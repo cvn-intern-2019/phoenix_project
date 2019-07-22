@@ -20,7 +20,6 @@ app.set('views', __dirname + '/views');
 
 app.get('/', (req, res) => {
     res.render('index');
-    // console.log("FUCK");
 });
 
 server.listen(port, () => {
