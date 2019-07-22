@@ -1,0 +1,26 @@
+form#player-info .form-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form#player-info input {
+    width: 200px;
+    height: 60px;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+}
+
+form#player-info input::placeholder {
+    font-size: 24px;
+    font-weight: normal;
+    text-align: center;
+}
+
+form#player-info .btn {
+    width: 200px;
+    height: 60px;
+    font-size: 28px;
+    font-weight: bold;
+}
