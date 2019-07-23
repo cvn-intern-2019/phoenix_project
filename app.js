@@ -52,7 +52,7 @@ app.route('/signin')
     .get((req,res) => {
         res.render('signIn');
     })
-    .post(passport.authenticate('local-signin' , {successRedirect:'/' ,failureRedirect:'/signin'}))
+    .post(passport.authenticate('local-signin' , {successRedirect:'/profile' ,failureRedirect:'/signin'}))
 
 app.route('/signup')
     .get((req,res) => {
@@ -84,16 +84,16 @@ passport.use('local-signup',new localStrategy(
                 return done(null,false)
             }else {
                 let newUser = {
-                    username : username,
-                    password : md5(password),
-                    email : req.body.email
+                    user_username : username,
+                    user_password : md5(password),
+                    user_email : req.body.email
                 };
 
-                let insertQuery = `INSERT INTO users (user_username,user_password,user_email) values ('${newUser.username}','${newUser.password}','${newUser.email}')` 
+                let insertQuery = `INSERT INTO users (user_username,user_password,user_email) values ('${newUser.user_username}','${newUser.user_password}','${newUser.user_email}')` 
                 con.query(insertQuery,(err,result) => {
                     if(err) throw err;
-                    newUser.id = result.insertId;
-                    console.log(newUser);
+                    newUser.user_id = result.insertId;
+                    console.log('signup success');
                     return done(null,newUser);
                 })
             }
@@ -114,7 +114,7 @@ passport.use('local-signin',new localStrategy(
             if(!md5(password) == result[0].user_password)
                 return done(null,false);
 
-            console.log(result[0]);
+            console.log('login success');
             return done(null,result[0]);
         });
         
@@ -141,8 +141,10 @@ function isSignIn(req,res,next) {
 }
 
 app.get('/profile',isSignIn,(req,res)=>{
-    res.send(`<a href='/logout'>Logout</a>`);
+    res.send('Hello ' + req.user.user_username);
 })
+
+
 
 app.get('/logout', function(req, res){
     req.logout();

@@ -1,6 +1,6 @@
-<div class="container">
-  <div class="row">
-    <form id="signInForm" action="signin" method="POST" class="col align-self-center">
+{{!-- <div class="container">
+  <div class="text-center">
+    <form id="signInForm" action="signin" method="POST">
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" class="form-control" name="username" id="username" placeholder="Enter username" >
@@ -15,4 +15,29 @@
     </form>
   </div>
   
+</div> --}}
+<div class="mt-5">
+<form class="container border border-dark p-5 w-25" id="signInForm" action="signin" method="POST">
+
+  <p class="h4 mb-4 text-center">Sign in</p>
+
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" class="form-control mb-2" placeholder="Username">
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" class="form-control mb-2" placeholder="Password">
+  </div>
+
+  <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
+
+  <div class="text-center">
+    <p>Not a member?
+      <a href="/signup">Sign Up</a>
+    </p>
+
+  </div>
+</form>
 </div>

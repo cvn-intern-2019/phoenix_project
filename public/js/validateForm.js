@@ -3,14 +3,18 @@ $(document).ready(() => {
         errorClass : 'my-error-class',
         rules: {
             username: {
-            required: true
+                required: true,
+                minlength: 5,
+                specialChars : true
             },
             password : {
-                required : true
+                required : true,
+                minlength: 7
             },
             confirmPassword : {
                 required : true,
-                equalTo: "#password"
+                equalTo: "#password",
+                minlength: 7
             },
             email : {
                 required : true,
@@ -23,18 +27,24 @@ $(document).ready(() => {
         errorClass : 'my-error-class',
         rules: {
             username: {
-            required: true
+                required: true,
+                minlength: 5,
+                specialChars : true
             },
             password : {
-                required : true
-            },
-            confirmPassword : {
-                required : true
-            },
-            email : {
                 required : true,
-                email : true
+                minlength: 7
             }
         }
     });
+
+    jQuery.validator.addMethod("specialChars", function( value, element ) {
+        var regex = new RegExp("^[a-zA-Z0-9]+$");
+        var key = value;
+
+        if (!regex.test(key)) {
+            return false;
+        }
+        return true;
+    }, "please use only alphanumeric or alphabetic characters");
 });
