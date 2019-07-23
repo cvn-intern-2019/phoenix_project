@@ -16,14 +16,13 @@ let app = express();
 let server = http.createServer(app);
 let io = socketIO(server);
 
+//Database
 let con = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '12345678',
     database: 'kahootdb'
-
 });
-
 con.connect(function (err) {
     if (err) throw err;
     console.log("Connected!");
@@ -31,10 +30,11 @@ con.connect(function (err) {
 
 app.use(express.static(publicPath));
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(session({secret : 'secret'}));
+app.use(session({secret : 'secret' , resave: false , saveUninitialized : false}));
 app.use(passport.initialize());
 app.use(passport.session());
 
+//hbs engine
 app.engine('hbs', exphbs({
     defaultLayout: 'main.hbs',
     layoutsDir: 'views/_layouts',
@@ -42,6 +42,8 @@ app.engine('hbs', exphbs({
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
 
+
+//Route
 app.get('/', (req, res) => {
     res.render('index');
 });
@@ -50,49 +52,102 @@ app.route('/signin')
     .get((req,res) => {
         res.render('signIn');
     })
-    .post(passport.authenticate('local' , {successRedirect:'/' ,failureRedirect:'/signin'}))
+    .post(passport.authenticate('local-signin' , {successRedirect:'/' ,failureRedirect:'/signin'}))
 
 app.route('/signup')
     .get((req,res) => {
         res.render('signUp');
     })
-    .post((req,res) => {  
-        let password = md5(req.body.password);
-        let sql = `INSERT INTO users (user_username,user_password,user_email) VALUES ('${req.body.username}','${password}','${req.body.email}')`;
-        console.log(sql);
-        con.query(sql, function (err, result) {
-            if (err) throw err;
-            res.render('index');
-        });   
-    })
+    // .post((req,res) => {  
+    //     let password = md5(req.body.password);
+    //     let sql = `INSERT INTO users (user_username,user_password,user_email) VALUES ('${req.body.username}','${password}','${req.body.email}')`;
+    //     console.log(sql);
+    //     con.query(sql, function (err, result) {
+    //         if (err) throw err;
+    //         res.render('index');
+    //     });   
+    // })
+    .post(passport.authenticate('local-signup' , {successRedirect:'/signin' ,failureRedirect:'/signup'}))
 
-passport.use(new localStrategy(
-    (username,password,done) => {
-        let pwd = md5(password);
-        let sql = `SELECT * FROM users where user_username = '${username}' AND user_password = '${pwd}'`;
-        con.query(sql, function (err, result) {
-            console.log(result[0]);
-            return done(err,result[0]);
+passport.use('local-signup',new localStrategy(
+    {   
+        usernameField: 'username',
+        passwordField: 'password',
+        passReqToCallback: true
+    },
+    (req,username,password,done) => {
+        let sql = `SELECT * FROM users where user_username = '${username}' OR user_email = '${req.body.email}'`;
+        con.query(sql , (err,result) => {
+            if(err)
+                return done(err);
+            if(result.length) {
+                return done(null,false)
+            }else {
+                let newUser = {
+                    username : username,
+                    password : md5(password),
+                    email : req.body.email
+                };
+
+                let insertQuery = `INSERT INTO users (user_username,user_password,user_email) values ('${newUser.username}','${newUser.password}','${newUser.email}')` 
+                con.query(insertQuery,(err,result) => {
+                    if(err) throw err;
+                    newUser.id = result.insertId;
+                    console.log(newUser);
+                    return done(null,newUser);
+                })
+            }
         });
         
     }
 ));
 
-passport.serializeUser((user,done) => {
-    done(null,user[0]);
-    console.log(user[0]);
-    
+passport.use('local-signin',new localStrategy(
+    (username,password,done) => {
+        let sql = `SELECT * FROM users where user_username = '${username}'`;
+        con.query(sql , (err,result) => {
+            if(err)
+                return done(err);
+            if(!result.length) {
+                return done(null,false)
+            }
+            if(!md5(password) == result[0].user_password)
+                return done(null,false);
+
+            console.log(result[0]);
+            return done(null,result[0]);
+        });
+        
+    }
+));
+
+passport.serializeUser((user, done) => {
+    done(null, user.user_id);
 });
 
 passport.deserializeUser((id,done) => {
-    let sql = `SELECT * FROM kahootdb.users where user_id = '${id}'`;
+    let sql = `SELECT * FROM users where user_id = '${id}'`;
     con.query(sql, function (err, result) {
         done(err,result[0]);
     });
     
 })
 
+function isSignIn(req,res,next) {
+    if(req.isAuthenticated())
+        return next();
 
+    res.send('Not login');
+}
+
+app.get('/profile',isSignIn,(req,res)=>{
+    res.send(`<a href='/logout'>Logout</a>`);
+})
+
+app.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');
+});
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);
 })
