@@ -3,6 +3,7 @@ const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 const exphbs = require('express-handlebars');
+const express_handlebars_sections = require('express-handlebars-sections');
 
 const publicPath = path.join(__dirname, '/public');
 const port = process.env.PORT || 3000
@@ -14,6 +15,10 @@ app.use(express.static(publicPath));
 app.engine('hbs', exphbs({
     defaultLayout: 'main.hbs',
     layoutsDir: 'views/_layouts',
+    section: express_handlebars_sections(),  // CONFIGURE 'express_handlebars_sections'
+    helpers: {
+        section: express_handlebars_sections(),
+    }
 }));
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');

@@ -1,13 +1,58 @@
+{{#section 'css'}}
+<style type="text/css">
+    label.error {
+        color: rgb(255, 186, 38);
+        width: 200px;
+        font-size: 18px;
+    }
+</style>
+{{/section}}
+
+{{#section 'js'}}
+<script>
+    $('body').css("height", "100vh");
+</script>
+
+{{!-- jquery validate --}}
+<script>
+    $(document).ready(function () {
+        $("#player-info").validate({
+            rules: {
+                pin: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 4,
+                    digits: true
+                },
+                nickname: "required",
+            },
+            messages: {
+                pin: {
+                    required: "Please enter PIN",
+                    minlength: "PIN is not correct",
+                    maxlength: "PIN is not correct",
+                    digits: "PIN must be number"
+                },
+                nickname: "Please enter nickname",
+            }
+        });
+    });
+</script>
+{{/section}}
+
 <div class="bg-success p-5" style="height: 100%">
     <form method="POST" id="player-info">
         <div class="form-group">
-            <input class="form-control input-sm" name="pin" type="text" placeholder="PIN">
+            <div class="row">
+                
+                <input class="form-control input-sm" name="pin" type="text" placeholder="PIN">
+            </div>
         </div>
         <div class="form-group">
             <input class="form-control" name="nickname" type="text" placeholder="Nick name">
         </div>
         <div class="form-group">
-            <button class="btn btn-secondary">JOIN</button>
+            <button class="btn btn-secondary" type="submit">JOIN</button>
         </div>
     </form>
 </div>

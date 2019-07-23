@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/style.css">
-
+    {{{_sections.css}}}
 </head>
 
-<body style="height: 100vh">
+<body>
     {{!-- LOGO
             <i class="fas fa-fire-extinguisher fa-4x"></i>
             <i class="fab fa-cloudversify fa-5x"></i>
@@ -27,17 +27,18 @@
             </a>
             <a class="navbar-brand justify-content-center" href="#">
                 <h1><strong>Kahoot Phoenix</strong></h1>
-                </a>
-            
+            </a>
+
         </nav>
     </header>
 
     {{{body}}}
 
     {{!-- JS files --}}
-    <script src="/js/bootstrap.min.js"></script>
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/jquery.validate.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    {{{_sections.js}}}
 </body>
 
 </html>

@@ -1,7 +1,14 @@
+body {
+    height: 80vh;
+    margin: 0;
+    padding: 0;
+}
+
 form#player-info .form-group {
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
+    text-align: center;
 }
 
 form#player-info input {
