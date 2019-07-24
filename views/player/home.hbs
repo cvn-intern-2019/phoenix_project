@@ -2,8 +2,7 @@
 <style type="text/css">
     label.error {
         color: rgb(255, 186, 38);
-        width: 200px;
-        font-size: 18px;
+        font-size: 24px;
     }
 </style>
 {{/section}}
@@ -24,7 +23,10 @@
                     maxlength: 4,
                     digits: true
                 },
-                nickname: "required",
+                nickname: {
+                    required: true,
+                    minlength: 3,
+                },
             },
             messages: {
                 pin: {
@@ -33,25 +35,26 @@
                     maxlength: "PIN is not correct",
                     digits: "PIN must be number"
                 },
-                nickname: "Please enter nickname",
+                nickname: {
+                    required: "Please enter nickname",
+                    minlength: "Nickname must be at least 3 characters",
+                },
+
             }
         });
     });
 </script>
 {{/section}}
 
-<div class="bg-success p-5" style="height: 100%">
-    <form method="POST" id="player-info">
-        <div class="form-group">
-            <div class="row">
-                
-                <input class="form-control input-sm" name="pin" type="text" placeholder="PIN">
-            </div>
+<div class="homepage-bg p-5" style="height: 100%">
+    <form class="container px-5" method="POST" id="player-info">
+        <div class="form-group px-5 my-5">
+            <input class="form-control" name="pin" type="text" placeholder="PIN">
         </div>
-        <div class="form-group">
+        <div class="form-group px-5 my-5">
             <input class="form-control" name="nickname" type="text" placeholder="Nick name">
         </div>
-        <div class="form-group">
+        <div class="form-group px-5 my-5">
             <button class="btn btn-secondary" type="submit">JOIN</button>
         </div>
     </form>
