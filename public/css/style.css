@@ -56,3 +56,6 @@ form#player-info .btn {
     -webkit-animation-direction: alternate;
     animation-direction: alternate;
 }
+.my-error-class {
+    color:#FF0000;  /* red */
+}
