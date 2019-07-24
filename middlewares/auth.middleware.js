@@ -1,6 +1,3 @@
-const passport = require('passport');
-
-
 function isSignIn(req,res,next) {
     if(req.isAuthenticated())
         return next();
