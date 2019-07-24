@@ -1,0 +1,25 @@
+<div class="mt-5">
+<form class="container border border-dark p-5 w-25" id="" action="/host/profile" method="POST">
+
+  <p class="h4 mb-4 text-center">Sign in</p>
+
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" class="form-control mb-2" placeholder="Username" value="{{user.user_username}}">
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" class="form-control mb-2" placeholder="email" value="{{user.user_email}}">
+  </div>
+
+  <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
+
+  <div class="text-center">
+    <p>Not a member?
+      <a href="/host/signup">Sign Up</a>
+    </p>
+
+  </div>
+</form>
+</div>
