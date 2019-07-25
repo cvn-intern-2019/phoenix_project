@@ -2,15 +2,19 @@
     <p class="h5"><a href="/host">Home</a>> Edit profile</p>
 </div>
 <div class="mt-5">
-<form class="container p-5 w-25" action="/edit-profile" method="POST" id="editProfileForm">
+<form class="container p-5 w-25" action="/host/edit-profile" method="POST" id="editProfileForm">
 
   <p class="h2 mb-4 text-center">Edit profile</p>
   <div class="form-group text-center">
   {{#if error}}
-    <label style="color:red">{{error}}</label>
+    <div class="alert alert-danger" role="alert">
+      {{error}}
+    </div>
   {{/if}}
-  {{#if status}}
-    <label style="color:green">{{status}}</label>
+  {{#if success}}
+    <div class="alert alert-success" role="alert">
+      {{success}}
+    </div>
   {{/if}}
   </div>
 
@@ -25,7 +29,7 @@
   </div>
   
   <div class="row form-group text-center">
-    <a class="col-md-12 text-center" href="/change-password">Change your password</a>        
+    <a class="col-md-12 text-center" href="/host/change-password">Change your password</a>        
   </div>
 
   <button class="btn btn-info" style="margin-left:35%" type="submit">Save change</button>
