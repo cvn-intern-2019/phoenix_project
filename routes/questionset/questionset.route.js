@@ -20,7 +20,14 @@ router.get('/add', (req, res) =>{
 })
 
 router.post('/add', (req, res) =>{
-    res.end('import thanh cong');
+    console.log(req.body);
+    questionset.add(req.body).then(id => {
+        console.log(id);
+        res.render('questionsets/add_questionset');
+      }).catch(err => {
+        console.log(err);
+        res.end('error occured.')
+      });
 })
 
 module.exports = router;

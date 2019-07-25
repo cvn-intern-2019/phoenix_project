@@ -6,7 +6,7 @@
                 <label>Title</label>
                 <input type="title" class="form-control" placeholder="Title of question set" name="title">
                 <label>Description</label>
-                <textarea class="form-control" rows="5" placeholder="Description of quetion set"></textarea>
+                <textarea class="form-control" rows="5" placeholder="Description of quetion set" name="description"></textarea>
             </div>
             <div class="form-group col-md-4">
                 <img src="" style="display:none" height="200px" id="image"> 
@@ -30,8 +30,8 @@
             </div>
         </div>
         <div class="form-check row">
-            <lable class="radio-inline" style="margin-left: 40px;"><input type="radio" name="status" value="active">Active</lable>
-            <lable class="radio-inline" style="margin-left: 40px;"><input type="radio" name="status" value="inactive">Inactive</lable>
+            <lable class="radio-inline" style="margin-left: 40px;"><input type="radio" name="status" value="1">Active</lable>
+            <lable class="radio-inline" style="margin-left: 40px;"><input type="radio" name="status" value="0">Inactive</lable>
         </div>
         <button type="Save" class="btn btn-primary" id="btn-question-set">Submit</button>
         <button type="Cancel" class="btn btn-secondary" id="btn-question-set">Cancel</button>
