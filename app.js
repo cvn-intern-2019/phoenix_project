@@ -95,11 +95,6 @@ app.route('/change-password')
             error = 'Current password is incorrect.';
         if(newpass != confirmpass)
             error = 'Confirm password is incorrect.';
-        console.log("-----------------------");
-        console.log(req.user.user_password);
-        console.log(currentpass);
-        console.log("-----------------------");
-        console.log(newpass);
         if(error == ""){
             let change_pass_query = `UPDATE users SET user_password = '${newpass}' where user_id = '${req.user.user_id}'`;
             con.query(change_pass_query,(err,result) => {
