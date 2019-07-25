@@ -31,3 +31,6 @@ form#player-info .btn {
     font-size: 28px;
     font-weight: bold;
 }
+.my-error-class {
+    color:#FF0000;  /* red */
+}
