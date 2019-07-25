@@ -2,14 +2,12 @@
 // ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '12345678'
 const mysql = require('mysql');
 
-var createConnection = () => {
-    return mysql.createConnection({
+var con = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '12345678',
     database: 'kahootdb'
-    });
-};
+});
 
 module.exports = {
     query: sql => {

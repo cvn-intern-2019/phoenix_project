@@ -41,6 +41,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+app.use('/questionset', require('./routes/questionset/questionset.route'));
+
 require('./models/passport')(passport);
 require('./routes/route')(app);
 require('./routes/player.route')(app);
