@@ -1,7 +1,30 @@
+
+h4{
+    white-space: nowrap;
+    height: 40%;
+    width: 50%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.question-set-heading{
+    text-align: center;
+    margin-bottom: 50px;
+    margin-top: 30px;
+}
+#btn-question-set{
+    margin-top: 20px;
+    padding: 5px;
+    margin-left: 30px;
+}
+
 body {
     height: 80vh;
     margin: 0;
     padding: 0;
+}
+
+.list-group-item button, .list-group-item .badge {
+    height: 100%;
 }
 
 form#player-info .form-group {
@@ -59,3 +82,9 @@ form#player-info .btn {
 .my-error-class {
     color:#FF0000;  /* red */
 }
+
+#btn-question-set-back
+{
+    margin-top: 30px;
+}
+

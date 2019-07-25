@@ -11,6 +11,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
+const morgan = require('morgan');
 
 const publicPath = path.join(__dirname, '/public');
 const port = process.env.PORT || 3000;
@@ -27,9 +28,11 @@ app.engine('hbs', exphbs({
         section: express_handlebars_sections(),
     }
 }));
+
+app.use(morgan('dev'));
+app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
-
 app.use(express.static(publicPath));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
