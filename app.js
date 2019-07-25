@@ -19,7 +19,7 @@ app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
 
 app.get('/', (req, res) => {
-    res.render('add_questionset');
+    res.render('questionset');
 });
 
 server.listen(port, () => {
