@@ -218,18 +218,6 @@ function isSignIn(req,res,next) {
     }
 }
 
-function checkValidEmail(req,res){
-    // var flag = true;
-    // let sql = `SELECT user_id FROM users where user_email = '${req.body.email}' and user_id != '${req.user.user_id}'`;
-    // console.log(con.query(sql));
-    // con.query(sql , (err,result) => {
-    //     if(err) flag = false;
-    //     if(result.length) flag = false;
-    //     return flag;
-    // });
-
-}
-
 
 
 app.get('/logout', function(req, res){
