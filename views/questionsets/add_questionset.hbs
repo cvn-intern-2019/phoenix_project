@@ -1,10 +1,10 @@
 <div class="container">
-    <form>
+    <form method="POST">
         <h1 class="question-set-heading">Question set</h1>
-        <div class="row">
+        <div class="row" >
             <div class="form-group col-md-8">
                 <label>Title</label>
-                <input type="title" class="form-control" placeholder="Title of question set">
+                <input type="title" class="form-control" placeholder="Title of question set" name="title">
                 <label>Description</label>
                 <textarea class="form-control" rows="5" placeholder="Description of quetion set"></textarea>
             </div>
@@ -36,4 +36,5 @@
         <button type="Save" class="btn btn-primary" id="btn-question-set">Submit</button>
         <button type="Cancel" class="btn btn-secondary" id="btn-question-set">Cancel</button>
    </form>
+   <a type="back_list" class="btn btn-outline-primary btn-lg fas fa-chevron-circle-left" id="btn-question-set-back" href="/questionset">  Back list</a>
 </div>
