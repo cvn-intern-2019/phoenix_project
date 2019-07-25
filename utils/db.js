@@ -10,11 +10,25 @@ var con = mysql.createConnection({
 
 });
 
-con.connect(function (err) {
+con.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");
-    con.query("CREATE DATABASE KahootDB", function (err, result) {
+    con.query("CREATE DATABASE KahootDB", function(err, result) {
         if (err) throw err;
         console.log("Database created");
     });
 });
+
+module.exports = {
+    load: sql => {
+        return new Promise((resolve, reject) => {
+            var connection = createConnection();
+            connection.connect();
+            connection.query(sql, (error, results, fields) => {
+                if (error) reject(error);
+                else resolve(results);
+                connection.end();
+            });
+        });
+    },
+};
