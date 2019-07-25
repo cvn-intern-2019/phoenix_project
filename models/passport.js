@@ -30,7 +30,7 @@ module.exports = function(passport) {
                 }else {
                     let newUser = {
                         user_username : username,
-                        user_password : password,
+                        user_password : md5(password),
                         user_email : req.body.email
                     };
     
