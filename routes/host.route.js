@@ -130,4 +130,34 @@ module.exports = function(app,passport) {
 
         });
     })
+
+    app.route('/host/update-question/:id')
+    .get(authMiddleware.isSignIn,(req, res) => {
+        let id = req.params.id;
+        let sql = `SELECT * FROM questions WHERE question_id = ${id}`;
+        db.query(sql)
+            .then(result => {
+                if(result.length == 0){
+                    res.send('Question not found');
+                }else{
+                    res.render('host/update-question',{
+                        csrfToken: req.csrfToken(),
+                        question:result[0],
+                        user : req.user
+                    });    
+                }
+            })
+    })
+    .post((req,res) => {
+        let id = req.params.id;
+        let sql = `UPDATE questions SET question_content = '${req.body.content}',question_answer1 = '${req.body.answer1}',question_answer2 = '${req.body.answer2}',question_answer3 = '${req.body.answer3}',question_answer4 = '${req.body.answer4}',question_answercorrect = '${req.body.correctanswer}'  WHERE question_id = ${1};`
+        db.query(sql)
+        .then(result => {
+            res.redirect(`/host/update-question/${id}`);
+        })
+        .catch(err => {
+            res.redirect(`/host/update-question/${id}`);
+
+        });
+    })
 };
