@@ -6,29 +6,30 @@ var con = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '12345678',
-    // database: 'KahootDB'
+    database: 'KahootDB'
 
 });
 
-con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-    con.query("CREATE DATABASE KahootDB", function(err, result) {
-        if (err) throw err;
-        console.log("Database created");
-    });
-});
+// module.exports = {
+//     host: 'localhost',
+//     user: 'root',
+//     password: '12345678',
+//     database: 'KahootDB'
+// };
+
+
+// connection.connect();
 
 module.exports = {
-    load: sql => {
+    query: sql => {
         return new Promise((resolve, reject) => {
-            var connection = createConnection();
-            connection.connect();
-            connection.query(sql, (error, results, fields) => {
+            // connection.connect();
+            con.query(sql, (error, results, fields) => {
                 if (error) reject(error);
                 else resolve(results);
-                connection.end();
+                // connection.end();
             });
         });
     },
+
 };

@@ -40,21 +40,8 @@ app.use(flash());
 
 require('./models/passport')(passport);
 require('./routes/route')(app);
+require('./routes/player.route')(app);
 require('./routes/host.route')(app, passport);
-
-
-//Database
-let con = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
-});
-con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-});
-
 
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);
