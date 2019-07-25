@@ -24,7 +24,15 @@ router.post('/add', (req, res) => {
     questionset.add(req.body)
         .then(id => {
             console.log(id);
-            res.render('questionsets/add_questionset');
+            // res.render('questionsets/add_questionset');
+            upload(req,res, err => {
+                if(err) {
+                    res.render('questionsets/add_questionset');
+                }else {
+                    console.log(req.file);
+                    
+                }
+            })
         })
         .catch(err => {
             console.log(err);

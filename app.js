@@ -12,12 +12,27 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
 const morgan = require('morgan');
+const multer = require('multer');
+
 
 const publicPath = path.join(__dirname, '/public');
 const port = process.env.PORT || 3000;
 let app = express();
 let server = http.createServer(app);
 let io = socketIO(server);
+
+//pathimage
+const storage = multer.diskStorage({
+    destination: './public/img/',
+    filename: function(req,file,cb){
+        cb(null, file.filename + '-' + Date.now() + 
+        path.extname(file.originalname));
+    }
+})
+
+const upload = multer({
+    storage : storage
+}).single('questionset_img');
 
 //hbs engine
 app.engine('hbs', exphbs({
