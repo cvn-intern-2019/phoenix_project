@@ -1,11 +1,12 @@
 const authMiddleware = require('../middlewares/auth.middleware');
 var db = require('../utils/db');
+var question = require('../models/question/question.model')
 const md5 = require('md5');
 
 module.exports = function(app,passport) {
     app.route('/host/signin')
     .get((req,res) => {
-        res.render('signIn' , {signinuser : req.flash('signinuser'),signinpwd : req.flash('signinpwd')});
+        res.render('signIn' , {csrfToken: req.csrfToken(),signinuser : req.flash('signinuser'),signinpwd : req.flash('signinpwd')});
     })
     .post(passport.authenticate('local-signin' , {
         successRedirect:'/host/edit-profile',
@@ -15,7 +16,7 @@ module.exports = function(app,passport) {
 
     app.route('/host/signup')
         .get((req,res) => {
-            res.render('signUp' , {signupMessage : req.flash('signupMessage')});
+            res.render('signUp' , { csrfToken: req.csrfToken(), signupMessage : req.flash('signupMessage')});
         })
         .post(passport.authenticate('local-signup' , {
             successRedirect:'/host/signin',
@@ -49,11 +50,13 @@ module.exports = function(app,passport) {
                         })
                         .catch(err => {
                             res.render('host/edit-profile',{
+                            csrfToken: req.csrfToken(),
                             error:"Edit Fail!",
                         });
                     });
                 }else{
                     res.render('host/edit-profile',{
+                        csrfToken: req.csrfToken(),
                         error:"Email has existed!",
                         user : req.user,
                     });    
@@ -62,16 +65,16 @@ module.exports = function(app,passport) {
             })
             .catch(err => {
                 res.render('host/edit-profile',{
+                csrfToken: req.csrfToken(), 
                 error:"Edit Fail!",
             });
-        });
-
-        
+        });        
     })
 
     app.route('/host/change-password')
     .get(authMiddleware.isSignIn,(req,res) => {
         res.render('host/change-password',{
+            csrfToken: req.csrfToken(),
             user: req.user,
             success: req.flash("passwordMessage"),
         });
@@ -81,13 +84,13 @@ module.exports = function(app,passport) {
         var currentpass = md5(req.body.current);
         var newpass = md5(req.body.new);
         var confirmpass = md5(req.body.confirm);
+        
         if(currentpass != req.user.user_password)
             error = 'Current password is incorrect.';
         else
             if(newpass != confirmpass)
                 error = 'Confirm password is incorrect.';
-        console.log(req.user.user_password);
-        console.log(newpass);
+
         if(error == ""){
             let change_pass_query = `UPDATE users SET user_password = '${newpass}' where user_id = '${req.user.user_id}'`;
             db.query(change_pass_query)
@@ -97,11 +100,34 @@ module.exports = function(app,passport) {
                 })
                 .catch(err => {
                     res.render('host/change-password',{
+                    csrfToken: req.csrfToken(), 
                     error:"Change Password Fail!",
                 });
             }); 
         }else{
-            res.render('host/change-password',{error:error});
+            res.render('host/change-password',{
+                error:error,
+                csrfToken: req.csrfToken(),
+            });
         }
+    })
+    
+    app.route('/host/create-question')
+    .get(authMiddleware.isSignIn,(req, res) => {
+        res.render('host/create-question',{
+            csrfToken: req.csrfToken(),
+            user : req.user,
+        });
+    })
+    .post((req,res) => {
+        question.add(req.body)
+        .then(id => {
+            res.send('1');
+        })
+        .catch(err => {
+            // res.render("index");
+            res.send(err);
+
+        });
     })
 };

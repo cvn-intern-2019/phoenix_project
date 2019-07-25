@@ -11,12 +11,15 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
+const morgan = require('morgan');
+const csrf = require('csurf');
 
 const publicPath = path.join(__dirname, '/public');
 const port = process.env.PORT || 3000;
 let app = express();
 let server = http.createServer(app);
 let io = socketIO(server);
+let csrfProtection = csrf();
 
 //hbs engine
 app.engine('hbs', exphbs({
@@ -37,6 +40,7 @@ app.use(session({ secret: process.env.session, resave: false, saveUninitialized:
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+app.use(csrfProtection);
 
 require('./models/passport')(passport);
 require('./routes/route')(app);
