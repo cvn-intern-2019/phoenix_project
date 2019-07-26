@@ -23,7 +23,7 @@ let io = socketIO(server);
 
 //pathimage
 const storage = multer.diskStorage({
-    destination: './public/img/',
+    destination: path.join(__dirname + './../public/img/'),
     filename: function(req,file,cb){
         cb(null, file.filename + '-' + Date.now() + 
         path.extname(file.originalname));

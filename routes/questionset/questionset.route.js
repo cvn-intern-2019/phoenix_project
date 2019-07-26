@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
     //res.end(" question sets list");
     var p = questionset.all();
     p.then(rows => {
-        console.log(rows);
+        //console.log(rows);
         res.render('questionsets/questionset', {
             questionset: rows
         });
@@ -19,20 +19,12 @@ router.get('/add', (req, res) => {
     res.render('questionsets/add_questionset')
 })
 
-router.post('/add', (req, res) => {
+router.post('/add', (req, res) =>{
     console.log(req.body);
     questionset.add(req.body)
         .then(id => {
             console.log(id);
-            // res.render('questionsets/add_questionset');
-            upload(req,res, err => {
-                if(err) {
-                    res.render('questionsets/add_questionset');
-                }else {
-                    console.log(req.file);
-                    
-                }
-            })
+            res.render('questionsets/add_questionset');
         })
         .catch(err => {
             console.log(err);
