@@ -1,0 +1,77 @@
+{{#section 'js'}}
+<script>
+    $("body").addClass('homepage-bg');
+</script>
+{{/section}}
+
+{{#section 'css'}}
+<style>
+    .card.border-dark {
+        border-width: 3px;
+        border-radius: 10px;
+    }
+    .card.border-secondary {
+        border-width: 3px;
+        border-radius: 10px;
+    }
+</style>
+{{/section}}
+
+<div class="mt-5 row">
+    <div class="container col-lg-6 col-lg-offset-3 ">
+        <div class="card mb-3 border-secondary">
+            <div class="row">
+                <div class="col-3" style="height: 180px; overflow: hidden; position: relative;">
+                    <img src="/img/test.jpg" class="card-img" alt="error" style="width: 180px">
+                </div>
+                <div class="col-6">
+                    <div class="card-body">
+                        <h3 class="card-title">{{info_qs.questionset_title}}</h3>
+                        <p class="card-text">{{info_qs.questionset_description}}</p>
+                    </div>
+
+                </div>
+                <div class="col-3 pr-3" style="margin-top: auto; margin-bottom: auto">
+                    <a class="btn btn-outline-success d-block mb-3 mr-3" href="#">
+                        <h5 class="m-0">Create room</h5>
+                    </a>
+                    <a class="btn btn-outline-primary d-block mb-3 mr-3" href="#">
+                        <h5 class="m-0">Edit</h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <h3>Questions list</h3>
+        <hr>
+        <div id="questions-list">
+            {{#each list_q}}
+            <div class="card mb-3 border-dark">
+                <div class="row">
+                    <div class="col-2" style="height: 120px; overflow: hidden; position: relative;">
+                        <img src="/img/test.jpg" class="card-img" alt="error" style="width: 120px">
+                    </div>
+                    <div class="col-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{question_content}}</h5>
+                        </div>
+                    </div>
+                    <div class="col-2 pr-3" style="margin-top: auto; margin-bottom: auto">
+                        <a class="btn btn-outline-primary d-block p-0 my-2 mr-3"
+                            href="/host/questionset/{{questionset_id}}/question/{{question_id}}/edit">
+                            <i class="fas fa-edit"></i>
+                            <p class="m-0">
+                            </p>
+                        </a>
+                        <a class="btn btn-outline-danger d-block p-0 my-2 mr-3"
+                            href="/host/questionset/{{questionset_id}}/question/{{question_id}}/delete">
+                            <i class="fas fa-trash"></i>
+                            <p class="m-0">
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

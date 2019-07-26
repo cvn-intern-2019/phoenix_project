@@ -43,9 +43,11 @@ app.engine('hbs', exphbs({
         section: express_handlebars_sections(),
     }
 }));
+
+app.use(morgan('dev'));
+app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
-
 app.use(express.static(publicPath));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -55,11 +57,13 @@ app.use(passport.session());
 app.use(flash());
 app.use(csrfProtection);
 
+app.use('/questionset', require('./routes/questionset.route'));
+
 require('./models/passport')(passport);
 require('./routes/route')(app);
 require('./routes/player.route')(app);
 require('./routes/host.route')(app, passport);
-require('./routes/question/question.route')(app,upload);
+require('./routes/question.route')(app);
 
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);
