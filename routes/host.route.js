@@ -4,7 +4,7 @@ var question = require('../models/question/question.model')
 const md5 = require('md5');
 
 
-module.exports = function(app,passport) {
+module.exports = function(app, passport) {
     app.route('/host/signin')
     .get(authMiddleware.alreadySignin , (req,res) => {
         res.render('signIn' , {csrfToken: req.csrfToken(),signinuser : req.flash('signinuser'),signinpwd : req.flash('signinpwd')});
@@ -19,13 +19,13 @@ module.exports = function(app,passport) {
         .get(authMiddleware.alreadySignin,(req,res) => {
             res.render('signUp' , { csrfToken: req.csrfToken(), signupMessage : req.flash('signupMessage')});
         })
-        .post(passport.authenticate('local-signup' , {
-            successRedirect:'/host/signin',
-            failureRedirect:'/host/signup',
+        .post(passport.authenticate('local-signup', {
+            successRedirect: '/host/signin',
+            failureRedirect: '/host/signup',
             failureFlash: true
         }))
 
-    app.get('/host/signout',authMiddleware.isSignIn,(req, res) => {
+    app.get('/host/signout', authMiddleware.isSignIn, (req, res) => {
         req.logout();
         res.redirect('/');
     });
@@ -160,5 +160,7 @@ module.exports = function(app,passport) {
             res.redirect(`/host/update-question/${id}`);
 
         });
+    app.get('/host/profile', authMiddleware.isSignIn, (req, res) => {
+        res.render('profile', { user: req.user });
     })
 };
