@@ -58,7 +58,7 @@
         </div>
         <div class="container d-flex justify-content-between">
             <h3>Questions list</h3>
-            <a href="/host/questionset/{{questionset_id}}/question/{{question_id}}/add"
+            <a href="/host/questionset/{{info_qs.questionset_id}}/question/add"
                 class="btn btn-primary border-dark">
                 <i class="fas fa-plus">Add</i>
             </a>
@@ -69,7 +69,7 @@
             <div class="card mb-3 border-dark">
                 <div class="row">
                     <div class="col-2" style="height: 120px; overflow: hidden; position: relative;">
-                        <img src="/img/test.jpg" class="card-img" alt="error" style="width: 120px">
+                        <img src="/img/{{question_image}}" class="card-img" alt="error" style="width: 120px">
                     </div>
                     <div class="col-8">
                         <div class="card-body">
