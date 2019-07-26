@@ -21,6 +21,7 @@ router.get('/add', (req, res) => {
 
 router.post('/add', (req, res) => {
     console.log(req.body);
+    console.log("abc");
     questionset.add(req.body)
         .then(id => {
             console.log(id);
@@ -40,4 +41,20 @@ router.post('/add', (req, res) => {
         });
 })
 
+
+router.get('/edit/:id', (req, res) => {
+    var id = req.params.id;
+    questionset.single(id).then(rows => {
+        if(rows.lenght > 0) {
+            res.render('questionsets/edit_questionset', {
+            error : false,
+            question_set : rows[0]
+            });
+         } else{
+            res.render('questionsets/edit_questionset', {
+                error : true,
+            });
+        }
+    });
+})
 module.exports = router;
