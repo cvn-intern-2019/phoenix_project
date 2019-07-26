@@ -10,6 +10,6 @@ module.exports = {
     },
 
     add: user => {
-        return db.query(`INSERT INTO questionsets (questionset_title,questionset_description,questionset_image,questionset_state) VALUES ("${user.title}","${user.description}","${user.questionset_img}","${user.status}")`);
+        return db.query(`INSERT INTO questionsets (questionset_title,questionset_description,questionset_image,questionset_state) VALUES ("${user.title}","${user.description}","${user.file}","${user.status}")`);
     }
 };

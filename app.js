@@ -13,6 +13,7 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const morgan = require('morgan');
 
+const multer = require('multer');
 const csrf = require('csurf');
 
 const publicPath = path.join(__dirname, '/public');
@@ -21,6 +22,21 @@ let app = express();
 let server = http.createServer(app);
 let io = socketIO(server);
 let csrfProtection = csrf();
+
+const storage = multer.diskStorage({
+    destination: './public/img/',
+    filename: function (req, file, cb) {    
+        console.log(req.body);    
+        console.log(file.originalname);   
+        cb(null, file.originalname + '-' + Date.now() +path.extname(file.originalname));
+    }
+})
+
+const upload = multer({
+    storage: storage
+});
+const test = upload.single('questionset_img');
+app.use(test);
 
 
 //hbs engine
