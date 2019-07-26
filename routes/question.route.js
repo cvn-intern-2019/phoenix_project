@@ -6,5 +6,9 @@ module.exports = function(app) {
         .get(authMiddleware.isSignIn, question_controller.showQuestionList);
 
     app.route('/host/questionset/:qs_id/question/:q_id/delete')
-        .get(question_controller.deleteQuestion);
+        .get(authMiddleware.isSignIn, question_controller.deleteQuestion);
+
+    app.route('/host/questionset/:qs_id/question/:q_id/edit')
+        .get(authMiddleware.isSignIn, question_controller.findQuestion)
+        .post(question_controller.editQuestion);
 };
