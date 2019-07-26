@@ -22,6 +22,7 @@
 
 <div class="container">
     <form action ="/questionset/add" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         <h1 class="question-set-heading"> New question set</h1>
         <div class="row" >
             <div class="form-group col-md-8">
