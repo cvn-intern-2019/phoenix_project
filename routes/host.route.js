@@ -1,6 +1,5 @@
 const authMiddleware = require('../middlewares/auth.middleware');
 var db = require('../utils/db');
-var question = require('../models/question/question.model')
 const md5 = require('md5');
 
 module.exports = function(app,passport) {
@@ -114,24 +113,5 @@ module.exports = function(app,passport) {
         }
     })
     
-    app.route('/host/create-question')
-    .get(authMiddleware.isSignIn,(req, res) => {
-        res.render('host/create-question',{
-            csrfToken: req.csrfToken(),
-            user : req.user,
-        });
-    })
-    .post((req,res) => {
-        question.add(req.body)
-        .then(id => {
-            res.redirect("/")
-        })
-        .catch(err => {
-            res.render('host/create-question',{
-                csrfToken: req.csrfToken(),
-                user : req.user,
-                error : "Fail to create question!!",
-            });
-        });
-    })
+    
 };

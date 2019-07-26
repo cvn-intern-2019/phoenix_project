@@ -13,6 +13,7 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const morgan = require('morgan');
 const csrf = require('csurf');
+const multer = require('multer');
 
 const publicPath = path.join(__dirname, '/public');
 const port = process.env.PORT || 3000;
@@ -20,6 +21,18 @@ let app = express();
 let server = http.createServer(app);
 let io = socketIO(server);
 let csrfProtection = csrf();
+
+const storage = multer.diskStorage({
+    destination: './public/img/', 
+    filename: function (req, file, cb) {
+        cb(null, file.originalname + '-' + Date.now() + path.extname(file.originalname));
+    }	
+})
+const upload = multer({
+    storage: storage
+}).single('question_img');
+app.use(upload);
+
 
 //hbs engine
 app.engine('hbs', exphbs({
@@ -46,7 +59,10 @@ require('./models/passport')(passport);
 require('./routes/route')(app);
 require('./routes/player.route')(app);
 require('./routes/host.route')(app, passport);
+require('./routes/question/question.route')(app,upload);
 
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);
 })
+
+
