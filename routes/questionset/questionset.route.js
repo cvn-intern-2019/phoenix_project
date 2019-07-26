@@ -1,24 +1,9 @@
 var questionset = require('../../models/questionset/questionset.model');
 
-module.exports = function (app,test) {
+var db = require('../../utils/db');
 
-    //pathimage
-    // const storage = multer.diskStorage({
-    //     destination: './public/img/',
-    //     filename: function (req, file, cb) {
-    //         cb(null, file.filename + '-' + Date.now() +
-    //             path.extname(file.originalname));
-    //     }
-    // })
-
-    // const upload = multer({
-    //     storage: storage
-    // });
-    // const test = upload.single('questionset_img');
-    // app.use(test);
-
+module.exports = function (app, test) {
     app.get('/questionset', (req, res) => {
-        //res.end(" question sets list");
         var p = questionset.all();
         p.then(rows => {
             console.log(rows);
@@ -36,24 +21,26 @@ module.exports = function (app,test) {
         })
 
         .post((req, res) => {
-            let filename = '';
+            let questionset = req.body;
             test(req, res, err => {
                 if (err) {
-                    // res.render('questionsets/add_questionset');
+                    res.render('questionset/add_questionset'); 
                 } else {
-                    return filename = req.file.filename;                    
-                    // res.render('questionsets/questionset');
+                    var filename = "";
+                    if(req.file){
+                        filename=req.file.filename;
+                    }
+                    var sql = `INSERT INTO questionsets (questionset_title,questionset_description,questionset_image,questionset_state) 
+                    VALUES ("${questionset.title}","${questionset.description}","${filename}","${questionset.status}")`;
+                    db.query(sql)
+                    .then(result => {
+                        res.redirect('/questionset'); 
+                    })
+                    .catch(err => {
+                        res.render('questionset/add_questionset'); 
+                    });
                 }
             })
-            questionset.add(req.body)
-                .then(id => {
-                    // res.render('questionsets/add_questionset');
-                    
-                })
-                .catch(err => {
-                    console.log(err);
-                    res.end('error occured.')
-                });
         })
 
 

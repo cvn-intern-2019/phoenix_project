@@ -14,7 +14,7 @@ const passport = require('passport');
 const morgan = require('morgan');
 const multer = require('multer');
 
-const multer = require('multer');
+
 const csrf = require('csurf');
 
 const publicPath = path.join(__dirname, '/public');
@@ -26,9 +26,7 @@ let csrfProtection = csrf();
 
 const storage = multer.diskStorage({
     destination: './public/img/',
-    filename: function (req, file, cb) {    
-        console.log(req.body);    
-        console.log(file.originalname);   
+    filename: function (req, file, cb) {
         cb(null, file.originalname + '-' + Date.now() +path.extname(file.originalname));
     }
 })
@@ -39,20 +37,6 @@ const upload = multer({
 const test = upload.single('questionset_img');
 app.use(test);
 
-
-const storage = multer.diskStorage({
-        destination: './public/img/',
-        filename: function (req, file, cb) {
-            cb(null, file.filename + '-' + Date.now() +
-                path.extname(file.originalname));
-        }
-    })
-
-    const upload = multer({
-        storage: storage
-    });
-    const test = upload.single('questionset_img');
-    app.use(test);
 
 
 //hbs engine
