@@ -6,7 +6,7 @@ const md5 = require('md5');
 
 module.exports = function(app,passport) {
     app.route('/host/signin')
-    .get((req,res) => {
+    .get(authMiddleware.alreadySignin , (req,res) => {
         res.render('signIn' , {csrfToken: req.csrfToken(),signinuser : req.flash('signinuser'),signinpwd : req.flash('signinpwd')});
     })
     .post(passport.authenticate('local-signin' , {
@@ -16,7 +16,7 @@ module.exports = function(app,passport) {
     }))
 
     app.route('/host/signup')
-        .get((req,res) => {
+        .get(authMiddleware.alreadySignin,(req,res) => {
             res.render('signUp' , { csrfToken: req.csrfToken(), signupMessage : req.flash('signupMessage')});
         })
         .post(passport.authenticate('local-signup' , {

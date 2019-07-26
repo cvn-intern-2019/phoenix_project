@@ -5,6 +5,15 @@ function isSignIn(req,res,next) {
     res.redirect("/host/signin");
 }
 
+function alreadySignin(req,res,next) {
+    if(!req.user)
+        return next();
+
+    res.redirect("/");
+}
+
+
 module.exports = {
-    isSignIn
+    isSignIn,
+    alreadySignin
 }
