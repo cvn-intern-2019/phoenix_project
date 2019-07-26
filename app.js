@@ -44,12 +44,14 @@ app.use(passport.session());
 app.use(flash());
 app.use(csrfProtection);
 
-app.use('/questionset', require('./routes/questionset/questionset.route'));
-
 require('./models/passport')(passport);
 require('./routes/route')(app);
 require('./routes/player.route')(app);
 require('./routes/host.route')(app, passport);
+
+app.get('/session', function(req, res, next) {
+    res.send(req.session)
+})
 
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);
