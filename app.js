@@ -12,6 +12,7 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
 const morgan = require('morgan');
+
 const csrf = require('csurf');
 
 const publicPath = path.join(__dirname, '/public');
@@ -20,6 +21,7 @@ let app = express();
 let server = http.createServer(app);
 let io = socketIO(server);
 let csrfProtection = csrf();
+
 
 //hbs engine
 app.engine('hbs', exphbs({
@@ -48,6 +50,7 @@ require('./models/passport')(passport);
 require('./routes/route')(app);
 require('./routes/player.route')(app);
 require('./routes/host.route')(app, passport);
+require('./routes/questionset/questionset.route')(app);
 
 app.get('/session', function(req, res, next) {
     res.send(req.session)

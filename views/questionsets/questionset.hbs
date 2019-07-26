@@ -2,14 +2,18 @@
     <div class="row">
         <div class="col-md-12">
             <h1 class="question-set-heading">Question sets</h1>
+            <a class="btn btn-primary btn-lg fas fa-plus-circle" id ="btn-question-set" style="margin-top: 20px" href="/questionset/add"> Add</a>
             {{#each this.questionset}}
-            <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <img src="/img/test.jpg" width="80git px" height="80px" class="img-rounded">
+            <ul class="list-group my-4 border border-dark">
+                <li class="list-group-item d-flex justify-content-between align-items-center mi-2">
+                    <img src="/img/{{questionset_image}}" width="80git px" height="80px" class="img-rounded">
                     <h4>{{questionset_title}}</h4>
                         <span class="badge">
-                            <label id ="status-question-set">Active</label>
+                            {{#if questionset_state }}
                             <button class="btn btn-success"> <i class="fas fa-external-link-alt"></i> New Game </button>
+                            {{else}}
+                            <button class="btn btn-secondary disabled"> <i class="fas fa-external-link-alt"></i> New Game </button>
+                            {{/if}}
                             <button class="btn btn-info mx-4"><i class="fas fa-edit"></i> Edit</button>
                        </span>
                 </li>
@@ -17,5 +21,4 @@
             {{/each}}
         </div>
     </div>
-    <a class="btn btn-primary btn-lg fas fa-plus-circle" id ="btn-question-set" style="margin-top: 20px" href="/questionset/add"> Add</a>
 </div>

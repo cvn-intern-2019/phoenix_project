@@ -1,40 +1,44 @@
+{{#section 'css'}}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/css/fileinput.min.css" media="all"
+  rel="stylesheet" type="text/css" />
+{{/section}}
+
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
+<script>
+  $(function () {
+    $('#questionset_img').fileinput({
+      theme: 'fa',
+      dropZoneEnabled: false,
+      allowedFileExtensions: ['png', 'jpg', 'gif'],
+      uploadUrl: '/upload',
+      uploadAsync: false,
+    });
+  })
+</script>
+{{/section}}
+
+
 <div class="container">
-    <form method="POST">
-        <h1 class="question-set-heading">Question set</h1>
+    <form action ="/questionset/add" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        <h1 class="question-set-heading"> New question set</h1>
         <div class="row" >
             <div class="form-group col-md-8">
                 <label>Title</label>
                 <input type="title" class="form-control" placeholder="Title of question set" name="title">
                 <label>Description</label>
-                <textarea class="form-control" rows="5" placeholder="Description of quetion set"></textarea>
-            </div>
-            <div class="form-group col-md-4">
-                <img src="" style="display:none" height="200px" id="image"> 
+                <textarea class="form-control" rows="5" placeholder="Description of quetion set" name="description"></textarea>
                 <label>Choose image</label>
-                <input type="file" onchange="showImage.call(this)">
-                <script>
-                    function showImage()
-                    {
-                        if(this.files && this.files[0])
-                        {
-                            var obj = new FileReader();
-                            obj.onload = function(data){
-                                var image = document.getElementById("image");
-                                image.src = data.target.result;
-                                image.style.display = "block";
-                            }
-                            obj.readAsDataURL(this.files[0]);
-                        }
-                    }
-                </script>
+                <input type="file" id="questionset_img" name="questionset_img" value="" multiple>
             </div>
         </div>
         <div class="form-check row">
-            <lable class="radio-inline" style="margin-left: 40px;"><input type="radio" name="status" value="active">Active</lable>
-            <lable class="radio-inline" style="margin-left: 40px;"><input type="radio" name="status" value="inactive">Inactive</lable>
+            <lable class="radio-inline" style="margin-left: 40px;"><input type="radio" name="status" value="1">Active</lable>
+            <lable class="radio-inline" style="margin-left: 40px;"><input type="radio" name="status" value="0">Inactive</lable>
         </div>
-        <button type="Save" class="btn btn-primary" id="btn-question-set">Submit</button>
-        <button type="Cancel" class="btn btn-secondary" id="btn-question-set">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="btn-question-set">Submit</button>
+        <a type="cancel" class="btn btn-secondary" id="btn-question-set" href="/questionset">Cancel</a>
    </form>
-   <a type="back_list" class="btn btn-outline-primary btn-lg fas fa-chevron-circle-left" id="btn-question-set-back" href="/questionset">  Back list</a>
 </div>
