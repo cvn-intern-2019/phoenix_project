@@ -1,5 +1,5 @@
 <div class="container p-5">
-    <form method="POST" action="/host/update-question/{{ question.question_id }}">
+    <form method="POST" action="/host/questionset/{{ question.questionset_id }}/question/{{ question.question_id }}/edit">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}"> 
         <h1 class="question-set-heading text-center">Question</h1>
         <div class="row" >
