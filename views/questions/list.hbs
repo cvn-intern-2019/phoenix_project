@@ -10,9 +10,22 @@
         border-width: 3px;
         border-radius: 10px;
     }
+
     .card.border-secondary {
         border-width: 3px;
         border-radius: 10px;
+    }
+
+    h3 {
+        white-space: nowrap;
+        width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    img {
+        object-fit: cover;
+        object-position: 150% 150%;
     }
 </style>
 {{/section}}
@@ -21,8 +34,10 @@
     <div class="container col-lg-6 col-lg-offset-3 ">
         <div class="card mb-3 border-secondary">
             <div class="row">
-                <div class="col-3" style="height: 180px; overflow: hidden; position: relative;">
+                <div class="col-3">
+                    <div style="height: 180px; overflow: hidden; position: relative;">
                     <img src="/img/test.jpg" class="card-img" alt="error" style="width: 180px">
+                    </div>
                 </div>
                 <div class="col-6">
                     <div class="card-body">
@@ -41,7 +56,13 @@
                 </div>
             </div>
         </div>
-        <h3>Questions list</h3>
+        <div class="container d-flex justify-content-between">
+            <h3>Questions list</h3>
+            <a href="/host/questionset/{{questionset_id}}/question/{{question_id}}/add"
+                class="btn btn-primary border-dark">
+                <i class="fas fa-plus">Add</i>
+            </a>
+        </div>
         <hr>
         <div id="questions-list">
             {{#each list_q}}
