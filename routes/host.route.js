@@ -1,6 +1,5 @@
 const authMiddleware = require('../middlewares/auth.middleware');
 var db = require('../utils/db');
-var question = require('../models/question/question.model')
 const md5 = require('md5');
 
 
@@ -34,6 +33,7 @@ module.exports = function(app, passport) {
     .get(authMiddleware.isSignIn,(req,res) => {
         res.render('host/edit-profile',{
             user : req.user,
+            csrfToken: req.csrfToken(),
             success: req.flash("editMessage"),
         });
     })
@@ -41,6 +41,7 @@ module.exports = function(app, passport) {
         let change_password_query = `SELECT * FROM users where user_email = '${req.body.email}' and user_id != '${req.user.user_id}'`;
         db.query(change_password_query)
             .then(result => {
+                // if email isn't exist.
                 if(result.length == 0){
                     let edit_profile_query = `UPDATE users SET user_email = '${req.body.email}' where user_id = '${req.user.user_id}'`;
                     db.query(edit_profile_query)

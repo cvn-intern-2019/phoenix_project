@@ -66,6 +66,7 @@ $(document).ready(() => {
         }
     });
 
+<<<<<<< HEAD
     $( "#question" ).validate({
         errorClass : 'my-error-class',
         rules: {
@@ -87,6 +88,34 @@ $(document).ready(() => {
             correctanswer : {
                 required : true,
             },
+=======
+    $( "#create_question" ).validate({
+        errorClass : 'my-error-class',
+        rules: {
+            content:{
+                required : true,
+            },
+            answer1 : {
+                required : true,
+                maxlength: 50,
+            },
+            answer2 : {
+                required : true,
+                maxlength: 50,
+            },
+            answer3 : {
+                required : true,
+                maxlength: 50,
+            },
+            answer4 : {
+                required : true,
+                maxlength: 50,
+            },
+            correctanswer : {
+                required : true,
+                maxlength: 1,
+            }
+>>>>>>> e84013bea81578ee3c6210f84475de4b17a04188
         }
     });
 
