@@ -1,8 +1,15 @@
 <div class="container p-5">
-    <form method="POST" action="/host/create-question">
-        <input type="text" name="question-set-headingtionSetId" value="1" hidden>
-        <input type="hidden" name="_csrf" value="{{ csrfToken }}"> 
+    <form method="POST" action="/host/create-question" enctype="multipart/form-data" id="create_question" >
+        <input type="text" name="questionSetId" value="1" hidden>
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         <h1 class="question-set-heading text-center">Question</h1>
+        <div class="form-group text-center">
+        {{#if error}}
+            <div class="alert alert-danger" role="alert">
+              {{error}}
+            </div>
+        {{/if}}
+        </div>
         <div class="row" >
             <div class="form-group col-md-8">
                 <label>Content</label>
@@ -13,10 +20,8 @@
                 <label>Choose image</label>
                 <input type="file" onchange="showImage.call(this)" name="image" value="">
                 <script>
-                    function showImage()
-                    {
-                        if(this.files && this.files[0])
-                        {
+                    function showImage(){
+                        if(this.files && this.files[0]){
                             var obj = new FileReader();
                             obj.onload = function(data){
                                 var image = document.getElementById("image");
@@ -32,19 +37,19 @@
         <div class="row mt-5">
             <div class="form-inline col-md-5 mb-3">
                 <label for="answer1" class="col-md-1"><strong>A.</strong></label>
-                <input type="text" class="form-control col-md-11" placeholder="Answer content" id="answer1" name="answer1" value="1aaaaaaaaaaaaaaaa">
+                <input type="text" class="form-control col-md-11" placeholder="Answer content" id="answer1" name="answer1" value="">
             </div>
             <div class="form-inline col-md-5 mb-3">
                 <label for="answer2" class="col-md-1"><strong>B.</strong></label>
-                <input type="text" class="form-control col-md-11" placeholder="Answer content" id="answer2" name="answer2" value="2aaaaaaaaaaaaaaaa">
+                <input type="text" class="form-control col-md-11" placeholder="Answer content" id="answer2" name="answer2" value="">
             </div>
             <div class="form-inline col-md-5 mb-3">
                 <label for="answer3" class="col-md-1"><strong>C.</strong>.</label>
-                <input type="text" class="form-control col-md-11" placeholder="Answer content" id="answer3" name="answer3" value="3aaaaaaaaaaaaaaaa">
+                <input type="text" class="form-control col-md-11" placeholder="Answer content" id="answer3" name="answer3" value="">
             </div>
             <div class="form-inline col-md-5 mb-3">
                 <label for="answer4" class="col-md-1"><strong>D.</strong></label>
-                <input type="text" class="form-control col-md-11" placeholder="Answer content" id="answer4" name="answer4" value="4aaaaaaaaaaaaaaaa">
+                <input type="text" class="form-control col-md-11" placeholder="Answer content" id="answer4" name="answer4" value="">
             </div>
         </div>  
 

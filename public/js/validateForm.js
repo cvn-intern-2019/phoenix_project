@@ -66,6 +66,35 @@ $(document).ready(() => {
         }
     });
 
+    $( "#create_question" ).validate({
+        errorClass : 'my-error-class',
+        rules: {
+            content:{
+                required : true,
+            },
+            answer1 : {
+                required : true,
+                maxlength: 50,
+            },
+            answer2 : {
+                required : true,
+                maxlength: 50,
+            },
+            answer3 : {
+                required : true,
+                maxlength: 50,
+            },
+            answer4 : {
+                required : true,
+                maxlength: 50,
+            },
+            correctanswer : {
+                required : true,
+                maxlength: 1,
+            }
+        }
+    });
+
     jQuery.validator.addMethod("specialChars", function( value, element ) {
         var regex = new RegExp("^[a-zA-Z0-9]+$");
         var key = value;
