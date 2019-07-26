@@ -12,6 +12,7 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
 const morgan = require('morgan');
+const multer = require('multer');
 
 const csrf = require('csurf');
 
@@ -21,6 +22,21 @@ let app = express();
 let server = http.createServer(app);
 let io = socketIO(server);
 let csrfProtection = csrf();
+
+
+const storage = multer.diskStorage({
+        destination: './public/img/',
+        filename: function (req, file, cb) {
+            cb(null, file.filename + '-' + Date.now() +
+                path.extname(file.originalname));
+        }
+    })
+
+    const upload = multer({
+        storage: storage
+    });
+    const test = upload.single('questionset_img');
+    app.use(test);
 
 
 //hbs engine
@@ -50,7 +66,7 @@ require('./models/passport')(passport);
 require('./routes/route')(app);
 require('./routes/player.route')(app);
 require('./routes/host.route')(app, passport);
-require('./routes/questionset/questionset.route')(app);
+require('./routes/questionset/questionset.route')(app,test);
 
 app.get('/session', function(req, res, next) {
     res.send(req.session)
