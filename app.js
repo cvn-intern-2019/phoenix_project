@@ -41,12 +41,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-app.use('/questionset', require('./routes/questionset/questionset.route'));
+app.use('/questionset', require('./routes/questionset.route'));
 
 require('./models/passport')(passport);
 require('./routes/route')(app);
 require('./routes/player.route')(app);
 require('./routes/host.route')(app, passport);
+require('./routes/question.route')(app);
 
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);

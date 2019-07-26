@@ -29,9 +29,4 @@ module.exports = function(app, passport) {
     app.get('/host/profile', authMiddleware.isSignIn, (req, res) => {
         res.render('profile', { user: req.user });
     })
-
-    app.route('/host/questions')
-        .get((req, res) => {
-            res.render('questions/list');
-        })
 };
