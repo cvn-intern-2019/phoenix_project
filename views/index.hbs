@@ -6,7 +6,7 @@
         </div>
         {{!-- <div id="homepage-break" class="w-100" style="display: none"></div> --}}
         <div class="col d-flex justify-content-center mb-3">
-            <a href="/host/signin" class="btn btn-outline-danger d-flex align-items-center justify-content-center"
+            <a href="{{#if user}}/host/questionset{{else}}/host/signin{{/if}}" class="btn btn-outline-danger d-flex align-items-center justify-content-center"
                 style="width: 100%; font-size: 80px"><strong>HOST</strong></a>
         </div>
     </div>

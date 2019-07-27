@@ -53,6 +53,7 @@ module.exports = function(passport) {
                     if (md5(password) !== result[0].user_password)
                         return done(null, false, req.flash('signinpwd', 'Wrong password'));
 
+                    req.session.cookie.expires = false;
                     return done(null, result[0]);
                 })
                 .catch(err => {
