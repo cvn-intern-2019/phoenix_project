@@ -24,14 +24,17 @@ let csrfProtection = csrf();
 
 const storage = multer.diskStorage({
     destination: './public/img/',
-    filename: function(req, file, cb) {
-        cb(null, file.originalname + '-' + Date.now() + path.extname(file.originalname));
+    filename: function (req, file, cb) {
+        cb(null, file.originalname + '-' + Date.now() +path.extname(file.originalname));
     }
 })
+
 const upload = multer({
     storage: storage
-}).single('question_img');
-app.use(upload);
+});
+const test = upload.single('questionset_img');
+app.use(test);
+
 
 
 //hbs engine
@@ -64,6 +67,7 @@ require('./routes/route')(app);
 require('./routes/player.route')(app);
 require('./routes/host.route')(app, passport);
 require('./routes/question.route')(app);
+require('./routes/questionset.route')(app);
 
 app.get('/session', function(req, res, next) {
     res.send(req.session)
