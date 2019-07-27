@@ -1,39 +1,45 @@
+{{#section 'css'}}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/css/fileinput.min.css" media="all"
+  rel="stylesheet" type="text/css" />
+{{/section}}
+
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
+<script>
+  $(function () {
+    $('#questionset_img').fileinput({
+      theme: 'fa',
+      dropZoneEnabled: true,
+      allowedFileExtensions: ['png', 'jpg', 'gif'],
+      uploadAsync: false,
+    });
+  })
+</script>
+
+{{/section}}
 <div class="container">
-    <form method="POST">
-        <h1 class="question-set-heading">Question set</h1>
+    <form action ="/questionset/{{questionset.questionset_id}}/edit" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        <h1 class="question-set-heading"> Edit question set</h1>
         <div class="row" >
-            <div class="form-group col-md-8">
-                <label>Title</label>
-                <input type="title" class="form-control" placeholder="Title of question set" name="title">
-                <label>Description</label>
-                <textarea class="form-control" rows="5" placeholder="Description of quetion set" name="description"></textarea>
+            <div class="form-group col-md-12">
+                <label><strong>Title</strong></label>
+                <input type="title" class="form-control" placeholder="Title of question set" name="title" value="{{questionset.questionset_title}}">
+                <label><strong>Description</strong></label>
+                <textarea class="form-control" rows="5" placeholder="Description of quetion set" name="description">{{questionset.questionset_description}}</textarea>
             </div>
-            <div class="form-group col-md-4">
-                <img src="" style="display:none" height="200px" id="image"> 
-                <label>Choose image</label>
-                <input type="file" onchange="showImage.call(this)" name="image" value="">
-                <script>
-                    function showImage()
-                    {
-                        if(this.files && this.files[0])
-                        {
-                            var obj = new FileReader();
-                            obj.onload = function(data){
-                                var image = document.getElementById("image");
-                                image.src = data.target.result;
-                                image.style.display = "block";
-                            }
-                            obj.readAsDataURL(this.files[0]);
-                        }
-                    }
-                </script>
+            <img src="{{path}}" alt="" id="old_img">
+            <div class="col-md-4">
+              <label><strong>Choose image</strong></label>
+              <input type="file" id="questionset_img" name="questionset_img"  data-show-upload="false" multiple>
             </div>
         </div>
         <div class="form-check row">
-            <lable class="radio-inline" style="margin-left: 40px;"><input type="radio" name="status" value="1">Active</lable>
-            <lable class="radio-inline" style="margin-left: 40px;"><input type="radio" name="status" value="0">Inactive</lable>
+            <lable class="radio-inline" style="margin-left: 50px; margin-top:100px; font-size: 20px; "><input type="radio" name="status" value="1" checked> Active</lable>
+            <lable class="radio-inline" style="margin-left: 40px; font-size: 20px;"><input type="radio" name="status" value="0" {{#if questionset.questionset_state}}  {{else}}checked {{/if}}> Inactive</lable>
         </div>
-        <button type="Save" class="btn btn-primary" id="btn-question-set">Change</button>
+        <button type="submit" class="btn btn-primary" id="btn-question-set">Save</button>
+        <a type="cancel" class="btn btn-secondary" id="btn-question-set" href="/questionset">Cancel</a>
    </form>
-   <a type="Cancel" class="btn btn-secondary" id="btn-question-set" href="/questionset">Cancel</a>
 </div>

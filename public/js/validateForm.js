@@ -38,6 +38,58 @@ $(document).ready(() => {
         }
     });
 
+    $( "#editProfileForm" ).validate({
+        errorClass : 'my-error-class',
+        rules: {
+            email : {
+                required : true,
+                email : true
+            }
+        }
+    });
+
+    $( "#changePassForm" ).validate({
+        errorClass : 'my-error-class',
+        rules: {
+            current:{
+                required : true,
+                minlength: 7
+            },
+            new : {
+                required : true,
+                minlength: 7
+            },
+            confirm : {
+                required : true,
+                minlength: 7
+            }
+        }
+    });
+
+    $( "#question" ).validate({
+        errorClass : 'my-error-class',
+        rules: {
+            answer1:{
+                required : true,
+            },
+            answer2 : {
+                required : true,
+            },
+            answer3 : {
+                required : true,
+            },
+            answer4 : {
+                required : true,
+            },
+            content : {
+                required : true,
+            },
+            correctanswer : {
+                required : true,
+            },
+        }
+    });
+
     jQuery.validator.addMethod("specialChars", function( value, element ) {
         var regex = new RegExp("^[a-zA-Z0-9]+$");
         var key = value;
