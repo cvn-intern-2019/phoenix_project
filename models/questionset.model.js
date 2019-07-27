@@ -1,7 +1,7 @@
-var db = require('../utils/db');
+const db = require('../utils/db');
 
 module.exports = {
-    all: () => {
-        return db.query('select * from questionsets');
-    }
+   exec : query =>{
+       return db.query(query);
+   },
 };
