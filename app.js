@@ -67,7 +67,7 @@ require('./routes/route')(app);
 require('./routes/player.route')(app);
 require('./routes/host.route')(app, passport);
 require('./routes/question.route')(app);
-require('./routes/questionset.route')(app);
+// require('./routes/questionset.route')(app);
 
 app.get('/session', function(req, res, next) {
     res.send(req.session)
