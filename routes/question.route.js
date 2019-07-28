@@ -1,7 +1,7 @@
 const authMiddleware = require('../middlewares/auth.middleware');
 const question_controller = require('../controllers/question.controller');
 
-module.exports = function(app) {
+module.exports = function (app) {
     app.route('/host/questionset/:id/question')
         .get(authMiddleware.isSignIn, question_controller.showQuestionList);
 
@@ -15,7 +15,4 @@ module.exports = function(app) {
     app.route('/host/questionset/:qs_id/question/:q_id/edit')
         .get(authMiddleware.isSignIn, question_controller.findQuestion)
         .post(question_controller.editQuestion);
-
-
-
 };

@@ -5,7 +5,6 @@ const express = require('express');
 const socketIO = require('socket.io');
 const exphbs = require('express-handlebars');
 const express_handlebars_sections = require('express-handlebars-sections');
-const mysql = require('mysql');
 const bodyParser = require('body-parser')
 const session = require('express-session');
 const cookieParser = require('cookie-parser');

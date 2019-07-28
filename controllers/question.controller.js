@@ -3,7 +3,6 @@ const questionset_model = require('../models/questionset.model');
 const fs = require('fs');
 const multer = require('multer');
 
-
 var db = require('../utils/db');
 
 const storage = multer.diskStorage({
@@ -53,7 +52,7 @@ module.exports = {
     },
     saveQuestion: (req, res) => {
         let qs_id = req.params.qs_id;
-        let question = req.body;
+        let question = question;
         upload(req, res, err => {
             if (err) {
                 console.log("1");
@@ -128,14 +127,41 @@ module.exports = {
             })
     },
     editQuestion: (req, res) => {
-        let sql = `UPDATE questions SET question_content = '${req.body.content}',question_answer1 = '${req.body.answer1}',question_answer2 = '${req.body.answer2}',question_answer3 = '${req.body.answer3}',question_answer4 = '${req.body.answer4}',question_answercorrect = '${req.body.correctanswer}'  WHERE question_id = ${req.params.q_id};`
-        question_model.exec(sql)
-            .then(result => {
-                res.redirect(`/host/questionset/${req.params.qs_id}/question`);
-            })
-            .catch(err => {
+        let question = req.body;
+        upload(req, res, err => {
+            if (err) {
                 console.log(err);
+                res.render('error')
+            } else {
+                let filename = "";
+                let sql = '';
+                if (req.file) {
+                    filename = req.file.filename;
+                    try {
+                        fs.unlink('./public/img/' + question.image, (err) => {
+                            if (err) {
+                                console.error(err)
+                                return
+                            }
+                            //file removed
+                        })
+                    } catch (err) {
+                        console.error(err)
+                    };
 
-            });
+                    sql = `UPDATE questions SET question_content = '${question.content}',question_answer1 = '${question.answer1}',question_answer2 = '${question.answer2}',question_answer3 = '${question.answer3}',question_answer4 = '${question.answer4}',question_answercorrect = '${question.correctanswer}',question_image = '${filename}'  WHERE question_id = ${req.params.q_id};`
+                } else {
+                    sql = `UPDATE questions SET question_content = '${question.content}',question_answer1 = '${question.answer1}',question_answer2 = '${question.answer2}',question_answer3 = '${question.answer3}',question_answer4 = '${question.answer4}',question_answercorrect = '${question.correctanswer}'  WHERE question_id = ${req.params.q_id};`
+                }
+
+                question_model.exec(sql)
+                    .then(result => {
+                        res.redirect(`/host/questionset/${req.params.qs_id}/question`);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
+        })
     }
 };
