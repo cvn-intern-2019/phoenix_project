@@ -49,7 +49,7 @@ module.exports = {
     },
     saveQuestion: (req, res) => {
         let qs_id = req.params.qs_id;
-        let question = question;
+        let question = req.body;
         upload(req, res, err => {
             if (err) {
                 console.log("1");
