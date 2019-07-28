@@ -8,7 +8,7 @@ var db = require('../utils/db');
 
 const storage = multer.diskStorage({
     destination: './public/img/',
-    filename: function(req, file, cb) {
+    filename: function (req, file, cb) {
         cb(null, file.originalname + '-' + Date.now() + path.extname(file.originalname));
     }
 })
@@ -93,6 +93,7 @@ module.exports = {
                     })
                 } catch (err) {
                     console.error(err)
+                    res.render('error');
                 }
             })
             .catch(err => {
