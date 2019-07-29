@@ -11,9 +11,6 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
 const morgan = require('morgan');
-const multer = require('multer');
-
-
 const csrf = require('csurf');
 
 const publicPath = path.join(__dirname, '/public');
@@ -58,7 +55,7 @@ app.use(passport.session());
 app.use(flash());
 app.use(csrfProtection);
 
-app.use('/questionset', require('./routes/questionset.route'));
+// app.use('/questionset', require('./routes/questionset.route'));
 
 require('./models/passport')(passport);
 require('./routes/route')(app);
@@ -74,5 +71,3 @@ app.get('/session', function(req, res, next) {
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);
 })
-
-

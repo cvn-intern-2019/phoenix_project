@@ -27,12 +27,9 @@ module.exports = {
                 console.log(err);
             })
     },
-
     addquestionset: (req, res) => {
-        res.render('questionsets/add_questionset', {csrfToken: req.csrfToken()});
+        res.render('questionsets/add_questionset', { csrfToken: req.csrfToken() });
     },
-
-
     savequestionset: (req, res) => {
         let questionset = req.body;
         upload(req, res, err => {
@@ -47,7 +44,7 @@ module.exports = {
                     VALUES ("${questionset.title}","${questionset.description}","${filename}","${questionset.status}")`;
                 db.query(sql)
                     .then(result => {
-                        res.redirect('/questionset');
+                        res.redirect('/host/questionset');
                     })
                     .catch(err => {
                         res.render('questionsets/add_questionset');
@@ -55,7 +52,6 @@ module.exports = {
             }
         })
     },
-
     findquestionset: (req, res) => {
         let sql = `select * from questionsets where questionset_id = '${req.params.qs_id}'`;
         db.query(sql)
@@ -64,10 +60,9 @@ module.exports = {
                 res.render('questionsets/edit_questionset', { questionset: result[0], path: path, csrfToken: req.csrfToken() });
             })
             .catch(err => {
-                res.redirect('/questionset');
+                res.redirect('/host/questionset');
             });
     },
-
     editquestionset: (req, res) => {
         let img_delete_query = `SELECT questionset_image FROM questionsets WHERE questionset_id = ${req.params.qs_id}`;
         questionset_model.exec(img_delete_query)
@@ -104,7 +99,7 @@ module.exports = {
                 console.log(sql);
                 db.query(sql)
                     .then(result => {
-                        res.redirect('/questionset');
+                        res.redirect('/host/questionset');
                     })
                     .catch(err => {
                         res.render('questionset/add_questionset');

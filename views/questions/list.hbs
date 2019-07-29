@@ -10,28 +10,43 @@
         border-width: 3px;
         border-radius: 10px;
     }
+
     .card.border-secondary {
         border-width: 3px;
         border-radius: 10px;
+    }
+
+    h3 {
+        white-space: nowrap;
+        width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    img {
+        object-fit: cover;
+        object-position: 150% 150%;
     }
 </style>
 {{/section}}
 
 <div class="mt-5 row">
-    <div class="container col-lg-6 col-lg-offset-3 ">
+    <div class="container col-lg-8 col-lg-offset-4 ">
         <div class="card mb-3 border-secondary">
             <div class="row">
-                <div class="col-3" style="height: 180px; overflow: hidden; position: relative;">
+                <div class="col-lg-3 col-3">
+                    <div style="height: 180px; overflow: hidden; position: relative;">
                     <img src="/img/test.jpg" class="card-img" alt="error" style="width: 180px">
+                    </div>
                 </div>
-                <div class="col-6">
+                <div class="col-lg-6 col-5">
                     <div class="card-body">
                         <h3 class="card-title">{{info_qs.questionset_title}}</h3>
                         <p class="card-text">{{info_qs.questionset_description}}</p>
                     </div>
 
                 </div>
-                <div class="col-3 pr-3" style="margin-top: auto; margin-bottom: auto">
+                <div class="col-lg-3 col-4 pr-3" style="margin-top: auto; margin-bottom: auto">
                     <a class="btn btn-outline-success d-block mb-3 mr-3" href="#">
                         <h5 class="m-0">Create room</h5>
                     </a>
@@ -41,7 +56,13 @@
                 </div>
             </div>
         </div>
-        <h3>Questions list</h3>
+        <div class="container d-flex justify-content-between">
+            <h3>Questions list</h3>
+            <a href="/host/questionset/{{info_qs.questionset_id}}/question/add"
+                class="btn btn-primary border-dark">
+                <i class="fas fa-plus">Add</i>
+            </a>
+        </div>
         <hr>
         <div id="questions-list">
             {{#each list_q}}

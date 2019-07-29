@@ -1,4 +1,4 @@
-h4 {
+h4#questionset_title{
     white-space: nowrap;
     margin-bottom: 50px;
     margin-left: 10px;
@@ -6,9 +6,8 @@ h4 {
     text-overflow: ellipsis;
     overflow: hidden;
 }
-
-.question-set-heading {
-    text-align: center;
+h1.question-set-heading{
+    font-size: 70px;
     margin-bottom: 50px;
     margin-top: 30px;
     text-align: center;
