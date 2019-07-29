@@ -5,7 +5,6 @@ const express = require('express');
 const socketIO = require('socket.io');
 const exphbs = require('express-handlebars');
 const express_handlebars_sections = require('express-handlebars-sections');
-const mysql = require('mysql');
 const bodyParser = require('body-parser')
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
@@ -16,6 +15,7 @@ const multer = require('multer');
 
 
 const csrf = require('csurf');
+const multer = require('multer');
 
 const publicPath = path.join(__dirname, '/public');
 const port = process.env.PORT || 3000;
@@ -25,18 +25,15 @@ let io = socketIO(server);
 let csrfProtection = csrf();
 
 const storage = multer.diskStorage({
-    destination: './public/img/',
+    destination: './public/img/', 
     filename: function (req, file, cb) {
-        cb(null, Date.now() +path.extname(file.originalname));
-    }
+        cb(null, file.originalname + '-' + Date.now() + path.extname(file.originalname));
+    }	
 })
-
 const upload = multer({
     storage: storage
-});
-const test = upload.single('questionset_img');
-app.use(test);
-
+}).single('question_img');
+app.use(upload);
 
 
 //hbs engine
@@ -62,11 +59,14 @@ app.use(passport.session());
 app.use(flash());
 app.use(csrfProtection);
 
+app.use('/questionset', require('./routes/questionset.route'));
+
 require('./models/passport')(passport);
 require('./routes/route')(app);
 require('./routes/player.route')(app);
 require('./routes/host.route')(app, passport);
 require('./routes/questionset.route')(app);
+require('./routes/question.route')(app);
 
 app.get('/session', function(req, res, next) {
     res.send(req.session)
@@ -75,3 +75,5 @@ app.get('/session', function(req, res, next) {
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);
 })
+
+
