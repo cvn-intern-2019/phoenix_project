@@ -15,7 +15,7 @@
                     <h4 id="questionset_title">{{questionset_title}}</h4>
                     <span class="badge">
                         {{#if questionset_state }}
-                        <button class="btn btn-success"> <i class="fas fa-external-link-alt"></i> New Game </button>
+                        <a class="btn btn-success" href="/host/questionset/{{questionset_id}}/create_room"> <i class="fas fa-external-link-alt"></i> New Game </a>
                         {{else}}
                         <button class="btn btn-secondary disabled"> <i class="fas fa-external-link-alt"></i> New Game
                         </button>

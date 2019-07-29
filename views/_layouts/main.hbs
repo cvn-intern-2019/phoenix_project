@@ -19,7 +19,7 @@
      --}}
 
 
-    <header class="bg-white shadow">
+    <header class="shadow bg-light container-fluid">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="/">
                 <i class="fas fa-fire-extinguisher fa-2x text-danger"></i>
@@ -38,8 +38,9 @@
                             data-toggle="dropdown">
                             {{user.user_username}}
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" style="font-size: 18px">
-                            <a class="dropdown-item" href="#">
+                        <div class="dropdown-menu dropdown-menu-right"
+                            style="font-size: 18px">
+                            <a class="dropdown-item" href="/host/edit-profile">
                                 <i class="fas fa-edit text-secondary"></i>
                                 Edit profile
                             </a>

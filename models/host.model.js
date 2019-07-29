@@ -4,4 +4,4 @@ module.exports = {
     exec: query => {
         return db.query(query);
     },
-};
+}

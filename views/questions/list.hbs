@@ -1,0 +1,98 @@
+{{#section 'js'}}
+<script>
+    $("body").addClass('homepage-bg');
+</script>
+{{/section}}
+
+{{#section 'css'}}
+<style>
+    .card.border-dark {
+        border-width: 3px;
+        border-radius: 10px;
+    }
+
+    .card.border-secondary {
+        border-width: 3px;
+        border-radius: 10px;
+    }
+
+    h3 {
+        white-space: nowrap;
+        width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    img {
+        object-fit: cover;
+        object-position: 150% 150%;
+    }
+</style>
+{{/section}}
+
+<div class="mt-5 row">
+    <div class="container col-lg-8 col-lg-offset-4 ">
+        <div class="card mb-3 border-secondary">
+            <div class="row">
+                <div class="col-lg-3 col-3">
+                    <div style="height: 180px; overflow: hidden; position: relative;">
+                    <img src="/img/test.jpg" class="card-img" alt="error" style="width: 180px">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-5">
+                    <div class="card-body">
+                        <h3 class="card-title">{{info_qs.questionset_title}}</h3>
+                        <p class="card-text">{{info_qs.questionset_description}}</p>
+                    </div>
+
+                </div>
+                <div class="col-lg-3 col-4 pr-3" style="margin-top: auto; margin-bottom: auto">
+                    <a class="btn btn-outline-success d-block mb-3 mr-3" href="#">
+                        <h5 class="m-0">Create room</h5>
+                    </a>
+                    <a class="btn btn-outline-primary d-block mb-3 mr-3" href="#">
+                        <h5 class="m-0">Edit</h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="container d-flex justify-content-between">
+            <h3>Questions list</h3>
+            <a href="/host/questionset/{{info_qs.questionset_id}}/question/add"
+                class="btn btn-primary border-dark">
+                <i class="fas fa-plus">Add</i>
+            </a>
+        </div>
+        <hr>
+        <div id="questions-list">
+            {{#each list_q}}
+            <div class="card mb-3 border-dark">
+                <div class="row">
+                    <div class="col-2" style="height: 120px; overflow: hidden; position: relative;">
+                        <img src="/img/{{question_image}}" class="card-img" alt="error" style="width: 120px">
+                    </div>
+                    <div class="col-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{question_content}}</h5>
+                        </div>
+                    </div>
+                    <div class="col-2 pr-3" style="margin-top: auto; margin-bottom: auto">
+                        <a class="btn btn-outline-primary d-block p-0 my-2 mr-3"
+                            href="/host/questionset/{{questionset_id}}/question/{{question_id}}/edit">
+                            <i class="fas fa-edit"></i>
+                            <p class="m-0">
+                            </p>
+                        </a>
+                        <a class="btn btn-outline-danger d-block p-0 my-2 mr-3"
+                            href="/host/questionset/{{questionset_id}}/question/{{question_id}}/delete">
+                            <i class="fas fa-trash"></i>
+                            <p class="m-0">
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
