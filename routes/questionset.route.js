@@ -4,14 +4,14 @@ const questionset_controller = require('../controllers/questionset.controller');
 
 
 module.exports = function (app) {
-    app.route('/questionset')
-        .get(questionset_controller.showQuestionsetList);
+    app.route('/host/questionset')
+        .get(authMiddleware.isSignIn, questionset_controller.showQuestionsetList);
 
-    app.route('/questionset/add')
-        .get(questionset_controller.addquestionset)
-        .post(questionset_controller.savequestionset);
+    app.route('/host/questionset/add')
+        .get(authMiddleware.isSignIn,questionset_controller.addquestionset)
+        .post(authMiddleware.isSignIn,questionset_controller.savequestionset);
 
-    app.route('/questionset/:qs_id/edit')
-        .get(questionset_controller.findquestionset)
-        .post(questionset_controller.editquestionset);
+    app.route('/host/questionset/:qs_id/edit')
+        .get(authMiddleware.isSignIn,questionset_controller.findquestionset)
+        .post(authMiddleware.isSignIn,questionset_controller.editquestionset);
 }

@@ -12,16 +12,17 @@ const storage = multer.diskStorage({
 })
 const upload = multer({
     storage: storage
-}).single('question_img');
+}).single('questionset_img');
 
 
 module.exports = {
     showQuestionsetList: (req, res) => {
-        let questionsetlist = `SELECT * FROM questionsets`;
-        questionset_model.exec(questionsetlist)
-            .then(q_list => {
-                res.render('questionsets/questionset', {
-                    questionset: q_list,
+        let questionset_user = `SELECT questionsets.* FROM questionsets, user_questionset WHERE user_questionset.questionset_id = questionsets.questionset_id and user_questionset.user_id = ${req.user.user_id};`;
+        questionset_model.exec(questionset_user)
+            .then(result => {
+                res.render('questionsets/questionset',{ 
+                    user :  req.user,
+                    questionset : result
                 });
             }).catch(err => {
                 console.log(err);
@@ -29,7 +30,7 @@ module.exports = {
     },
 
     addquestionset: (req, res) => {
-        res.render('questionsets/add_questionset', {csrfToken: req.csrfToken()});
+        res.render('questionsets/add_questionset', { user: req.user, csrfToken: req.csrfToken()});
     },
 
 
@@ -47,7 +48,24 @@ module.exports = {
                     VALUES ("${questionset.title}","${questionset.description}","${filename}","${questionset.status}")`;
                 db.query(sql)
                     .then(result => {
-                        res.redirect('/questionset');
+                        var sql2 = `SELECT * FROM questionsets ORDER BY questionset_id desc`;
+                        db.query(sql2)
+                        .then(result => {
+                            var sql = `INSERT INTO user_questionset (user_id, questionset_id) VALUES ("${req.user.user_id}","${result[0].questionset_id}")`;
+                            console.log(result[0].questionset_id);
+                            console.log(sql);
+                            db.query(sql)
+                            .then(result =>{
+                                res.redirect('/host/questionset');
+                            })
+                            .catch(err => {
+                                res.render('questionsets/add_questionset');
+                            });
+                        })
+                        .catch(err => {
+                            res.render('questionsets/add_questionset');
+                        });
+                        
                     })
                     .catch(err => {
                         res.render('questionsets/add_questionset');
@@ -57,7 +75,7 @@ module.exports = {
     },
 
     findquestionset: (req, res) => {
-        let sql = `select * from questionsets where questionset_id = '${req.params.qs_id}'`;
+        let sql = `SELECT * FROM questionsets WHERE questionset_id = '${req.params.qs_id}'`;
         db.query(sql)
             .then(result => {
                 let path = '/img/' + result[0].questionset_image;
@@ -107,7 +125,7 @@ module.exports = {
                         res.redirect('/questionset');
                     })
                     .catch(err => {
-                        res.render('questionset/add_questionset');
+                        res.render('questionsets/add_questionset');
                     });
             }
         })
