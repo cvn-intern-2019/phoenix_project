@@ -1,19 +1,39 @@
-function isSignIn(req,res,next) {
-    if(req.isAuthenticated())
+const db = require('../utils/db')
+
+
+function isSignIn(req, res, next) {
+    if (req.isAuthenticated())
         return next();
 
     res.redirect("/host/signin");
 }
 
-function alreadySignin(req,res,next) {
-    if(!req.user)
+function alreadySignin(req, res, next) {
+    if (!req.user)
         return next();
 
     res.redirect("/");
 }
 
+function checkUserId(req, res, next) {
+    let sql = `SELECT user_id FROM user_questionset WHERE questionset_id = ${req.params.qs_id}`
+    console.log(sql);
+
+    db.query(sql)
+        .then(result => {
+            console.log(result);
+            if (result.length > 0 && req.user.user_id == result[0].user_id)
+                return next();
+            res.render('error');
+        })
+        .catch(err => {
+            console.log(err);
+            res.render('error');
+        });
+}
 
 module.exports = {
     isSignIn,
-    alreadySignin
+    alreadySignin,
+    checkUserId
 }

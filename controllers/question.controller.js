@@ -17,7 +17,7 @@ const upload = multer({
 
 module.exports = {
     showQuestionList: (req, res) => {
-        let qs_id = req.params.id;
+        let qs_id = req.params.qs_id;
         let questionset_info_query = `SELECT * FROM kahootdb.questionsets WHERE questionset_id = ${qs_id}`;
         question_model.exec(questionset_info_query)
             .then(qs_info => {
