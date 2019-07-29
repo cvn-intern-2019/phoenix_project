@@ -15,7 +15,6 @@ const multer = require('multer');
 
 
 const csrf = require('csurf');
-const multer = require('multer');
 
 const publicPath = path.join(__dirname, '/public');
 const port = process.env.PORT || 3000;

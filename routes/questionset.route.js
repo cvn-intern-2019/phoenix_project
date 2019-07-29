@@ -1,26 +1,18 @@
-var express = require("express");
-var router = express.Router();
-var questionset = require('../models/questionset.model')
+    
+const authMiddleware = require('./../middlewares/auth.middleware');
+const questionset_controller = require('../controllers/questionset.controller');
 
-router.get('/', (req, res) => {
-    //res.end(" question sets list");
-    var p = questionset.all();
-    p.then(rows => {
-        console.log(rows);
-        res.render('questionsets/questionset', {
-            questionset: rows
-        });
-    }).catch(err => {
-        console.log(err);
-    });
-})
 
-router.get('/add', (req, res) => {
-    res.render('questionsets/add_questionset')
-})
 
-router.post('/add', (req, res) => {
-    res.end('import thanh cong');
-})
+module.exports = function (app) {
+    app.route('/questionset')
+        .get(questionset_controller.showQuestionsetList);
 
-module.exports = router;
+    app.route('/questionset/add')
+        .get(questionset_controller.addquestionset)
+        .post(questionset_controller.savequestionset);
+
+    app.route('/questionset/:qs_id/edit')
+        .get(questionset_controller.findquestionset)
+        .post(questionset_controller.editquestionset);
+}
