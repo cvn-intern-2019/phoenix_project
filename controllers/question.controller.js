@@ -134,7 +134,7 @@ module.exports = {
             } else {
                 let filename = "";
                 let sql = '';
-                if (req.file) {
+                if (req.file) {                    
                     filename = req.file.filename;
                     try {
                         fs.unlink('./public/img/' + question.image, (err) => {
