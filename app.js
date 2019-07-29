@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
 const morgan = require('morgan');
+const multer = require('multer')
 const csrf = require('csurf');
 
 const publicPath = path.join(__dirname, '/public');
