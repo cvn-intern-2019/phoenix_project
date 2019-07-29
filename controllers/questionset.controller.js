@@ -1,19 +1,17 @@
 const questionset_model = require('../models/questionset.model');
-
 var db = require('../utils/db');
 var multer = require('multer');
 var fs = require('fs');
 
 const storage = multer.diskStorage({
     destination: './public/img/',
-    filename: function (req, file, cb) {
+    filename: function(req, file, cb) {
         cb(null, file.originalname + '-' + Date.now() + path.extname(file.originalname));
     }
 })
 const upload = multer({
     storage: storage
-}).single('question_img');
-
+}).single('questionset_img');
 
 module.exports = {
     showQuestionsetList: (req, res) => {

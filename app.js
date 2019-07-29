@@ -23,16 +23,15 @@ let csrfProtection = csrf();
 
 const storage = multer.diskStorage({
     destination: './public/img/',
-    filename: function (req, file, cb) {
-        cb(null, Date.now() +path.extname(file.originalname));
+    filename: function(req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname));
     }
 })
 
 const upload = multer({
     storage: storage
-});
-const test = upload.single('questionset_img');
-app.use(test);
+}).single('questionset_img');
+app.use(upload);
 
 
 

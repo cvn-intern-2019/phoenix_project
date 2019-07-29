@@ -7,14 +7,13 @@ var db = require('../utils/db');
 
 const storage = multer.diskStorage({
     destination: './public/img/',
-    filename: function (req, file, cb) {
+    filename: function(req, file, cb) {
         cb(null, file.originalname + '-' + Date.now() + path.extname(file.originalname));
     }
 })
 const upload = multer({
     storage: storage
 }).single('question_img');
-
 
 module.exports = {
     showQuestionList: (req, res) => {
@@ -70,7 +69,7 @@ module.exports = {
                     })
                     .catch(err => {
                         req.flash("addMessage", "Fail to insert question!");
-                        res.redirect(`/host/questionset/"${qs_id}"/question/add`);
+                        res.redirect(`/host/questionset/${qs_id}/question/add`);
                     });
             }
         })
