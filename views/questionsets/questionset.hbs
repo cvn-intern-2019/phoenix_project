@@ -5,8 +5,8 @@
             <a class="btn btn-primary btn-lg fas fa-plus" id="btn-question-set" style="margin-top: 20px"
                 href="/host/questionset/add"> Add</a>
             {{#each this.questionset}}
-            <ul class="list-group my-4 border border-dark">
-                <li class="list-group-item d-flex justify-content-between align-items-center mi-2">
+            <div class="list-group my-2 border border-primary rounded">
+                <div class="list-group-item d-flex justify-content-between align-items-center mi-2">
                     {{#if questionset_image}}
                     <img src="/img/{{questionset_image}}" width="100px" height="100px" class="img-rounded">
                     {{else}}

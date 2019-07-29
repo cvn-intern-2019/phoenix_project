@@ -95,6 +95,34 @@ $(document).ready(() => {
         }
     });
 
+    $("#questionset").validate({
+        rules: {
+          title: {
+            required: true,
+            minlength: 5,
+            maxlength: 50,
+            //digits: true
+          },
+          description: {
+            required: true,
+            minlength: 10,
+            maxlength: 100,
+          },
+        },
+        messages: {
+          title: {
+            required: " * Please enter title of question set * ",
+            minlength: " * Title must be at least 5 characters * ",
+            maxlength: " * Title does not exceed 100 characters * ",
+          },
+          description: {
+            required: " * Please enter desctiption of question set * ",
+            minlength: " * Desctiption must be at least 10 characters * ",
+            maxlength: " * Desctiption does not exceed 100 characters * ",
+          },
+        }
+      });
+
     jQuery.validator.addMethod("specialChars", function( value, element ) {
         var regex = new RegExp("^[a-zA-Z0-9]+$");
         var key = value;

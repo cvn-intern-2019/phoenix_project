@@ -1,10 +1,12 @@
 {{#section 'css'}}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/css/fileinput.min.css" media="all"
   rel="stylesheet" type="text/css" />
-
+  <style>
+    label.error{
+      color:red;
+    }
+  </style>
 {{/section}}
-
-
 {{#section 'js'}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
@@ -18,40 +20,9 @@
     });
   })
 </script>
-<script>
-  $(document).ready(function () {
-    $("#questionset_add").validate({
-      rules: {
-        title: {
-          required: true,
-          minlength: 5,
-          maxlength: 50,
-          //digits: true
-        },
-        description: {
-          required: true,
-          minlength: 10,
-          maxlength: 100,
-        },
-      },
-      messages: {
-        title: {
-          required: " * Please enter title of question set * ",
-          minlength: " * Title must be at least 5 characters * ",
-          maxlength: " * Title does not exceed 100 characters * ",
-        },
-        description: {
-          required: " * Please enter desctiption of question set * ",
-          minlength: " * Desctiption must be at least 10 characters * ",
-          maxlength: " * Desctiption does not exceed 100 characters * ",
-        },
-      }
-    });
-  });
-</script>
 {{/section}}
 <div class="container">
-  <form action="/host/questionset/add" method="POST" enctype="multipart/form-data" id="questionset_add">
+  <form action="/host/questionset/add" method="POST" enctype="multipart/form-data" id="questionset">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     <h1 class="question-set-heading"> New question set</h1>
     <div class="row">
