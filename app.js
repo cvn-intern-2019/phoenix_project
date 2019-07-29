@@ -29,7 +29,7 @@ const storage = multer.diskStorage({
 })
 const upload = multer({
     storage: storage
-}).single('questionset_img');
+}).single('question_img');
 app.use(upload);
 
 

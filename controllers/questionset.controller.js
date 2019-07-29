@@ -17,8 +17,7 @@ const upload = multer({
 
 module.exports = {
     showQuestionsetList: (req, res) => {
-        let questionset_user = `SELECT questionsets.* FROM questionsets, user_questionset WHERE user_questionset.questionset_id = questionsets.questionset_id and user_questionset.user_id = ${req.user.user_id};`;
-        questionset_model.exec(questionset_user)
+        questionset_model.list(req.user.user_id)
             .then(result => {
                 res.render('questionsets/questionset',{ 
                     user :  req.user,
@@ -41,15 +40,11 @@ module.exports = {
                 if (req.file) {
                     filename = req.file.filename;
                 }
-                var sql = `INSERT INTO questionsets (questionset_title,questionset_description,questionset_image,questionset_state) 
-                    VALUES ("${questionset.title}","${questionset.description}","${filename}","${questionset.status}")`;
-                db.query(sql)
+                questionset_model.save(questionset,filename)
                     .then(result => {
-                        var sql2 = `SELECT * FROM questionsets ORDER BY questionset_id desc`;
-                        db.query(sql2)
+                        questionset_model.last()
                         .then(result => {
-                            var sql = `INSERT INTO user_questionset (user_id, questionset_id) VALUES ("${req.user.user_id}","${result[0].questionset_id}")`;
-                            db.query(sql)
+                        questionset_model.questionsetByUser(req.user.user_id,result[0].questionset_id)
                             .then(result =>{
                                 res.redirect('/host/questionset');
                             })
@@ -60,7 +55,6 @@ module.exports = {
                         .catch(err => {
                             res.render('questionsets/add_questionset');
                         });
-                        
                     })
                     .catch(err => {
                         res.render('questionsets/add_questionset');
@@ -69,8 +63,7 @@ module.exports = {
         })
     },
     findquestionset: (req, res) => {
-        let sql = `SELECT * FROM questionsets WHERE questionset_id = '${req.params.qs_id}'`;
-        db.query(sql)
+        questionset_model.findById(req.params.qs_id)
             .then(result => {
                 let path = '/img/' + result[0].questionset_image;
                 res.render('questionsets/edit_questionset', { questionset: result[0], path: path, csrfToken: req.csrfToken() });
@@ -80,8 +73,7 @@ module.exports = {
             });
     },
     editquestionset: (req, res) => {
-        let img_delete_query = `SELECT questionset_image FROM questionsets WHERE questionset_id = ${req.params.qs_id}`;
-        questionset_model.exec(img_delete_query)
+        questionset_model.getImage(req.params.qs_id)
             .then(result => {
                 console.log(result);
                 let fileName = result[0].questionset_image;
@@ -111,9 +103,7 @@ module.exports = {
                 if (req.file) {
                     filename = req.file.filename;
                 }
-                var sql = `UPDATE questionsets SET questionset_title = '${questionset.title}',questionset_description = '${questionset.description}',questionset_image = '${filename}',questionset_state = '${questionset.status}'  WHERE questionset_id = '${req.params.qs_id}';`;
-                console.log(sql);
-                db.query(sql)
+                questionset_model.update(questionset,filename,req.params.qs_id)
                     .then(result => {
                         res.redirect('/host/questionset');
                     })
@@ -126,10 +116,7 @@ module.exports = {
 
     
     create_room: (req, res) => {
-        let sql = `SELECT questionsets.* FROM questionsets, user_questionset 
-        WHERE user_questionset.questionset_id = questionsets.questionset_id 
-        and questionsets.questionset_id = ${req.params.qs_id} and user_questionset.user_id = ${req.user.user_id}`;
-        db.query(sql)
+        questionset_model.checkValidQuestionSet(req.params.qs_id,req.user.user_id)
             .then(result => {
                 if(result[0]){
                     res.render('waiting_room', { questionsets: result, csrfToken: req.csrfToken()});
