@@ -60,7 +60,6 @@ module.exports = {
                             .catch(err => {
                                 res.render('questionsets/add_questionset');
                             });
-
                     })
                     .catch(err => {
                         res.render('questionsets/add_questionset');
@@ -122,5 +121,23 @@ module.exports = {
                     });
             }
         })
-    }
+    },
+
+
+    create_room: (req, res) => {
+        let sql = `SELECT questionsets.* FROM questionsets, user_questionset 
+        WHERE user_questionset.questionset_id = questionsets.questionset_id 
+        and questionsets.questionset_id = ${req.params.qs_id} and user_questionset.user_id = ${req.user.user_id}`;
+        db.query(sql)
+            .then(result => {
+                if (result[0]) {
+                    res.render('waiting_room', { questionsets: result, csrfToken: req.csrfToken() });
+                } else {
+                    res.redirect('/host/questionset');
+                }
+            })
+            .catch(err => {
+                res.redirect('/host/questionset');
+            });
+    },
 };

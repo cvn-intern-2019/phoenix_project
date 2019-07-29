@@ -29,7 +29,7 @@ const storage = multer.diskStorage({
 })
 const upload = multer({
     storage: storage
-}).single('question_img');
+}).single('questionset_img');
 app.use(upload);
 
 //hbs engine

@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="col-lg-3 col-3">
                     <div style="height: 180px; overflow: hidden; position: relative;">
-                        {{#if questionset_image}}
+                        {{#if info_qs.questionset_image}}
                         <img src="/img/{{info_qs.questionset_image}}" height="180px" class="rounded">
                         {{else}}
                         <img src="https://media.giphy.com/media/Z1Exz24FbX3Ko/giphy.gif" height="180px"
@@ -52,7 +52,7 @@
 
                 </div>
                 <div class="col-lg-3 col-4 pr-3" style="margin-top: auto; margin-bottom: auto">
-                    <a class="btn btn-outline-success d-block mb-3 mr-3" href="#">
+                    <a class="btn btn-outline-success d-block mb-3 mr-3" href="/host/questionset/{{info_qs.questionset_id}}/create_room">
                         <h5 class="m-0">Create room</h5>
                     </a>
                     <a class="btn btn-outline-primary d-block mb-3 mr-3" href="/host/questionset/{{info_qs.questionset_id}}/edit">
