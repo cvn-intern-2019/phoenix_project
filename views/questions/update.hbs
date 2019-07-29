@@ -26,7 +26,7 @@
     <form method="POST" action="/host/questionset/{{ question.questionset_id }}/question/{{ question.question_id }}/edit" enctype="multipart/form-data"
         id="create_question">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-        <h1 class="question-set-heading text-center mt-0">Edit Question</h1>
+        <h1 class="question-set-heading text-center text-white mt-0">Edit Question</h1>
         <div class="row p-3 border rounded border-dark bg-light">
             <div class="form-group text-center">
             </div>
@@ -35,7 +35,7 @@
                 <textarea class="form-control" rows="5" placeholder="Content of question" name="content">{{question.question_content}}</textarea>
             </div>
             <div class="form-group col-md-8">
-                <label for=""><strong>Old image</strong></label>
+                <label class="row"><strong>Old image</strong></label>
                 <input type="hidden" name="image" value="{{ question.question_image }}">
                 <img src="/img/{{question.question_image}}" alt="" id="" class="img-fluid" name="">
             </div>
@@ -76,7 +76,7 @@
         </div>
         <div class="row">
             <button type="Save" class="btn btn-primary px-4" id="btn-question-set">Submit</button>
-            <a href="/host/questionset/{{questions.questionset_id}}/question" class="btn btn-secondary ml-5 px-4"
+            <a href="/host/questionset/{{question.questionset_id}}/question" class="btn btn-secondary ml-5 px-4"
                 id="btn-question-set">Cancel</a>
         </div>
 
