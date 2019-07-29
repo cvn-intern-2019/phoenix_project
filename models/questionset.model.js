@@ -1,7 +1,7 @@
-const db = require('../utils/db');
+var db = require('../utils/db');
 
 module.exports = {
-   exec : query =>{
-       return db.query(query);
-   },
+    exec: query => {
+        return db.query(query);
+    },
 };

@@ -8,7 +8,7 @@ var db = require('../utils/db');
 const storage = multer.diskStorage({
     destination: './public/img/',
     filename: function(req, file, cb) {
-        cb(null, file.originalname + '-' + Date.now() + path.extname(file.originalname));
+        cb(null, Date.now() + path.extname(file.originalname));
     }
 })
 const upload = multer({
@@ -65,7 +65,7 @@ module.exports = {
                 var sql = `INSERT INTO questions (question_content,question_answer1,question_answer2,question_answer3,question_answer4,question_answercorrect,question_image,questionset_id) VALUES ("${question.content}","${question.answer1}","${question.answer2}","${question.answer3}","${question.answer4}","${question.correctanswer}","${filename}","${qs_id}")`;
                 db.query(sql)
                     .then(result => {
-                        res.redirect(`/host/questionset/"${qs_id}"/question`);
+                        res.redirect(`/host/questionset/${qs_id}/question`);
                     })
                     .catch(err => {
                         req.flash("addMessage", "Fail to insert question!");
