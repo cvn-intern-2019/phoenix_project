@@ -66,27 +66,32 @@ $(document).ready(() => {
         }
     });
 
-    $( "#question" ).validate({
+    $( "#create_question" ).validate({
         errorClass : 'my-error-class',
         rules: {
-            answer1:{
+            content:{
                 required : true,
+            },
+            answer1 : {
+                required : true,
+                maxlength: 50,
             },
             answer2 : {
                 required : true,
+                maxlength: 50,
             },
             answer3 : {
                 required : true,
+                maxlength: 50,
             },
             answer4 : {
                 required : true,
-            },
-            content : {
-                required : true,
+                maxlength: 50,
             },
             correctanswer : {
                 required : true,
-            },
+                maxlength: 1,
+            }
         }
     });
 
