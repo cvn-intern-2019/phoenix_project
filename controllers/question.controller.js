@@ -67,7 +67,7 @@ module.exports = {
                 })
                 .catch(err => {
                     req.flash("addMessage","Fail to insert question!");
-                    res.redirect(`/host/questionset/"${qs_id}"/question/add`); 
+                    res.redirect(`/host/questionset/${qs_id}/question/add`); 
                 });
             }
         })
