@@ -38,6 +38,13 @@
 
 <div class="mt-5 row">
     <div class="container col-lg-8 col-lg-offset-4 ">
+        <div class="form-group text-center test-white">
+        {{#if success}}
+            <div class="alert alert-success" role="alert">
+              {{success}}
+            </div>
+        {{/if}}
+        </div>
         <div class="card mb-3 border-secondary">
             <div class="row">
                 <div class="col-lg-3 col-3">
