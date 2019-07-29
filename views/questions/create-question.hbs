@@ -1,75 +1,81 @@
 {{#section 'css'}}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/css/fileinput.min.css" media="all"
-  rel="stylesheet" type="text/css" />
+    rel="stylesheet" type="text/css" />
 {{/section}}
 
 {{#section 'js'}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
 <script>
-  $(function () {
-    $('#question_img').fileinput({
-        theme: 'fa',
-        allowedFileExtensions: ['png', 'jpg', 'gif'],
-        uploadAsync: false,
+    $(function () {
+        $('#question_img').fileinput({
+            theme: 'fa',
+            allowedFileExtensions: ['png', 'jpg', 'gif'],
+            uploadAsync: false,
+        });
     });
-  })
+    $("body").addClass('homepage-bg');
 </script>
 {{/section}}
 
 <div class="container p-5">
-    <form method="POST" action="/host/questionset/{{qs_id}}/question/add" enctype="multipart/form-data" id="create_question" >
+    <form method="POST" action="/host/questionset/{{qs_id}}/question/add" enctype="multipart/form-data"
+        id="create_question">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-        <h1 class="question-set-heading text-center">Question</h1>
-        <div class="form-group text-center">
-        {{#if error}}
-            <div class="alert alert-danger" role="alert">
-              {{error}}
+        <h1 class="question-set-heading text-center mt-0">Question</h1>
+        <div class="row p-3 border rounded border-dark bg-light">
+            <div class="form-group text-center">
+                {{#if error}}
+                <div class="alert alert-danger" role="alert">
+                    {{error}}
+                </div>
+                {{/if}}
             </div>
-        {{/if}}
-        </div>
-        <div class="row" >
             <div class="form-group col-md-8">
-                <label>Content</label>
-                <textarea class="form-control" rows="5" placeholder="Content of quetion" name="content">content</textarea>
+                <label><strong>Content</strong></label>
+                <textarea class="form-control" rows="5" placeholder="Content of question" name="content"></textarea>
             </div>
             <div class="form-group col-md-4">
-                <img src="" style="display:none" height="200px" id="image"> 
-                <label>Choose image</label>
+                <img src="" style="display:none" height="200px" id="image">
+                <label><strong>Choose image</strong></label>
                 <input type="file" id="question_img" name="question_img" value="" data-show-upload="false">
             </div>
-        </div>
-        <div class="row mt-5">
-            <div class="form-inline col-md-5 mb-3">
-                <label for="answer1" class="col-md-1"><strong>A.</strong></label>
-                <input type="text" class="form-control col-md-11" placeholder="Answer content" id="answer1" name="answer1" value="">
+            <div class="row mt-5">
+                <div class="form-inline col-md-6 mb-3">
+                    <label for="answer1" class="mr-2"><strong>A.</strong></label>
+                    <input type="text" class="form-control col-md-11" placeholder="Answer content" id="answer1"
+                        name="answer1" value="">
+                </div>
+                <div class="form-inline col-md-6 mb-3">
+                    <label for="answer2" class="mr-2"><strong>B.</strong></label>
+                    <input type="text" class="form-control col-md-11" placeholder="Answer content" id="answer2"
+                        name="answer2" value="">
+                </div>
+                <div class="form-inline col-md-6 mb-3">
+                    <label for="answer3" class="mr-2"><strong>C.</strong></label>
+                    <input type="text" class="form-control col-md-11" placeholder="Answer content" id="answer3"
+                        name="answer3" value="">
+                </div>
+                <div class="form-inline col-md-6 mb-3">
+                    <label for="answer4" class="mr-2"><strong>D.</strong></label>
+                    <input type="text" class="form-control col-md-11" placeholder="Answer content" id="answer4"
+                        name="answer4" value="">
+                </div>
             </div>
-            <div class="form-inline col-md-5 mb-3">
-                <label for="answer2" class="col-md-1"><strong>B.</strong></label>
-                <input type="text" class="form-control col-md-11" placeholder="Answer content" id="answer2" name="answer2" value="">
-            </div>
-            <div class="form-inline col-md-5 mb-3">
-                <label for="answer3" class="col-md-1"><strong>C.</strong>.</label>
-                <input type="text" class="form-control col-md-11" placeholder="Answer content" id="answer3" name="answer3" value="">
-            </div>
-            <div class="form-inline col-md-5 mb-3">
-                <label for="answer4" class="col-md-1"><strong>D.</strong></label>
-                <input type="text" class="form-control col-md-11" placeholder="Answer content" id="answer4" name="answer4" value="">
-            </div>
-        </div>  
 
-        <select class="btn btn-light" name="correctanswer">
-            <option value>Select correct answer...</option>
-            <option value="1">A.</option>
-            <option value="2">B.</option>
-            <option value="3">C.</option>
-            <option value="4">D.</option>
-        </select>
-
-        <div class="row col-md-8 pl-5 pr-5 mt-5">
-            <button type="Save" class="btn btn-primary col-md-3 ml-5 mr-5" id="btn-question-set">Submit</button>
-            <a href="/host/questionset/{{qs_id}}/question/" class="btn btn-secondary col-md-3 ml-5" id="btn-question-set">Cancel</a>
+            <select class="btn btn-light border border-secondary" name="correctanswer">
+                <option value>Select correct answer...</option>
+                <option value="1">A.</option>
+                <option value="2">B.</option>
+                <option value="3">C.</option>
+                <option value="4">D.</option>
+            </select>
         </div>
-        
-   </form>
+        <div class="row">
+            <button type="Save" class="btn btn-primary px-4" id="btn-question-set">Submit</button>
+            <a href="/host/questionset/{{qs_id}}/question/" class="btn btn-secondary ml-5 px-4"
+                id="btn-question-set">Cancel</a>
+        </div>
+
+    </form>
 </div>

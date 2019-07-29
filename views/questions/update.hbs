@@ -26,8 +26,7 @@
         enctype="multipart/form-data" id="create_question">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         <input type="hidden" name="image" value="{{ question.question_image }}">
-
-        <h1 class="question-set-heading text-center">Question</h1>
+        <h1 class="question-set-heading text-center mt-0">Question</h1>
         <div class="form-group text-center">
             {{#if error}}
             <div class="alert alert-danger" role="alert">

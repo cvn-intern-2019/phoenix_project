@@ -32,7 +32,6 @@ const upload = multer({
 }).single('question_img');
 app.use(upload);
 
-
 //hbs engine
 app.engine('hbs', exphbs({
     defaultLayout: 'main.hbs',
@@ -55,8 +54,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use(csrfProtection);
-
-// app.use('/questionset', require('./routes/questionset.route'));
 
 require('./models/passport')(passport);
 require('./routes/route')(app);

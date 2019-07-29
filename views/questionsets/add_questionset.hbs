@@ -1,11 +1,11 @@
 {{#section 'css'}}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/css/fileinput.min.css" media="all"
   rel="stylesheet" type="text/css" />
-  <style>
-    label.error{
-      color:red;
-    }
-  </style>
+<style>
+  label.error {
+    color: red;
+  }
+</style>
 {{/section}}
 {{#section 'js'}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
@@ -18,14 +18,15 @@
       allowedFileExtensions: ['png', 'jpg', 'gif'],
       uploadAsync: false,
     });
-  })
+  });
+  $("body").addClass('homepage-bg');
 </script>
 {{/section}}
 <div class="container">
   <form action="/host/questionset/add" method="POST" enctype="multipart/form-data" id="questionset">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     <h1 class="question-set-heading"> New question set</h1>
-    <div class="row">
+    <div class="row p-3 border rounded border-dark bg-light">
       <div class="form-group col-md-8">
         <div>
           <label><strong>Title</strong></label>
@@ -39,16 +40,16 @@
       </div>
       <div class="col-md-4">
         <label><strong>Choose image</strong></label>
-        <input type="file" id="questionset_img" name="questionset_img" value="" data-show-upload="false" multiple>
+        <input type="file" id="questionset_img" name="question_img" value="" data-show-upload="false" multiple>
+      </div>
+      <div class="form-check row">
+        <lable class="radio-inline" style="font-size: 20px; "><input type="radio" name="status" value="1" checked>
+          Active</lable>
+        <lable class="radio-inline" style="margin-left: 40px; font-size: 20px;"><input type="radio" name="status"
+            value="0"> Inactive</lable>
       </div>
     </div>
-    <div class="form-check row">
-      <lable class="radio-inline" style="margin-left: 50px; font-size: 20px; "><input type="radio" name="status"
-          value="1" checked> Active</lable>
-      <lable class="radio-inline" style="margin-left: 40px; font-size: 20px;"><input type="radio" name="status"
-          value="0"> Inactive</lable>
-    </div>
-    <button type="submit" class="btn btn-primary" id="btn-question-set">Submit</button>
-    <a type="cancel" class="btn btn-secondary" id="btn-question-set" href="/host/questionset">Cancel</a>
+    <button type="submit" class="btn btn-primary px-5" id="btn-question-set">Submit</button>
+    <a type="cancel" class="btn btn-secondary px-5" id="btn-question-set" href="/host/questionset">Cancel</a>
   </form>
 </div>
