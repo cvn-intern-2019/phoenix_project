@@ -1,35 +1,35 @@
 const questionset_model = require('../models/questionset.model');
-
-var db = require('../utils/db');
 var multer = require('multer');
 var fs = require('fs');
 
 const storage = multer.diskStorage({
     destination: './public/img/',
     filename: function (req, file, cb) {
-        cb(null, file.originalname + '-' + Date.now() + path.extname(file.originalname));
+        cb(null, Date.now() + path.extname(file.originalname));
     }
 })
 const upload = multer({
     storage: storage
-}).single('questionset_img');
+}).single('question_img');
 
 
 module.exports = {
     showQuestionsetList: (req, res) => {
         questionset_model.list(req.user.user_id)
             .then(result => {
-                res.render('questionsets/questionset',{ 
-                    user :  req.user,
-                    questionset : result
+                res.render('questionsets/questionset', {
+                    user: req.user,
+                    questionset: result
                 });
             }).catch(err => {
                 console.log(err);
             })
     },
+
     addquestionset: (req, res) => {
-        res.render('questionsets/add_questionset', { user: req.user, csrfToken: req.csrfToken()});
+        res.render('questionsets/add_questionset', { user: req.user, csrfToken: req.csrfToken() });
     },
+
     savequestionset: (req, res) => {
         let questionset = req.body;
         upload(req, res, err => {
@@ -40,21 +40,15 @@ module.exports = {
                 if (req.file) {
                     filename = req.file.filename;
                 }
-                questionset_model.save(questionset,filename)
+                questionset_model.save(questionset, filename)
                     .then(result => {
-                        questionset_model.last()
-                        .then(result => {
-                        questionset_model.questionsetByUser(req.user.user_id,result[0].questionset_id)
-                            .then(result =>{
+                        questionset_model.questionsetByUser(req.user.user_id, result.insertId)
+                            .then(result => {
                                 res.redirect('/host/questionset');
                             })
-                            .catch(err => {
+                            .catch(err =>{
                                 res.render('questionsets/add_questionset');
                             });
-                        })
-                        .catch(err => {
-                            res.render('questionsets/add_questionset');
-                        });
                     })
                     .catch(err => {
                         res.render('questionsets/add_questionset');
@@ -72,10 +66,10 @@ module.exports = {
                 res.redirect('/host/questionset');
             });
     },
+
     editquestionset: (req, res) => {
         questionset_model.getImage(req.params.qs_id)
             .then(result => {
-                console.log(result);
                 let fileName = result[0].questionset_image;
                 try {
                     fs.unlink('./public/img/' + fileName, (err) => {
@@ -103,7 +97,7 @@ module.exports = {
                 if (req.file) {
                     filename = req.file.filename;
                 }
-                questionset_model.update(questionset,filename,req.params.qs_id)
+                questionset_model.update(questionset, filename, req.params.qs_id)
                     .then(result => {
                         res.redirect('/host/questionset');
                     })
@@ -114,13 +108,13 @@ module.exports = {
         })
     },
 
-    
+
     create_room: (req, res) => {
-        questionset_model.checkValidQuestionSet(req.params.qs_id,req.user.user_id)
+        questionset_model.checkValidQuestionSet(req.params.qs_id, req.user.user_id)
             .then(result => {
-                if(result[0]){
-                    res.render('waiting_room', { questionsets: result, csrfToken: req.csrfToken()});
-                }else{
+                if (result[0]) {
+                    res.render('waiting_room', { questionsets: result, csrfToken: req.csrfToken() });
+                } else {
                     res.redirect('/host/questionset');
                 }
             })

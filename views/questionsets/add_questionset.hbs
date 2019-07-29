@@ -12,7 +12,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
 <script>
   $(function () {
-    $('#questionset_img').fileinput({
+    $('#question_img').fileinput({
       theme: 'fa',
       //dropZoneEnabled: false,
       allowedFileExtensions: ['png', 'jpg', 'gif'],
@@ -39,7 +39,7 @@
       </div>
       <div class="col-md-4">
         <label><strong>Choose image</strong></label>
-        <input type="file" id="questionset_img" name="question_img" value="" data-show-upload="false" multiple>
+        <input type="file" id="question_img" name="question_img" value="" data-show-upload="false" multiple>
       </div>
     </div>
     <div class="form-check row">
@@ -49,6 +49,6 @@
           value="0"> Inactive</lable>
     </div>
     <button type="submit" class="btn btn-primary" id="btn-question-set">Submit</button>
-    <a type="cancel" class="btn btn-secondary" id="btn-question-set" href="/questionset">Cancel</a>
+    <a type="cancel" class="btn btn-secondary" id="btn-question-set" href="/host/questionset">Cancel</a>
   </form>
 </div>

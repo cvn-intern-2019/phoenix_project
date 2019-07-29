@@ -11,7 +11,7 @@ module.exports = {
         return db.query(sql);
     },
 
-    save: (questionset,filename)=>{
+    save: (questionset,filename,user_id,questionset_id )=>{
         let sql = `INSERT INTO questionsets (questionset_title,questionset_description,questionset_image,questionset_state) 
         VALUES ("${questionset.title}","${questionset.description}","${filename}","${questionset.status}")`;
         return db.query(sql);
@@ -19,11 +19,6 @@ module.exports = {
 
     findById:(qs_id)=>{
         let sql = `SELECT * FROM questionsets WHERE questionset_id = '${qs_id}'`;
-        return db.query(sql);
-    },
-
-    last:()=>{
-        let sql = `SELECT * FROM questionsets ORDER BY questionset_id desc LIMIT 1`;
         return db.query(sql);
     },
 
