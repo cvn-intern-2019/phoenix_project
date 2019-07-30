@@ -12,7 +12,6 @@ const upload = multer({
     storage: storage
 }).single('question_img');
 
-
 module.exports = {
     showQuestionsetList: (req, res) => {
         questionset_model.list(req.user.user_id)
@@ -23,6 +22,7 @@ module.exports = {
                 });
             }).catch(err => {
                 console.log(err);
+                res.render('error');
             })
     },
 
@@ -48,12 +48,14 @@ module.exports = {
                             .then(result => {
                                 res.redirect('/host/questionset');
                             })
-                            .catch(err =>{
-                                res.render('questionsets/add_questionset');
+                            .catch(err => {
+                                console.log(err);
+                                res.render('error');
                             });
                     })
                     .catch(err => {
-                        res.render('questionsets/add_questionset');
+                        console.log(err);
+                        res.render('error');
                     });
             }
         })
@@ -65,7 +67,8 @@ module.exports = {
                 res.render('questionsets/edit_questionset', { questionset: result[0], path: path, csrfToken: req.csrfToken() });
             })
             .catch(err => {
-                res.redirect('/host/questionset');
+                console.log(err);
+                res.render('error');
             });
     },
 
@@ -92,14 +95,15 @@ module.exports = {
                         console.error(err)
                     }
                 } else {
-                    fileName= questionset.image;
+                    fileName = questionset.image;
                 }
                 questionset_model.update(questionset, fileName, req.params.qs_id)
                     .then(result => {
                         res.redirect('/host/questionset');
                     })
                     .catch(err => {
-                        res.render('questionsets/add_questionset');
+                        console.log(err);
+                        res.render('error');
                     });
             }
         })
@@ -110,13 +114,15 @@ module.exports = {
         questionset_model.checkValidQuestionSet(req.params.qs_id, req.user.user_id)
             .then(result => {
                 if (result[0]) {
-                    res.render('waiting_room', { questionsets: result, csrfToken: req.csrfToken() });
+                    res.render('questioncontent', { questionsets: result, csrfToken: req.csrfToken() });
+                    // res.render('waiting_room', { questionsets: result, csrfToken: req.csrfToken() });
                 } else {
                     res.redirect('/host/questionset');
                 }
             })
             .catch(err => {
-                res.redirect('/host/questionset');
+                console.log(err);
+                res.render('error');
             });
     },
 };

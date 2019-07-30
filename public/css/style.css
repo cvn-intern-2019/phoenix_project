@@ -1,12 +1,13 @@
-h4#questionset_title{
+#questionset_title {
     white-space: nowrap;
     margin-bottom: 50px;
     margin-left: 10px;
-    width: 100%;
+    width: 50%;
     text-overflow: ellipsis;
     overflow: hidden;
 }
-h1.question-set-heading{
+
+h1.question-set-heading {
     font-size: 70px;
     margin-bottom: 50px;
     margin-top: 30px;
@@ -19,7 +20,7 @@ h1.question-set-heading{
     padding: 10px;
 }
 
-img#old_img{
+img#old_img {
     width: 450px;
     height: 400px;
     margin-top: 20px;
@@ -96,3 +97,12 @@ form#player-info .btn {
     /* red */
 }
 
+#time_question{
+    border: 8px solid black;
+    width: 150px;
+    height: 150px;
+    -webkit-align-items: center; /* Safari 7.0+ */
+    font-size: 60px;
+    font-weight: bold;
+    text-shadow: 3px 2px grey;
+}

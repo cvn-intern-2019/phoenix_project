@@ -22,16 +22,15 @@ let io = socketIO(server);
 let csrfProtection = csrf();
 
 const storage = multer.diskStorage({
-    destination: './public/img/', 
-    filename: function (req, file, cb) {
+    destination: './public/img/',
+    filename: function(req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname));
-    }	
+    }
 })
 const upload = multer({
     storage: storage
 }).single('question_img');
 app.use(upload);
-
 
 //hbs engine
 app.engine('hbs', exphbs({
@@ -43,7 +42,7 @@ app.engine('hbs', exphbs({
     }
 }));
 
-app.use(morgan('dev'));
+//app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
@@ -55,8 +54,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use(csrfProtection);
-
-// app.use('/questionset', require('./routes/questionset.route'));
 
 require('./models/passport')(passport);
 require('./routes/route')(app);

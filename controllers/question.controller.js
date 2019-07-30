@@ -14,7 +14,6 @@ const upload = multer({
     storage: storage
 }).single('question_img');
 
-
 module.exports = {
     showQuestionList: (req, res) => {
         let qs_id = req.params.qs_id;
@@ -58,22 +57,22 @@ module.exports = {
         question.answer4 = question_model.format(question.answer4);
         upload(req, res, err => {
             if (err) {
-                req.flash("error","Fail to create question!");
-                res.redirect(`/host/questionset/"${qs_id}"/question/add`); 
+                req.flash("error", "Fail to create question!");
+                res.redirect(`/host/questionset/"${qs_id}"/question/add`);
             } else {
                 var filename = "";
-                if(req.file){
-                    filename=req.file.filename;
+                if (req.file) {
+                    filename = req.file.filename;
                 }
-                question_model.add(question,filename,qs_id)
-                .then(result => {
-                    req.flash("success","Create question successfully!");
-                    res.redirect(`/host/questionset/"${qs_id}"/question`); 
-                }).catch(err =>{
-                    console.log(err);
-                    req.flash("error","Fail to insert question!");
-                    res.redirect(`/host/questionset/${qs_id}/question/add`); 
-                });
+                question_model.add(question, filename, qs_id)
+                    .then(result => {
+                        req.flash("success", "Create question successfully!");
+                        res.redirect(`/host/questionset/${qs_id}/question`);
+                    }).catch(err => {
+                        console.log(err);
+                        req.flash("error", "Fail to insert question!");
+                        res.redirect(`/host/questionset/${qs_id}/question/add`);
+                    });
             }
         })
     },
@@ -112,7 +111,7 @@ module.exports = {
             });
     },
     findQuestion: (req, res) => {
-        question_model.listByQuestionSetId(req.params.q_id,req.params.qs_id)
+        question_model.listByQuestionSetId(req.params.q_id, req.params.qs_id)
             .then(result => {
                 if (result.length == 0) {
                     res.send('Question not found');
@@ -155,7 +154,7 @@ module.exports = {
                 } else {
                     filename = question.image;
                 }
-                question_model.update(question,filename,req.params.q_id)
+                question_model.update(question, filename, req.params.q_id)
                     .then(result => {
                         res.redirect(`/host/questionset/${req.params.qs_id}/question`);
                     })
