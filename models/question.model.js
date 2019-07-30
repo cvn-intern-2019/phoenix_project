@@ -1,6 +1,13 @@
 var db = require('../utils/db');
 
+function format(str){
+    str = str.replace(/"/gi,`\\"`);
+    str = str.replace(/'/gi,`\\'`);
+    return str;
+}
+
 module.exports = {
+    format,
     exec: query => {
         return db.query(query);
     },

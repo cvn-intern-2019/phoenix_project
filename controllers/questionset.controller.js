@@ -32,6 +32,8 @@ module.exports = {
 
     savequestionset: (req, res) => {
         let questionset = req.body;
+        questionset.title = questionset_model.format(questionset.title);
+        questionset.description = questionset_model.format(questionset.description);
         upload(req, res, err => {
             if (err) {
                 res.render('questionsets/add_questionset');
@@ -69,6 +71,8 @@ module.exports = {
 
     editquestionset: (req, res) => {
         let questionset = req.body;
+        questionset.title = questionset_model.format(questionset.title);
+        questionset.description = questionset_model.format(questionset.description);
         upload(req, res, err => {
             if (err) {
                 res.render('questionset/questionset');

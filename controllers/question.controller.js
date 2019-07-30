@@ -3,7 +3,7 @@ const questionset_model = require('../models/questionset.model');
 const fs = require('fs');
 const multer = require('multer');
 
-var db = require('../utils/db');
+
 
 const storage = multer.diskStorage({
     destination: './public/img/',
@@ -52,6 +52,11 @@ module.exports = {
     saveQuestion: (req, res) => {
         let qs_id = req.params.qs_id;
         let question = req.body;
+        question.content = question_model.format(question.content);
+        question.answer1 = question_model.format(question.answer1);
+        question.answer2 = question_model.format(question.answer2);
+        question.answer3 = question_model.format(question.answer3);
+        question.answer4 = question_model.format(question.answer4);
         upload(req, res, err => {
             if (err) {
                 req.flash("error","Fail to create question!");
@@ -113,7 +118,6 @@ module.exports = {
                 if (result.length == 0) {
                     res.send('Question not found');
                 }
-
                 res.render('questions/update', {
                     csrfToken: req.csrfToken(),
                     question: result[0],
@@ -123,6 +127,11 @@ module.exports = {
     },
     editQuestion: (req, res) => {
         let question = req.body;
+        question.content = question_model.format(question.content);
+        question.answer1 = question_model.format(question.answer1);
+        question.answer2 = question_model.format(question.answer2);
+        question.answer3 = question_model.format(question.answer3);
+        question.answer4 = question_model.format(question.answer4);
         upload(req, res, err => {
             if (err) {
                 console.log(err);
