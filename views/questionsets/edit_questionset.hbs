@@ -20,8 +20,9 @@
 {{/section}}
 <div class="container">
   <form class="m-5" action="/host/questionset/{{questionset.questionset_id}}/edit" method="POST"
-    enctype="multipart/form-data" id="question">
+    enctype="multipart/form-data" id="questionset">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    <input type="hidden" name="image" value="{{ questionset.questionset_image }}">
     <h1 class="question-set-heading text-white"> Edit question set</h1>
     <div class="row p-3 border rounded border-dark bg-light">
       <div class="form-group col-md-12">

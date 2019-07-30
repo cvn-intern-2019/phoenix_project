@@ -1,5 +1,4 @@
 const questionset_model = require('../models/questionset.model');
-var db = require('../utils/db');
 var multer = require('multer');
 var fs = require('fs');
 
@@ -11,7 +10,7 @@ const storage = multer.diskStorage({
 })
 const upload = multer({
     storage: storage
-}).single('questionset_img');
+}).single('question_img');
 
 module.exports = {
     showQuestionsetList: (req, res) => {
@@ -26,11 +25,15 @@ module.exports = {
                 res.render('error');
             })
     },
+
     addquestionset: (req, res) => {
         res.render('questionsets/add_questionset', { user: req.user, csrfToken: req.csrfToken() });
     },
+
     savequestionset: (req, res) => {
         let questionset = req.body;
+        questionset.title = questionset_model.format(questionset.title);
+        questionset.description = questionset_model.format(questionset.description);
         upload(req, res, err => {
             if (err) {
                 res.render('questionsets/add_questionset');
@@ -68,38 +71,33 @@ module.exports = {
                 res.render('error');
             });
     },
+
     editquestionset: (req, res) => {
-        questionset_model.getImage(req.params.qs_id)
-            .then(result => {
-                console.log(result);
-                let fileName = result[0].questionset_image;
-                try {
-                    fs.unlink('./public/img/' + fileName, (err) => {
-                        if (err) {
-                            console.error(err)
-                            return
-                        }
-                        //file removed
-                    })
-                } catch (err) {
-                    console.error(err)
-                }
-            })
-            .catch(err => {
-                console.log(err);
-                res.render('error');
-            });
         let questionset = req.body;
-        let path = './public/img/' + questionset.questionset_image;
+        questionset.title = questionset_model.format(questionset.title);
+        questionset.description = questionset_model.format(questionset.description);
         upload(req, res, err => {
             if (err) {
                 res.render('questionset/questionset');
             } else {
-                var filename = "";
+                var fileName = "";
                 if (req.file) {
-                    filename = req.file.filename;
+                    fileName = req.file.filename;
+                    try {
+                        fs.unlink('./public/img/' + questionset.image, (err) => {
+                            if (err) {
+                                console.error(err)
+                                return
+                            }
+                            //file removed
+                        })
+                    } catch (err) {
+                        console.error(err)
+                    }
+                } else {
+                    fileName = questionset.image;
                 }
-                questionset_model.update(questionset, filename, req.params.qs_id)
+                questionset_model.update(questionset, fileName, req.params.qs_id)
                     .then(result => {
                         res.redirect('/host/questionset');
                     })
