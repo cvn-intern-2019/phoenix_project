@@ -5,35 +5,35 @@
 
 }
 @media screen and (max-width: 768px) {
-	#navbarTogglerDemo03 h1{
+	#navbarTogglerDemo03 h1#numOfQuestion{
 		font-size: 28px;
 	}
-	#navbarTogglerDemo03 h3{
+	#navbarTogglerDemo03 h3#narPin,h3#playerName{
 		font-size: 24px;
 	}
-	#navbarTogglerDemo03 h4{
+	#navbarTogglerDemo03 h4#point{
 		font-size: 20px;
 	}
 }
 @media screen and (max-width: 640px) {
-	#navbarTogglerDemo03 h1{
+	#navbarTogglerDemo03 h1#numOfQuestion{
 		font-size: 22px;
 	}
-	#navbarTogglerDemo03 h3{
+	#navbarTogglerDemo03 h3#narPin,h3#playerName{
 		font-size: 18px;
 	}
-	#navbarTogglerDemo03 h4{
+	#navbarTogglerDemo03 h4#point{
 		font-size: 16px;
 	}
 }
 @media screen and (max-width: 480px) {
-	#navbarTogglerDemo03 h1{
+	#navbarTogglerDemo03 h1#numOfQuestion{
 		font-size: 20px;
 	}
-	#navbarTogglerDemo03 h3{
+	#navbarTogglerDemo03 h3#narPin,h3#playerName{
 		font-size: 16px;
 	}
-	#navbarTogglerDemo03 h4{
+	#navbarTogglerDemo03 h4#point{
 		font-size: 14px;
 	}
 }
