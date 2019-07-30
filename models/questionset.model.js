@@ -7,7 +7,7 @@ module.exports = {
 
     list: (user_id)=>{
         let sql = `SELECT questionsets.* FROM questionsets, user_questionset 
-        WHERE user_questionset.questionset_id = questionsets.questionset_id and user_questionset.user_id = ${user_id};`;
+        WHERE user_questionset.questionset_id = questionsets.questionset_id and user_questionset.user_id = ${user_id} ORDER BY questionsets.questionset_id DESC;`;
         return db.query(sql);
     },
 
@@ -19,11 +19,6 @@ module.exports = {
 
     findById:(qs_id)=>{
         let sql = `SELECT * FROM questionsets WHERE questionset_id = '${qs_id}'`;
-        return db.query(sql);
-    },
-
-    last:()=>{
-        let sql = `SELECT * FROM questionsets ORDER BY questionset_id desc LIMIT 1`;
         return db.query(sql);
     },
 
