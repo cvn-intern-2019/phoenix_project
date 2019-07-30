@@ -41,24 +41,29 @@ module.exports = {
                     filename = req.file.filename;
                 }
                 questionset_model.save(questionset,filename)
+                .then(result => {
+                    questionset_model.last()
                     .then(result => {
-                        questionset_model.last()
-                        .then(result => {
-                        questionset_model.questionsetByUser(req.user.user_id,result[0].questionset_id)
-                            .then(result =>{
-                                res.redirect('/host/questionset');
-                            })
-                            .catch(err => {
-                                res.render('questionsets/add_questionset');
-                            });
+                    questionset_model.questionsetByUser(req.user.user_id,result[0].questionset_id)
+                        .then(result =>{
+                            res.redirect('/host/questionset');
                         })
                         .catch(err => {
+                    console.log(err);
+
                             res.render('questionsets/add_questionset');
                         });
                     })
                     .catch(err => {
+                    console.log(err);
+
                         res.render('questionsets/add_questionset');
                     });
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.render('questionsets/add_questionset');
+                });
             }
         })
     },
