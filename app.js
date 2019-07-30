@@ -10,7 +10,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
-const morgan = require('morgan');
+//const morgan = require('morgan');
 const multer = require('multer')
 const csrf = require('csurf');
 
@@ -42,7 +42,7 @@ app.engine('hbs', exphbs({
     }
 }));
 
-app.use(morgan('dev'));
+//app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');

@@ -114,7 +114,7 @@ module.exports = {
         questionset_model.checkValidQuestionSet(req.params.qs_id, req.user.user_id)
             .then(result => {
                 if (result[0]) {
-                    res.render('waiting_room', { questionsets: result, csrfToken: req.csrfToken() });
+                    res.render('player/new_game', { questionsets: result, csrfToken: req.csrfToken() });
                 } else {
                     res.redirect('/host/questionset');
                 }
