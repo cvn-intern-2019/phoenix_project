@@ -23,6 +23,7 @@ module.exports = {
                 });
             }).catch(err => {
                 console.log(err);
+                res.render('error');
             })
     },
     addquestionset: (req, res) => {
@@ -40,26 +41,16 @@ module.exports = {
                 }
                 questionset_model.save(questionset, filename)
                     .then(result => {
-                        questionset_model.last()
+                        questionset_model.questionsetByUser(req.user.user_id, result.insertId)
                             .then(result => {
-                                questionset_model.questionsetByUser(req.user.user_id, result[0].questionset_id)
-                                    .then(result => {
-                                        res.redirect('/host/questionset');
-                                    })
-                                    .catch(err => {
-                                        // res.render('questionsets/add_questionset');
-                                        console.log(err);
-                                        res.render('error');
-                                    });
+                                res.redirect('/host/questionset');
                             })
                             .catch(err => {
-                                // res.render('questionsets/add_questionset');
                                 console.log(err);
                                 res.render('error');
                             });
                     })
                     .catch(err => {
-                        // res.render('questionsets/add_questionset');
                         console.log(err);
                         res.render('error');
                     });
@@ -73,7 +64,8 @@ module.exports = {
                 res.render('questionsets/edit_questionset', { questionset: result[0], path: path, csrfToken: req.csrfToken() });
             })
             .catch(err => {
-                res.redirect('/host/questionset');
+                console.log(err);
+                res.render('error');
             });
     },
     editquestionset: (req, res) => {
@@ -112,7 +104,8 @@ module.exports = {
                         res.redirect('/host/questionset');
                     })
                     .catch(err => {
-                        res.render('questionsets/add_questionset');
+                        console.log(err);
+                        res.render('error');
                     });
             }
         })
@@ -129,7 +122,8 @@ module.exports = {
                 }
             })
             .catch(err => {
-                res.redirect('/host/questionset');
+                console.log(err);
+                res.render('error');
             });
     },
 };

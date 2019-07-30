@@ -24,7 +24,7 @@
 
 <div class="container p-5">
     <form method="POST" action="/host/questionset/{{ question.questionset_id }}/question/{{ question.question_id }}/edit" enctype="multipart/form-data"
-        id="create_question">
+        id="question">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         <h1 class="question-set-heading text-center text-white mt-0">Edit Question</h1>
         <div class="row p-3 border rounded border-dark bg-light">
