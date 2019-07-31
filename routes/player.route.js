@@ -13,4 +13,14 @@ module.exports = (app) => {
         .get((req, res) => {
             res.render('player/qa');
         })
+    app.get('/nar-bar', (req, res) => {
+        res.render('player/home', {
+        	layout: 'player.hbs'
+        })
+    });
+    app.get('/player/middle', (req, res) => {
+        res.render('player/middle', {
+        	layout: 'player.hbs'
+        })
+    });
 }

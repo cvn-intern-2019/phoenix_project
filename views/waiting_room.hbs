@@ -12,7 +12,9 @@
         socket.emit('join', info)
     });
 
-    socket.on('newMessage', (pin) => {
+    socket.emit('summit');
+
+    socket.on('newMessage' , (pin) => {
         console.log(`Welcome to ${pin}`);
     })
 
@@ -39,7 +41,7 @@
     <div class="row d-flex justify-content-center mt-5 mx-4">
         <div class="border border-dark col-md-3"
             style="font-size: 30px;margin-bottom: 100px; border: 5px solid; text-align:center;">
-            <p><strong> PIN: {{ info.pin }}</span> </strong> </p>
+            <p><strong> PIN: {{ info.pin }}</strong> </p>
         </div>
     </div>
     <div class="row mb-5">
