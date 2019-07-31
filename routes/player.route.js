@@ -9,4 +9,10 @@ module.exports = (app) => {
         	layout: 'player.hbs'
         })
     });
-}
+    app.route('/player/question')
+        .get((req, res) => {
+            res.render('player/qa', {
+                layout: 'player.hbs'
+            });
+        })
+    }
