@@ -23,8 +23,9 @@
 {{/section}}
 
 <div class="container p-5">
-    <form method="POST" action="/host/questionset/{{ question.questionset_id }}/question/{{ question.question_id }}/edit" enctype="multipart/form-data"
-        id="question">
+    <form method="POST"
+        action="/host/questionset/{{ question.questionset_id }}/question/{{ question.question_id }}/edit"
+        enctype="multipart/form-data" id="question">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         <h1 class="question-set-heading text-center text-white mt-0">Edit Question</h1>
         <div class="row p-3 border rounded border-dark bg-light">
@@ -32,7 +33,8 @@
             </div>
             <div class="form-group col-md-12">
                 <label><strong>Content</strong></label>
-                <textarea class="form-control" rows="5" placeholder="Content of question" name="content">{{question.question_content}}</textarea>
+                <textarea class="form-control" rows="5" placeholder="Content of question"
+                    name="content">{{question.question_content}}</textarea>
             </div>
             <div class="form-group col-md-8">
                 <label class="row"><strong>Old image</strong></label>

@@ -10,7 +10,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
-const morgan = require('morgan');
+//const morgan = require('morgan');
 const multer = require('multer')
 const csrf = require('csurf');
 

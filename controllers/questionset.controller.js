@@ -4,7 +4,7 @@ var fs = require('fs');
 
 const storage = multer.diskStorage({
     destination: './public/img/',
-    filename: function(req, file, cb) {
+    filename: function (req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname));
     }
 })
@@ -114,7 +114,8 @@ module.exports = {
         questionset_model.checkValidQuestionSet(req.params.qs_id, req.user.user_id)
             .then(result => {
                 if (result[0]) {
-                    res.render('waiting_room', { questionsets: result, csrfToken: req.csrfToken() });
+                    res.render('player/new_game', { questionsets: result, csrfToken: req.csrfToken() });
+                    // res.render('waiting_room', { questionsets: result, csrfToken: req.csrfToken() });
                 } else {
                     res.redirect('/host/questionset');
                 }
