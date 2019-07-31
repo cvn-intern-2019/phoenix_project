@@ -12,7 +12,6 @@
         socket.emit('join', info)
     });
 
-    socket.emit('summit');
 
     socket.on('newMessage' , (pin) => {
         console.log(`Welcome to ${pin}`);
