@@ -23,9 +23,10 @@ class Game_rooms {
 }
 
 class Room {
-    constructor(qs) {
+    constructor(qs,list_question) {
         this.qs = qs;
         this.roomId =  Math.floor((Math.random() * 9000) + 1000);
+        this.list_question = list_question;
     }
 }
 

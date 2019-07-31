@@ -70,10 +70,9 @@ var Game_room = new Game_rooms();
 io.on('connection', (socket) => {
     console.log("A new user just connected");
 
-    socket.on('summit', () => {
-        let room = new Room();
-        Game_room.addRoom(room);
-        console.log(Game_room);
+    socket.on('create_room', (data) => {
+        let room = new Room(data[1],data[0]);
+        console.log(room);
     })
     socket.on('join', (info) => {
         let pin = info.pin;
