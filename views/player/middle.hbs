@@ -3,6 +3,10 @@
     let socket = io();
     let data = [list_question,{{qs_id}}];
     socket.emit('create_room', data);
+
+    socket.on('waiting' , () => {
+        window.location.href = '/host/waiting'
+    });
 </script>
 {{/section}}
 <script>

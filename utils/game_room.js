@@ -11,13 +11,13 @@ class Game_rooms {
     }
 
     getRoomById(id) {
-        return this.Game_rooms.filter((game_room) => game_room.id === id)[0];
+        return this.Game_rooms.filter((room) => room.roomId == id)[0];
     }
 
     removeRoom(id) {
         let game_room = this.getRoomById(id);
         if (game_room)
-            this.Game_rooms = this.Game_rooms.filter((game_room) => game_room.id !== id);
+            this.Game_rooms = this.Game_rooms.filter((game_room) => game_room.roomId !== id);
         return game_room;
     }
 }

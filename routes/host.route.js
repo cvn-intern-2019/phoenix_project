@@ -30,4 +30,8 @@ module.exports = function (app, passport) {
 
 
     app.get('/host/profile', authMiddleware.isSignIn, host_controller.profile)
+
+    app.get('/host/waiting', (req,res) => {
+        res.render('../views/host/waiting.hbs' , {user : req.user});
+    });
 };

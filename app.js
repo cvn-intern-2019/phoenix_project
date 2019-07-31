@@ -73,6 +73,8 @@ io.on('connection', (socket) => {
 
     socket.on('create_room', (data) => {
         Game_room.addRoom(new Room(data[1],data[0]));
+        socket.emit('waiting');
+        console.log(Game_room);
     })
     socket.on('join', (info) => {
         let pin = info.pin;
@@ -80,14 +82,14 @@ io.on('connection', (socket) => {
             console.log('Room not found');
             socket.emit('roomNotExists')
         }
-
         socket.join(info.pin);
         players.removePlayer(socket.id);
         players.addPlayer(new Player(socket.id, info.nickname, info.pin));
   
   
-      io.to(info.pin).emit('updatePlayerList', players.getPlayerByRoom(info.pin));
-      socket.emit('newMessage', pin);
+        io.to(info.pin).emit('updatePlayerList', players.getPlayerByRoom(info.pin));
+        socket.to(info.pin).emit('list', players.getPlayerByRoom(info.pin));
+        socket.emit('newMessage', pin);
   
     //   socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', "New User Joined!"));
   
