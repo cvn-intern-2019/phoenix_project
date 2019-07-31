@@ -1,0 +1,22 @@
+{{#section 'js'}}
+<script>
+    let socket = io();
+    //let info_questionset = ${questionsets};
+    //console.log({{questionsets}});
+    let question = Object.assign({} , {{question}});
+
+    console.log(question);
+
+    socket.on('connect', () => {
+       socket.on('summit', () => {
+        let room = new Room(question);
+        Game_room.addRoom(room);
+        console.log(Game_room);
+    })
+    
+
+    });
+
+</script>
+
+{{/section}}
