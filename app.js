@@ -72,11 +72,15 @@ io.on('connection', (socket) => {
     console.log("A new user just connected");
 
     socket.on('create_room', (data) => {
-        let room = new Room(data[1],data[0]);
-        console.log(room);
+        Game_room.addRoom(new Room(data[1],data[0]));
     })
     socket.on('join', (info) => {
         let pin = info.pin;
+        if(!Game_room.getRoomById(pin)) {
+            console.log('Room not found');
+            socket.emit('roomNotExists')
+        }
+
         socket.join(info.pin);
         players.removePlayer(socket.id);
         players.addPlayer(new Player(socket.id, info.nickname, info.pin));
@@ -99,7 +103,6 @@ io.on('connection', (socket) => {
 
 
         //   io.to(params.room).emit('updateUsersList', users.getUserList(params.room));
-        socket.emit('newMessage', pin);
 
         //   socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', "New User Joined!"));
 

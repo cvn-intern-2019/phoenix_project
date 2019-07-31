@@ -1,6 +1,6 @@
 {{#section 'js'}}
 <script>
-    let socket = io({transports: ['websocket'], upgrade: false});
+    let socket = io({ transports: ['websocket'], upgrade: false });
 
     let info =
     {
@@ -12,14 +12,16 @@
         socket.emit('join', info)
     });
 
-    socket.emit('summit');
+    socket.on('roomNotExists', () => {
+        window.location.href = '/player';
+    });
 
-    socket.on('newMessage' , (pin) => {
+
+    socket.on('newMessage', (pin) => {
         console.log(`Welcome to ${pin}`);
     })
 
     socket.on('updatePlayerList', (players) => {
-        console.log(players);
         $("#players-number").html(players.length);
         $('#playerList').html('');
         for (let i = 0; i < players.length; i++) {
@@ -28,7 +30,7 @@
         }
     });
 
-    socket.on('disconnect', function() {
+    socket.on('disconnect', function () {
         console.log('disconnected from server.');
     });
 
