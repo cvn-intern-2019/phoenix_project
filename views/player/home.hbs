@@ -26,18 +26,16 @@
                 nickname: {
                     required: true,
                     minlength: 3,
+                    maxlength: 10,
                 },
             },
             messages: {
                 pin: {
                     required: "Please enter PIN",
-                    minlength: "PIN is not correct",
-                    maxlength: "PIN is not correct",
                     digits: "PIN must be number"
                 },
                 nickname: {
                     required: "Please enter nickname",
-                    minlength: "Nickname must be at least 3 characters",
                 },
             }
         });

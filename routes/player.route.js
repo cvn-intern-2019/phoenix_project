@@ -8,4 +8,9 @@ module.exports = (app) => {
     app.post('/player/waiting-room' , (req,res) => {
         res.render('waiting_room' , {info : req.body});
     });
+
+    app.route('/player/question')
+        .get((req, res) => {
+            res.render('player/qa');
+        })
 }
