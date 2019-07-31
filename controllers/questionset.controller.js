@@ -1,38 +1,41 @@
 const questionset_model = require('../models/questionset.model');
-
-var db = require('../utils/db');
+const question_model = require('../models/question.model');
+const {Game_rooms, Room} = require('../utils/game_room');
 var multer = require('multer');
 var fs = require('fs');
 
 const storage = multer.diskStorage({
     destination: './public/img/',
     filename: function (req, file, cb) {
-        cb(null, file.originalname + '-' + Date.now() + path.extname(file.originalname));
+        cb(null, Date.now() + path.extname(file.originalname));
     }
 })
 const upload = multer({
     storage: storage
-}).single('questionset_img');
-
+}).single('question_img');
 
 module.exports = {
     showQuestionsetList: (req, res) => {
-        let questionset_user = `SELECT questionsets.* FROM questionsets, user_questionset WHERE user_questionset.questionset_id = questionsets.questionset_id and user_questionset.user_id = ${req.user.user_id};`;
-        questionset_model.exec(questionset_user)
+        questionset_model.list(req.user.user_id)
             .then(result => {
-                res.render('questionsets/questionset',{ 
-                    user :  req.user,
-                    questionset : result
+                res.render('questionsets/questionset', {
+                    user: req.user,
+                    questionset: result
                 });
             }).catch(err => {
                 console.log(err);
+                res.render('error');
             })
     },
+
     addquestionset: (req, res) => {
-        res.render('questionsets/add_questionset', { user: req.user, csrfToken: req.csrfToken()});
+        res.render('questionsets/add_questionset', { user: req.user, csrfToken: req.csrfToken() });
     },
+
     savequestionset: (req, res) => {
         let questionset = req.body;
+        questionset.title = questionset_model.format(questionset.title);
+        questionset.description = questionset_model.format(questionset.description);
         upload(req, res, err => {
             if (err) {
                 res.render('questionsets/add_questionset');
@@ -41,104 +44,83 @@ module.exports = {
                 if (req.file) {
                     filename = req.file.filename;
                 }
-                var sql = `INSERT INTO questionsets (questionset_title,questionset_description,questionset_image,questionset_state) 
-                    VALUES ("${questionset.title}","${questionset.description}","${filename}","${questionset.status}")`;
-                db.query(sql)
+                questionset_model.save(questionset, filename)
                     .then(result => {
-                        var sql2 = `SELECT * FROM questionsets ORDER BY questionset_id desc`;
-                        db.query(sql2)
-                        .then(result => {
-                            var sql = `INSERT INTO user_questionset (user_id, questionset_id) VALUES ("${req.user.user_id}","${result[0].questionset_id}")`;
-                            db.query(sql)
-                            .then(result =>{
+                        questionset_model.questionsetByUser(req.user.user_id, result.insertId)
+                            .then(result => {
                                 res.redirect('/host/questionset');
                             })
                             .catch(err => {
-                                res.render('questionsets/add_questionset');
+                                console.log(err);
+                                res.render('error');
                             });
-                        })
-                        .catch(err => {
-                            res.render('questionsets/add_questionset');
-                        });
-                        
                     })
                     .catch(err => {
-                        res.render('questionsets/add_questionset');
+                        console.log(err);
+                        res.render('error');
                     });
             }
         })
     },
     findquestionset: (req, res) => {
-        let sql = `SELECT * FROM questionsets WHERE questionset_id = '${req.params.qs_id}'`;
-        db.query(sql)
+        questionset_model.findById(req.params.qs_id)
             .then(result => {
                 let path = '/img/' + result[0].questionset_image;
                 res.render('questionsets/edit_questionset', { questionset: result[0], path: path, csrfToken: req.csrfToken() });
             })
             .catch(err => {
-                res.redirect('/host/questionset');
-            });
-    },
-    editquestionset: (req, res) => {
-        let img_delete_query = `SELECT questionset_image FROM questionsets WHERE questionset_id = ${req.params.qs_id}`;
-        questionset_model.exec(img_delete_query)
-            .then(result => {
-                console.log(result);
-                let fileName = result[0].questionset_image;
-                try {
-                    fs.unlink('./public/img/' + fileName, (err) => {
-                        if (err) {
-                            console.error(err)
-                            return
-                        }
-                        //file removed
-                    })
-                } catch (err) {
-                    console.error(err)
-                }
-            })
-            .catch(err => {
                 console.log(err);
                 res.render('error');
             });
+    },
+
+    editquestionset: (req, res) => {
         let questionset = req.body;
-        let path = './public/img/' + questionset.questionset_image;
+        questionset.title = questionset_model.format(questionset.title);
+        questionset.description = questionset_model.format(questionset.description);
         upload(req, res, err => {
             if (err) {
                 res.render('questionset/questionset');
             } else {
-                var filename = "";
+                var fileName = "";
                 if (req.file) {
-                    filename = req.file.filename;
+                    fileName = req.file.filename;
+                    try {
+                        fs.unlink('./public/img/' + questionset.image, (err) => {
+                            if (err) {
+                                console.error(err)
+                                return
+                            }
+                            //file removed
+                        })
+                    } catch (err) {
+                        console.error(err)
+                    }
+                } else {
+                    fileName = questionset.image;
                 }
-                var sql = `UPDATE questionsets SET questionset_title = '${questionset.title}',questionset_description = '${questionset.description}',questionset_image = '${filename}',questionset_state = '${questionset.status}'  WHERE questionset_id = '${req.params.qs_id}';`;
-                console.log(sql);
-                db.query(sql)
+                questionset_model.update(questionset, fileName, req.params.qs_id)
                     .then(result => {
                         res.redirect('/host/questionset');
                     })
                     .catch(err => {
-                        res.render('questionsets/add_questionset');
+                        console.log(err);
+                        res.render('error');
                     });
             }
         })
     },
 
-    
+
     create_room: (req, res) => {
-        let sql = `SELECT questionsets.* FROM questionsets, user_questionset 
-        WHERE user_questionset.questionset_id = questionsets.questionset_id 
-        and questionsets.questionset_id = ${req.params.qs_id} and user_questionset.user_id = ${req.user.user_id}`;
-        db.query(sql)
-            .then(result => {
-                if(result[0]){
-                    res.render('waiting_room', { questionsets: result, csrfToken: req.csrfToken()});
-                }else{
-                    res.redirect('/host/questionset');
-                }
-            })
-            .catch(err => {
-                res.redirect('/host/questionset');
-            });
+        question_model.findByQuestionsetId(req.params.qs_id)
+        .then(result => {
+            res.render('player/middle',  {question : result,qs_id : req.params.qs_id} );
+            console.log(result);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+        
     },
 };

@@ -32,11 +32,23 @@
 
 <div class="mt-5 row">
     <div class="container col-lg-8 col-lg-offset-4 ">
+        <div class="form-group text-center test-white">
+            {{#if success}}
+            <div class="alert alert-success" role="alert">
+                {{success}}
+            </div>
+            {{/if}}
+        </div>
         <div class="card mb-3 border-secondary">
             <div class="row">
                 <div class="col-lg-3 col-3">
-                    <div style="height: 180px; overflow: hidden; position: relative;">
-                    <img src="/img/test.jpg" class="card-img" alt="error" style="width: 180px">
+                    <div class="d-flex align-items-center" style="height: 180px; overflow: hidden; position: relative;">
+                        {{#if info_qs.questionset_image}}
+                        <img src="/img/{{info_qs.questionset_image}}" height="180px" class="img-fluid rounded">
+                        {{else}}
+                        <img src="https://media.giphy.com/media/Z1Exz24FbX3Ko/giphy.gif" height="180px"
+                            class="img-fluid rounded">
+                        {{/if}}
                     </div>
                 </div>
                 <div class="col-lg-6 col-5">
@@ -47,19 +59,20 @@
 
                 </div>
                 <div class="col-lg-3 col-4 pr-3" style="margin-top: auto; margin-bottom: auto">
-                    <a class="btn btn-outline-success d-block mb-3 mr-3" href="#">
+                    <a class="btn btn-outline-success d-block mb-3 mr-3"
+                        href="/host/questionset/{{info_qs.questionset_id}}/create_room">
                         <h5 class="m-0">Create room</h5>
                     </a>
-                    <a class="btn btn-outline-primary d-block mb-3 mr-3" href="#">
+                    <a class="btn btn-outline-primary d-block mb-3 mr-3"
+                        href="/host/questionset/{{info_qs.questionset_id}}/edit">
                         <h5 class="m-0">Edit</h5>
                     </a>
                 </div>
             </div>
         </div>
-        <div class="container d-flex justify-content-between">
-            <h3>Questions list</h3>
-            <a href="/host/questionset/{{info_qs.questionset_id}}/question/add"
-                class="btn btn-primary border-dark">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="text-white">Questions list</h3>
+            <a href="/host/questionset/{{info_qs.questionset_id}}/question/add" class="btn btn-primary btn-md px-4">
                 <i class="fas fa-plus">Add</i>
             </a>
         </div>
@@ -68,8 +81,14 @@
             {{#each list_q}}
             <div class="card mb-3 border-dark">
                 <div class="row">
-                    <div class="col-2" style="height: 120px; overflow: hidden; position: relative;">
-                        <img src="/img/{{question_image}}" class="card-img" alt="error" style="width: 120px">
+                    <div class="col-2 d-flex align-items-center"
+                        style="height: 120px; overflow: hidden; position: relative;">
+                        {{#if question_image}}
+                        <img src="/img/{{question_image}}" class="img-fluid" alt="error" style="width: 120px">
+                        {{else}}
+                        <img src="https://media.giphy.com/media/Z1Exz24FbX3Ko/giphy.gif" class="img-fluid" alt="error"
+                            style="width: 120px">
+                        {{/if}}
                     </div>
                     <div class="col-8">
                         <div class="card-body">
@@ -80,15 +99,32 @@
                         <a class="btn btn-outline-primary d-block p-0 my-2 mr-3"
                             href="/host/questionset/{{questionset_id}}/question/{{question_id}}/edit">
                             <i class="fas fa-edit"></i>
-                            <p class="m-0">
-                            </p>
                         </a>
-                        <a class="btn btn-outline-danger d-block p-0 my-2 mr-3"
-                            href="/host/questionset/{{questionset_id}}/question/{{question_id}}/delete">
+                        <a class="btn btn-outline-danger d-block p-0 my-2 mr-3" id="delete-btn" href="#myModal"
+                            data-toggle="modal">
                             <i class="fas fa-trash"></i>
-                            <p class="m-0">
-                            </p>
                         </a>
+                    </div>
+                </div>
+            </div>
+            <div id="myModal" class="modal fade">
+                <div class="modal-dialog modal-dialog-centered modal-confirm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="icon-box">
+                                <i class="far fa-trash-alt fa-2x text-danger mr-3"></i>
+                            </div>
+                            <h4 class="modal-title">Are you sure?</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Do you really want to delete these records? This process cannot be undone.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                            <a class="btn btn-danger"
+                                href="/host/questionset/{{questionset_id}}/question/{{question_id}}/delete">Delete</a>
+                        </div>
                     </div>
                 </div>
             </div>
