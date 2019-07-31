@@ -1,0 +1,59 @@
+{{#section 'css'}}
+<style>
+    .text2 {
+        position: absolute;
+        top: 26%;
+        display: none;
+    }
+    .text1 {
+        position: absolute;
+        top: 16%;
+        display: none;
+    }
+    .text3 {
+        position: absolute;
+        top: 31%;
+        display: none;
+    }
+</style>
+{{/section}}
+
+{{#section 'js'}}
+<script>
+    $("body").addClass('homepage-bg');
+
+    $('#rank2').animate({ height: "70%" }, 1000);
+    $('#rank1').animate({ height: "80%" }, 1000);
+    $('#rank3').animate({ height: "65%" }, 1000);
+    $('.text1').fadeIn(4000);
+    $('.text2').fadeIn(4000);
+    $('.text3').fadeIn(4000);
+
+</script>
+{{/section}}
+
+<div class="container">
+    <div class="row mt-5 p-5 bg-light border border-dark">
+        <div class="col-md-10 border border-dark text-center">
+            <div class="d-flex flex-row justify-content-center" style="height:60vh">
+                <div class="mt-auto ml-1 p-2 border border-dark align-self-stretch rounded bg-success" id="rank2"
+                    style="width:100px">
+                    <div class="text2">adasdasd10</div>
+                </div>
+                <div class="mt-auto ml-1 p-2 border border-dark align-self-stretch rounded bg-danger" id="rank1"
+                    style="width:100px">
+                    <i class="fas fa-crown fa-2x text-warning"></i>
+                    <div class="text1">adasdasd</div>
+                </div>
+                <div class="mt-auto ml-1 p-2 border border-dark align-self-stretch rounded bg-primary" id="rank3"
+                    style="width:100px">
+                    <div class="text3">456456456</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-2 text-center">
+            <button class="btn btn-primary">Quit</button>
+        </div>
+    </div>
+</div>
