@@ -10,7 +10,6 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
-const morgan = require('morgan');
 const multer = require('multer')
 const csrf = require('csurf');
 
@@ -65,6 +64,16 @@ require('./routes/question.route')(app);
 app.get('/session', function(req, res, next) {
     res.send(req.session)
 })
+
+
+
+io.on('connection', function(socket) {
+    console.log('a user connected');
+
+    socket.on('join', (params) => {
+        socket.join(params.pin);
+  })
+});
 
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);

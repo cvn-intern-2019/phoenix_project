@@ -9,4 +9,12 @@ module.exports = (app) => {
         	layout: 'player.hbs'
         })
     });
+    
+    app.get('/player/waiting_room',(req, res) => {
+        res.render('player/home')
+    });
+
+    app.post('/player/waiting_room',(req, res) => {
+        res.render('waiting_room')
+    });
 }

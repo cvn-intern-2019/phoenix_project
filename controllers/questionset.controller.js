@@ -115,8 +115,10 @@ module.exports = {
             .then(result => {
                 if (result[0]) {
                     console.log(result);
-                    res.render('questioncontent', { questionsets: result, csrfToken: req.csrfToken() ,layout:'player.hbs'});
+                    //res.render('questioncontent', { questionsets: result, csrfToken: req.csrfToken() ,layout:'player.hbs'});
+                    res.render('player/new_game', { questionsets: result, csrfToken: req.csrfToken() });
                     // res.render('waiting_room', { questionsets: result, csrfToken: req.csrfToken() });
+
                 } else {
                     res.redirect('/host/questionset');
                 }
