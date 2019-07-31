@@ -42,7 +42,7 @@ app.engine('hbs', exphbs({
     }
 }));
 
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');

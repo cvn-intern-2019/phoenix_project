@@ -1,10 +1,27 @@
-@media screen and (max-width: 1024px) {
+ul#list-score{
+	margin: 10% 20% 10% 20%;
+	padding: 0px 3% 0px 0%;
 
 }
-@media screen and (max-width: 980px) {
-
+ul#list-score li{
+	margin-bottom: 2%;
+	list-style-type: none;
+}
+div#result-answer h1{
+	font-size:60px;
+	margin-top: 35%;
+}
+div#result-answer h2{
+	margin-bottom: 70%;
 }
 @media screen and (max-width: 768px) {
+	div#result-answer h1{
+		font-size:60px;
+		margin-top: 20%;
+	}
+	div#result-answer h2{
+		margin-bottom: 40%;
+	}
 	#navbarTogglerDemo03 h1#numOfQuestion{
 		font-size: 28px;
 	}
@@ -16,6 +33,13 @@
 	}
 }
 @media screen and (max-width: 640px) {
+	div#result-answer h1{
+		font-size:60px;
+		margin-top: 20%;
+	}
+	div#result-answer h2{
+		margin-bottom: 40%;
+	}
 	#navbarTogglerDemo03 h1#numOfQuestion{
 		font-size: 22px;
 	}
@@ -26,7 +50,14 @@
 		font-size: 16px;
 	}
 }
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 500px) {
+	div#result-answer h1{
+		font-size:60px;
+		margin-top: 10%;
+	}
+	div#result-answer h2{
+		margin-bottom: 20%;
+	}
 	#navbarTogglerDemo03 h1#numOfQuestion{
 		font-size: 20px;
 	}
@@ -36,10 +67,4 @@
 	#navbarTogglerDemo03 h4#point{
 		font-size: 14px;
 	}
-}
-@media screen and (max-width: 415px) {
-
-}
-@media screen and (max-width: 320px){
-
 }
