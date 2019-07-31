@@ -1,32 +1,26 @@
 const authMiddleware = require('../middlewares/auth.middleware');
 
 module.exports = (app) => {
-    app.get('/player', (req, res) => {
-        res.render('player/home')
+    app.get('/player', authMiddleware.alreadySignin, (req, res) => {
+        res.render('player/home', { csrfToken: req.csrfToken() })
     });
 
-    app.get('/small-statistic', (req, res) => {
-        res.render('player/smallStatistic', {
-        	layout: 'player.hbs'
-        })
+    app.post('/player/waiting-room', (req, res) => {
+        res.render('waiting_room', { info: req.body });
     });
 
     app.route('/player/question')
-    .get((req, res) => {
-        res.render('player/qa', {
+        .get((req, res) => {
+            res.render('player/qa');
+        })
+    app.get('/nar-bar', (req, res) => {
+        res.render('player/home', {
             layout: 'player.hbs'
-        });
-    })  
-
-    app.route('/player/new_game')
-    .get((req, res) => {
-        res.render('player/new_game', {
-            layout: 'player.hbs'
-        });
-    })  
-
-    app.get('/player/final-stat' , (req,res) => {
-        res.render('player/final-stat');
+        })
     });
-}   
-    
+    app.get('/player/middle', (req, res) => {
+        res.render('player/middle', {
+            layout: 'player.hbs'
+        })
+    });
+}

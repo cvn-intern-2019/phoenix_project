@@ -16,5 +16,7 @@ module.exports = function(app) {
     app.route('/host/questionset/:qs_id/create_room')
         .get(authMiddleware.isSignIn, questionset_controller.create_room);
 
+    app.route('/host/questionset/:qs_id/start_game')
+        .get(authMiddleware.isSignIn, questionset_controller.create_room);
 
 }
