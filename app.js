@@ -10,6 +10,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
+const morgan = require('morgan');
 const multer = require('multer')
 const csrf = require('csurf');
 
@@ -21,15 +22,16 @@ let io = socketIO(server);
 let csrfProtection = csrf();
 
 const storage = multer.diskStorage({
-    destination: './public/img/',
+    destination: './public/img/', 
     filename: function (req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname));
-    }
+    }	
 })
 const upload = multer({
     storage: storage
 }).single('question_img');
 app.use(upload);
+
 
 //hbs engine
 app.engine('hbs', exphbs({
@@ -41,7 +43,7 @@ app.engine('hbs', exphbs({
     }
 }));
 
-// app.use(morgan('dev'));
+app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
@@ -54,53 +56,18 @@ app.use(passport.session());
 app.use(flash());
 app.use(csrfProtection);
 
+// app.use('/questionset', require('./routes/questionset.route'));
+
 require('./models/passport')(passport);
 require('./routes/route')(app);
 require('./routes/player.route')(app);
 require('./routes/host.route')(app, passport);
 require('./routes/questionset.route')(app);
 require('./routes/question.route')(app);
-const {Game_rooms, Room} = require('./utils/game_room');
 
-app.get('/session', function (req, res, next) {
+app.get('/session', function(req, res, next) {
     res.send(req.session)
 })
-var Game_room = new Game_rooms();
-
-io.on('connection', (socket) => {
-    console.log("A new user just connected");
-
-    socket.on('create_room', (data) => {
-        let room = new Room(data[1],data[0]);
-        console.log(room);
-    })
-    socket.on('join', (info) => {
-        let pin = info.pin;
-        socket.join(info.pin);
-        //   users.removeUser(socket.id);
-        //   users.addUser(socket.id, params.name, params.room);
-
-
-        //   io.to(params.room).emit('updateUsersList', users.getUserList(params.room));
-        socket.emit('newMessage', pin);
-
-        //   socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', "New User Joined!"));
-
-    });
-    socket.on('disconnect', () => {
-        //   let user = users.removeUser(socket.id);
-
-        //   if(user){
-        //     io.to(user.room).emit('updateUsersList', users.getUserList(user.room));
-        //     io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left ${user.room} chat room.`))
-        //   }
-        console.log('user disconnect');
-
-
-    });
-})
-
-
 
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);
