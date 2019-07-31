@@ -65,7 +65,6 @@ require('./routes/question.route')(app);
 app.get('/session', function(req, res, next) {
     res.send(req.session)
 })
-
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);
 })

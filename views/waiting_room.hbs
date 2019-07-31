@@ -1,8 +1,7 @@
 {{#section 'js'}}
 <script>
-    document.getElementById("pin_code").innerHTML =
-        Math.floor(Math.random() * (9999 - 1000) + 1000);
 </script>
+
 {{/section}}
 
 
@@ -10,7 +9,7 @@
     <div class="row d-flex justify-content-center mt-5 mx-4">
         <div class="border border-dark col-md-3"
             style="font-size: 30px;margin-bottom: 100px; border: 5px solid; text-align:center;">
-            <p><strong> PIN: <span id="pin_code"></span> </strong> </p>
+            <p><strong> PIN: {{ info.pin }}</span> </strong> </p>
         </div>
     </div>
     <div class="row mb-5">
@@ -18,25 +17,17 @@
             <p> <span class="red display-4">0 Players</span></p>
         </div>
         <div class="col-md-6  text-white">
-            <a class=" col-md-4 btn btn-success border border-dark" style="font-size: 20px;float:right" href="/questioncontent">Start</a>
+            {{#if user}}
+            <a class=" col-md-4 btn btn-success border border-dark" style="font-size: 20px;float:right">Start</a>
+            {{/if}}
         </div>
     </div>
     <div class="row border border-dark">
         <div class="col-md-4" style="">
             <div class="col-md-8 py-2">
-                <p>test2</p>
+                <p>{{ info.nickname }}</p>
             </div>
         </div>
-        <div class="col-md-4" style="">
-            <div class="col-md-8 py-2">
-                <p>test2</p>
-            </div>
-        </div>
-        <div class="col-md-4" style="">
-            <div class="col-md-8 py-2">
-                <p>test2</p>
-            </div>
-        </div>
-
     </div>
+
 </div>
