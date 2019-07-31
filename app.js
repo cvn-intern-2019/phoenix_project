@@ -62,9 +62,9 @@ require('./routes/host.route')(app, passport);
 require('./routes/questionset.route')(app);
 require('./routes/question.route')(app);
 
-app.get('/session', function(req, res, next) {
-    res.send(req.session)
-})
+const {Players, Player} = require('./utils/players');
+
+const players = new Players();
 
 io.on('connection', (socket) => {
     console.log("A new user just connected");
@@ -72,11 +72,11 @@ io.on('connection', (socket) => {
     socket.on('join', (info) => {
         let pin = info.pin;
         socket.join(info.pin);
-    //   users.removeUser(socket.id);
-    //   users.addUser(socket.id, params.name, params.room);
+        players.removePlayer(socket.id);
+        players.addPlayer(new Player(socket.id, info.nickname, info.pin));
   
   
-    //   io.to(params.room).emit('updateUsersList', users.getUserList(params.room));
+      io.to(info.pin).emit('updatePlayerList', players.getPlayerByRoom(info.pin));
       socket.emit('newMessage', pin);
   
     //   socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', "New User Joined!"));
@@ -84,14 +84,10 @@ io.on('connection', (socket) => {
     })
   
     socket.on('disconnect', () => {
-    //   let user = users.removeUser(socket.id);
-  
-    //   if(user){
-    //     io.to(user.room).emit('updateUsersList', users.getUserList(user.room));
-    //     io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left ${user.room} chat room.`))
-    //   }
-    console.log('user disconnect');
-    
+        let player = players.removePlayer(socket.id);
+        if(player){
+            io.to(player.roomId).emit('updatePlayerList', players.getPlayerByRoom(player.roomId));
+        }
     });
   });
 
