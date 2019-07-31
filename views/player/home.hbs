@@ -46,7 +46,8 @@
 {{/section}}
 
 <div class="homepage-bg p-5" style="height: 100%">
-    <form class="container px-5" method="POST" id="player-info">
+    <form class="container px-5" action="/player/waiting-room" method="POST" id="player-info">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         <div class="form-group px-5 my-5">
             <input class="form-control" name="pin" type="text" placeholder="PIN">
         </div>

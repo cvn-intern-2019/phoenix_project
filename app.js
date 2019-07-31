@@ -42,7 +42,7 @@ app.engine('hbs', exphbs({
     }
 }));
 
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
@@ -65,6 +65,35 @@ require('./routes/question.route')(app);
 app.get('/session', function(req, res, next) {
     res.send(req.session)
 })
+
+io.on('connection', (socket) => {
+    console.log("A new user just connected");
+  
+    socket.on('join', (info) => {
+        let pin = info.pin;
+        socket.join(info.pin);
+    //   users.removeUser(socket.id);
+    //   users.addUser(socket.id, params.name, params.room);
+  
+  
+    //   io.to(params.room).emit('updateUsersList', users.getUserList(params.room));
+      socket.emit('newMessage', pin);
+  
+    //   socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', "New User Joined!"));
+  
+    })
+  
+    socket.on('disconnect', () => {
+    //   let user = users.removeUser(socket.id);
+  
+    //   if(user){
+    //     io.to(user.room).emit('updateUsersList', users.getUserList(user.room));
+    //     io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left ${user.room} chat room.`))
+    //   }
+    console.log('user disconnect');
+    
+    });
+  });
 
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);
