@@ -1,0 +1,25 @@
+{{#section 'js'}}
+<script>
+    let socket = io();
+    let data = [list_question,{{qs_id}}];
+    socket.emit('create_room', data);
+</script>
+{{/section}}
+<script>
+    var list_question = [];
+</script>
+{{#each question}}
+<script>
+    list_question.push({
+        question_id: "{{question_id}}",
+        question_content: "{{question_content}}",
+        question_answer1: "{{question_answer1}}",
+        question_answer2: "{{question_answer2}}",
+        question_answer3: "{{question_answer3}}",
+        question_answer4: "{{question_answer4}}",
+        question_answercorrect: "{{question_answercorrect}}",
+        question_image: "{{question_image}}",
+        questionset_id: "{{questionset_id}}",
+    });
+</script>
+{{/each}}

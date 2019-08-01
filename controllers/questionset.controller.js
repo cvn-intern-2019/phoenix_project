@@ -1,4 +1,6 @@
 const questionset_model = require('../models/questionset.model');
+const question_model = require('../models/question.model');
+const {Game_rooms, Room} = require('../utils/game_room');
 var multer = require('multer');
 var fs = require('fs');
 
@@ -111,18 +113,13 @@ module.exports = {
 
 
     create_room: (req, res) => {
-        questionset_model.checkValidQuestionSet(req.params.qs_id, req.user.user_id)
-            .then(result => {
-                if (result[0]) {
-                    res.render('player/new_game', { questionsets: result, csrfToken: req.csrfToken() });
-                    // res.render('waiting_room', { questionsets: result, csrfToken: req.csrfToken() });
-                } else {
-                    res.redirect('/host/questionset');
-                }
-            })
-            .catch(err => {
-                console.log(err);
-                res.render('error');
-            });
+        question_model.findByQuestionsetId(req.params.qs_id)
+        .then(result => {
+            res.render('player/middle',  {question : result,qs_id : req.params.qs_id} );
+            console.log(result);
+        })
+        .catch(err => {
+            console.log(err);
+        })
     },
 };

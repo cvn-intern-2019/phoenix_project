@@ -11,7 +11,6 @@ class Players {
 
     getPlayerByRoom(roomId) {
         let players = this.players.filter((player) => player.roomId === roomId);
-        console.log(players);
         return players;
     }
 
@@ -20,9 +19,13 @@ class Players {
     }
 
     removePlayer(playerId) {
-        if (this.findPlayerById(playerId)) {
-            this.players.filter((player) => player.id !== playerId);
+        let player = this.getPlayerById(playerId);
+
+        if (player) {
+            this.players = this.players.filter((player) => player.id !== playerId);
         }
+
+        return player;
     }
 
     checkAnswerAndUpdateScore(correctAnswer, playerId) {
@@ -42,10 +45,6 @@ class Player {
         this.answerTime = 0;
     }
 
-    constructor() {
-        console.log("Error when init player");
-    }
-
     calculateScore() {
         // Total score: 300 pt
         // Each second will subtract 10 pt
@@ -54,3 +53,5 @@ class Player {
         this.answer = 0;
     }
 }
+
+module.exports = {Players, Player};

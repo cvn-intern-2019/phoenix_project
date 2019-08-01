@@ -1,7 +1,6 @@
 ul#list-score{
 	margin: 10% 20% 10% 20%;
 	padding: 0px 3% 0px 0%;
-
 }
 ul#list-score li{
 	margin-bottom: 2%;
@@ -14,14 +13,7 @@ div#result-answer h1{
 div#result-answer h2{
 	margin-bottom: 70%;
 }
-@media screen and (max-width: 768px) {
-	div#result-answer h1{
-		font-size:60px;
-		margin-top: 20%;
-	}
-	div#result-answer h2{
-		margin-bottom: 40%;
-	}
+@media only screen and (max-width: 768px) {
 	#navbarTogglerDemo03 h1#numOfQuestion{
 		font-size: 28px;
 	}
