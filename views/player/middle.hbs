@@ -4,9 +4,18 @@
     let data = [list_question, {{ qs_id }}];
     socket.emit('create_room', data);
     socket.on('waiting-room', (pin) => {
-        window.location.replace(`/waiting-room?pin=${pin}`);
+        $('#pin').html(pin);
+        socket.emit('host-join', pin);
     })
-
+    
+    socket.on('updatePlayerList' , players => {
+        $("#players-number").html(players.length);
+        $('#playerList').html('');
+        for (let i = 0; i < players.length; i++) {
+            console.log(players[i].name);
+            $('#playerList').append($("<div class='col-md-4 py-2'><p>" + players[i].name + "</p></div>"));
+        }
+    })
 </script>
 {{/section}}
 <script>
@@ -27,3 +36,24 @@
     });
 </script>
 {{/each}}
+
+<div class="container">
+    <div class="row d-flex justify-content-center mt-5 mx-4">
+        <div class="border border-dark col-md-3"
+            style="font-size: 30px;margin-bottom: 100px; border: 5px solid; text-align:center;">
+            <p><strong> PIN: <span id="pin"></span> </strong></p>
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <span class="red display-4">
+                <h1 id="players-number">0</h1>Players
+            </span>
+        </div>
+        <div class="col-md-6  text-white">
+            <a class=" col-md-4 btn btn-success border border-dark" style="font-size: 20px;float:right">Start</a>
+        </div>
+    </div>
+    <div class="row border border-dark" id="playerList">
+    </div>
+</div>

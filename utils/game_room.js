@@ -11,7 +11,7 @@ class Game_rooms {
     }
 
     getRoomById(id) {
-        return this.Game_rooms.filter((game_room) => game_room.roomId === id)[0];
+        return this.Game_rooms.filter((room) => room.roomId == id)[0];
     }
 
     removeRoomById(id) {

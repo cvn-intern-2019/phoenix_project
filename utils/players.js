@@ -10,7 +10,7 @@ class Players {
     }
 
     getPlayerByRoom(roomId) {
-        let players = this.players.filter((player) => player.roomId === roomId);
+        let players = this.players.filter((player) => player.roomId == roomId);
         return players;
     }
 

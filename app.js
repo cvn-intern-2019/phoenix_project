@@ -10,7 +10,6 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
-const morgan = require('morgan');
 const multer = require('multer')
 const csrf = require('csurf');
 
@@ -43,7 +42,6 @@ app.engine('hbs', exphbs({
     }
 }));
 
-app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
@@ -64,10 +62,53 @@ require('./routes/player.route')(app);
 require('./routes/host.route')(app, passport);
 require('./routes/questionset.route')(app);
 require('./routes/question.route')(app);
+const { Game_rooms, Room } = require('./utils/game_room');
 
-app.get('/session', function(req, res, next) {
-    res.send(req.session)
+const { Players, Player } = require('./utils/players');
+
+const players = new Players();
+
+const Game_room = new Game_rooms();
+
+io.on('connection', (socket) => {
+    console.log("A new user just connected");
+
+    socket.on('create_room', (data) => {
+        let room = new Room(data[1], data[0]);
+        Game_room.addRoom(room);
+        console.log(Game_room);
+        socket.emit('waiting-room', room.roomId);
+    })
+
+    socket.on('host-join' , (pin) => {
+        socket.join(pin);
+    })
+
+    socket.on('player-join', (info) => {
+        let pin = info.pin;
+        if (!Game_room.getRoomById(pin)) {
+            console.log('Room not found');
+            socket.emit('roomNotExists');
+        }
+
+        socket.join(pin);
+        players.removePlayer(socket.id);
+        players.addPlayer(new Player(socket.id, info.nickname, pin));        
+        io.to(pin).emit('updatePlayerList', players.getPlayerByRoom(pin));
+        console.log(players.getPlayerByRoom(pin));
+        //   socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', "New User Joined!"));
+    })
+
+    socket.on('disconnect', () => {
+        let player = players.removePlayer(socket.id);
+        console.log("A user disconnect");
+        if (player) {
+            io.to(player.roomId).emit('updatePlayerList', players.getPlayerByRoom(player.roomId));
+        }
+    });
 })
+
+
 
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);
