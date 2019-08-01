@@ -27,7 +27,9 @@
                 <h1 class="text-center ml-auto" id="numOfQuestion"><strong>Question 1 of 10</strong></h1>
                 <div class="form-inline ml-auto my-2 my-lg-0">
                     <h3 id="playerName"><strong>Name</strong></h3>
-                    <div class="border border-dark p-2 ml-3" ><h4 id="point">1234 .pt</h4></div>
+                    <div class="border border-dark p-2 ml-3">
+                        <h4 id="point">1234 .pt</h4>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -41,7 +43,10 @@
     <script src="/js/jquery.validate.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/validateForm.js"></script>
-     <script src="/socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io({ transports: ['websocket'], upgrade: false });
+    </script>
     {{{_sections.js}}}
 
 </body>

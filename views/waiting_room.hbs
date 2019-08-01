@@ -1,7 +1,6 @@
 {{#section 'js'}}
 <script>
     let socket = io({ transports: ['websocket'], upgrade: false });
-
     let info =
     {
         nickname: '{{info.nickname}}',
@@ -9,7 +8,7 @@
     };
 
     socket.on('connect', () => {
-        socket.emit('join', info)
+        socket.emit('join', info);
     });
 
     socket.on('roomNotExists', () => {
@@ -20,7 +19,9 @@
     socket.on('newMessage', (pin) => {
         console.log(`Welcome to ${pin}`);
     })
-
+    socket.on("playerInfo",(player)=>{
+        localStorage.setItem("profile",JSON.stringify(player));
+    })
     socket.on('updatePlayerList', (players) => {
         $("#players-number").html(players.length);
         $('#playerList').html('');
@@ -33,6 +34,15 @@
     socket.on('disconnect', function () {
         console.log('disconnected from server.');
     });
+
+    localStorage.setItem("localPin", info.pin);
+    localStorage.setItem("questionIndex", 0);
+    $("#host_start").click(() => {
+        socket.emit("start-game");
+    })
+    socket.on("redirect-to-question", () => {
+        window.location.replace('/player/new_game');
+    })
 </script>
 
 {{/section}}
@@ -52,9 +62,8 @@
             </span>
         </div>
         <div class="col-md-6  text-white">
-            {{#if user}}
-            <a class=" col-md-4 btn btn-success border border-dark" style="font-size: 20px;float:right">Start</a>
-            {{/if}}
+            <button class=" col-md-4 btn btn-success border border-dark" id="host_start"
+                style="font-size: 20px;float:right">Start</button>
         </div>
     </div>
     <div class="row border border-dark" id="playerList">

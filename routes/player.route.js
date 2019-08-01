@@ -9,7 +9,7 @@ module.exports = (app) => {
         res.render('waiting_room' , {info : req.body});
     });
 
-    app.get('/small-statistic', (req, res) => {
+    app.get('/player/small-statistic', (req, res) => {
         res.render('player/smallStatistic', {
         	layout: 'player.hbs'
         })

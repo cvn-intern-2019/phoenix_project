@@ -21,6 +21,11 @@
 {{/section}}
 {{#section 'js'}}
 <script>
+    let profile = JSON.parse(window.localStorage.getItem("profile"));
+    socket.emit("updateProfile",profile.id);
+    socket.on("updatedProfile",(player)=>{
+        window.localStorage.setItem("profile",JSON.stringify(player));
+    })
     $("body").addClass('homepage-bg');
     var sec = 2;
     $('#countdown').css({
@@ -34,6 +39,7 @@
         }
         if (sec == -1) {
             clearInterval(timer);
+            window.location.replace("/player/new_game");
         }
     }, 1000);
 </script>

@@ -11,7 +11,7 @@ class Game_rooms {
     }
 
     getRoomById(id) {
-        return this.Game_rooms.filter((game_room) => game_room.id === id)[0];
+        return this.Game_rooms.filter((room) => room.roomId == id)[0];
     }
 
     removeRoom(id) {
@@ -25,7 +25,8 @@ class Game_rooms {
 class Room {
     constructor(qs,list_question) {
         this.qs = qs;
-        this.roomId =  Math.floor((Math.random() * 9000) + 1000);
+        // this.roomId =  Math.floor((Math.random() * 9000) + 1000);
+        this.roomId =  1234;
         this.list_question = list_question;
     }
 }
