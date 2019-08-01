@@ -14,6 +14,7 @@
 
 {{!-- jquery validate --}}
 <script>
+    let socket = io({ transports: ['websocket'], upgrade: false });
     $(document).ready(function () {
         $("#player-info").validate({
             rules: {
@@ -26,28 +27,28 @@
                 nickname: {
                     required: true,
                     minlength: 3,
+                    maxlength: 10,
                 },
             },
             messages: {
                 pin: {
                     required: "Please enter PIN",
-                    minlength: "PIN is not correct",
-                    maxlength: "PIN is not correct",
                     digits: "PIN must be number"
                 },
                 nickname: {
                     required: "Please enter nickname",
-                    minlength: "Nickname must be at least 3 characters",
                 },
             }
         });
     });
+
+    $('#player-info').submit(function (e) {
+        socket.on('connect', () => {
+            socket.emit('join', info)
+        });
+    })
 </script>
 
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  var socket = io();
-</script>
 {{/section}}
 
 <div class="homepage-bg p-5" style="height: 100%">
@@ -64,3 +65,4 @@
         </div>
     </form>
 </div>
+

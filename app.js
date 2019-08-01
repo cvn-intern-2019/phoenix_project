@@ -60,42 +60,53 @@ require('./routes/player.route')(app);
 require('./routes/host.route')(app, passport);
 require('./routes/questionset.route')(app);
 require('./routes/question.route')(app);
-const {Game_rooms, Room} = require('./utils/game_room');
+const { Game_rooms, Room } = require('./utils/game_room');
 
-app.get('/session', function (req, res, next) {
-    res.send(req.session)
-})
-var Game_room = new Game_rooms();
+const { Players, Player } = require('./utils/players');
+
+const players = new Players();
+
+const Game_room = new Game_rooms();
 
 io.on('connection', (socket) => {
     console.log("A new user just connected");
 
     socket.on('create_room', (data) => {
-        let room = new Room(data[1],data[0]);
-        console.log(room);
+        let room = new Room(data[1], data[0]);
+        Game_room.addRoom(room);
+        socket.emit('waiting-room', room.roomId);
     })
     socket.on('join', (info) => {
         let pin = info.pin;
+        if (!Game_room.getRoomById(pin)) {
+            console.log('Room not found');
+            socket.emit('roomNotExists')
+        }
+
         socket.join(info.pin);
+        players.removePlayer(socket.id);
+        players.addPlayer(new Player(socket.id, info.nickname, info.pin));
+
+
+        io.to(info.pin).emit('updatePlayerList', players.getPlayerByRoom(info.pin));
+        socket.emit('newMessage', pin);
+
+        //   socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', "New User Joined!"));
+
+    })
+
+    socket.on('disconnect', () => {
+        let player = players.removePlayer(socket.id);
+        if (player) {
+            io.to(player.roomId).emit('updatePlayerList', players.getPlayerByRoom(player.roomId));
+        }
         //   users.removeUser(socket.id);
         //   users.addUser(socket.id, params.name, params.room);
 
 
         //   io.to(params.room).emit('updateUsersList', users.getUserList(params.room));
-        socket.emit('newMessage', pin);
 
         //   socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', "New User Joined!"));
-
-    });
-    socket.on('disconnect', () => {
-        //   let user = users.removeUser(socket.id);
-
-        //   if(user){
-        //     io.to(user.room).emit('updateUsersList', users.getUserList(user.room));
-        //     io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left ${user.room} chat room.`))
-        //   }
-        console.log('user disconnect');
-
 
     });
 })
