@@ -21,15 +21,16 @@ let io = socketIO(server);
 let csrfProtection = csrf();
 
 const storage = multer.diskStorage({
-    destination: './public/img/',
+    destination: './public/img/', 
     filename: function (req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname));
-    }
+    }	
 })
 const upload = multer({
     storage: storage
 }).single('question_img');
 app.use(upload);
+
 
 //hbs engine
 app.engine('hbs', exphbs({
@@ -41,7 +42,6 @@ app.engine('hbs', exphbs({
     }
 }));
 
-// app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
@@ -53,6 +53,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use(csrfProtection);
+
+// app.use('/questionset', require('./routes/questionset.route'));
 
 require('./models/passport')(passport);
 require('./routes/route')(app);
@@ -72,27 +74,33 @@ io.on('connection', (socket) => {
     console.log("A new user just connected");
 
     socket.on('create_room', (data) => {
-        Game_room.addRoom(new Room(data[1], data[0]));
+        let room = new Room(data[1], data[0]);
+        Game_room.addRoom(room);
         console.log(Game_room);
-
+        socket.emit('waiting-room', room.roomId);
     })
-    socket.on('join', (info) => {
+
+    socket.on('host-join' , (pin) => {
+        socket.join(pin);
+    })
+
+    socket.on('player-join', (info) => {
         let pin = info.pin;
-        /*if(!Game_room.getRoomById(pin)) {
+        if (!Game_room.getRoomById(pin)) {
             console.log('Room not found');
-            socket.emit('roomNotExists')
-        }*/
+            socket.emit('roomNotExists');
+        }
 
-        socket.join(info.pin);
+        socket.join(pin);
         players.removePlayer(socket.id);
-        players.addPlayer(new Player(socket.id, info.nickname, info.pin));
-
-
-        io.to(info.pin).emit('updatePlayerList', players.getPlayerByRoom(info.pin));
-        socket.emit('newMessage', pin);
+        players.addPlayer(new Player(socket.id, info.nickname, pin));        
+        io.to(pin).emit('updatePlayerList', players.getPlayerByRoom(pin));
+        console.log(players.getPlayerByRoom(pin));
+        //   socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', "New User Joined!"));
         io.to(`${players.players[parseInt(players.players.length-1)].id}`).emit("playerInfo",players.players[parseInt(players.players.length-1)]);
 
     })
+
     socket.on("start-game", () => {
         socket.emit("redirect-to-question");
     })
@@ -104,22 +112,25 @@ io.on('connection', (socket) => {
         else
             socket.emit("final-statistic");    
     })
+    
     socket.on("thisIsMyAnswer",(player,correctAnswer)=>{
         console.log(players);
         players.updatePlayer(player);
         players.checkAnswerAndUpdateScore(correctAnswer,player.id);
     })
+    
     socket.on("updateProfile",(playerId)=>{
         let player = players.getPlayerById(playerId);
         socket.emit("updatedProfile",player);
     })
+
     socket.on('disconnect', () => {
         console.log("Dis");
         // let player = players.removePlayer(socket.id);
         // if (player) {
         //     io.to(player.roomId).emit('updatePlayerList', players.getPlayerByRoom(player.roomId));
         // }
-    });
+    })
 })
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);

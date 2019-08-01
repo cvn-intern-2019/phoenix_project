@@ -5,9 +5,11 @@ module.exports = (app) => {
         res.render('player/home', {csrfToken: req.csrfToken()})
     });
 
-    app.post('/player/waiting-room' , (req,res) => {
-        res.render('waiting_room' , {info : req.body});
-    });
+    
+
+    // app.post('/player/waiting-room' , (req,res) => {
+    //     res.render('waiting_room' , {info : req.body});
+    // });
 
     app.get('/player/small-statistic', (req, res) => {
         res.render('player/smallStatistic', {
