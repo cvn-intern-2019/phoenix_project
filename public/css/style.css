@@ -29,7 +29,7 @@ img#old_img {
 }
 
 body {
-    height: 100%;
+    height: 80vh;
     margin: 0;
     padding: 0;
 }
@@ -96,7 +96,3 @@ form#player-info .btn {
     color: #FF0000;
     /* red */
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 67a3a6c97cc54502e9a3a7630096469af654b7c3
