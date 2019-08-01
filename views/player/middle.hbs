@@ -12,7 +12,7 @@
         $("#players-number").html(players.length);
         $('#playerList').html('');
         for (let i = 0; i < players.length; i++) {
-            console.log(players[i].name);
+            //console.log(players[i].name);
             $('#playerList').append($("<div class='col-md-4 py-2'><p>" + players[i].name + "</p></div>"));
         }
     })
@@ -47,7 +47,7 @@
     <div class="row mb-5">
         <div class="col-md-6">
             <span class="red display-4">
-                <h1 id="players-number">0</h1>Players
+                <h1 id="players-number">0</h1><strong>Players</strong>
             </span>
         </div>
         <div class="col-md-6  text-white">
