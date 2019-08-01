@@ -28,23 +28,23 @@ class Players {
         return player;
     }
 
-    updatePlayer(playerData){
-        // Update player info
-        let player = this.getPlayerById(playerData.id);
-        player.score = playerData.score;
-        player.answer = playerData.answer;
-        player.answerTime = playerData.answerTime;
+    updatePlayer(playerData) {
+            // Update player info
+        if (playerData.id) {
+            let player = this.getPlayerById(playerData.id);
+            player.score = playerData.score;
+            player.answer = playerData.answer;
+            player.answerTime = playerData.answerTime;
 
-        this.removePlayer(playerData.id);
-        this.addPlayer(player);
+            this.removePlayer(playerData.id);
+            this.addPlayer(player);
+        }
     }
 
     checkAnswerAndUpdateScore(correctAnswer, playerId) {
         let player = this.getPlayerById(playerId);
-        console.log(this.players);
         if (correctAnswer == player.answer)
             player.calculateScore();
-        console.log(player);
     }
 }
 

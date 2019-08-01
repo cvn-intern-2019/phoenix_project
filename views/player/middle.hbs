@@ -1,14 +1,18 @@
 {{#section 'js'}}
 <script>
-    let socket = io();
+    let socket = io({ transports: ['websocket'], upgrade: false });
     let data = [list_question, {{ qs_id }}];
+    let roomPin = '';
     socket.emit('create_room', data);
     socket.on('waiting-room', (pin) => {
         $('#pin').html(pin);
         socket.emit('host-join', pin);
+        roomPin = pin;
+        localStorage.setItem("localPin", roomPin);
+        localStorage.setItem("questionIndex", 0);
     })
-    
-    socket.on('updatePlayerList' , players => {
+
+    socket.on('updatePlayerList', players => {
         $("#players-number").html(players.length);
         $('#playerList').html('');
         for (let i = 0; i < players.length; i++) {
@@ -16,8 +20,19 @@
             $('#playerList').append($("<div class='col-md-4 py-2'><p>" + players[i].name + "</p></div>"));
         }
     })
+
+
+
+    $("#host_start").click(() => {
+        socket.emit("start-game", roomPin);
+    })
+
+    socket.on("redirect-to-question", () => {
+        window.location.replace('/player/new_game');
+    })
 </script>
 {{/section}}
+
 <script>
     var list_question = [];
 </script>
@@ -51,7 +66,8 @@
             </span>
         </div>
         <div class="col-md-6  text-white">
-            <a class=" col-md-4 btn btn-success border border-dark" style="font-size: 20px;float:right">Start</a>
+            <button class=" col-md-4 btn btn-success border border-dark" id="host_start"
+                style="font-size: 20px;float:right">Start</button>
         </div>
     </div>
     <div class="row border border-dark" id="playerList">

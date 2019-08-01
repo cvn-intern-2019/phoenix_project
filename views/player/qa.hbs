@@ -80,12 +80,14 @@
             $('#countdown').addClass("text-danger");
             $('#countdown').addClass("text-warning");
         }
-        if (sec == -1) {
+        if (sec <= -1) {
             let player = JSON.parse(localStorage.getItem("profile"));
-            player.answer = answer;
-            player.answerTime = answerTime;
-            localStorage.setItem("profile",JSON.stringify(player));
-            socket.emit("thisIsMyAnswer",player,localStorage.getItem("correct_answer"));
+            if(player){
+                player.answer = answer;
+                player.answerTime = answerTime;     
+                localStorage.setItem("profile",JSON.stringify(player));
+                socket.emit("thisIsMyAnswer",player,localStorage.getItem("correct_answer"));
+            }            
             $('#countdown').fadeOut('slow');
             clearInterval(timer);
             window.location.replace("/player/small-statistic");
@@ -106,7 +108,9 @@
     // send get question command
     socket.emit("getQuestion", window.localStorage.getItem("localPin"), window.localStorage.getItem("questionIndex"));
     // Increase questionIndex
-    window.localStorage.setItem("questionIndex",parseInt(window.localStorage.getItem("questionIndex"))+1)    
+    window.localStorage.setItem("questionIndex",parseInt(window.localStorage.getItem("questionIndex"))+1)
+    let i = window.localStorage.getItem("questionIndex");
+    console.log(i);
     // Get question content
     socket.on("question-content", (question) => {
         // Show question-content

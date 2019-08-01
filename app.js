@@ -101,8 +101,8 @@ io.on('connection', (socket) => {
 
     })
 
-    socket.on("start-game", () => {
-        socket.emit("redirect-to-question");
+    socket.on("start-game", (pin) => {
+        io.to(pin).emit("redirect-to-question");
     })
 
     socket.on("getQuestion", (pin, index) => {
