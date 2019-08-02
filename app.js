@@ -105,14 +105,18 @@ io.on('connection', (socket) => {
         io.to(pin).emit("redirect-to-question");
     })
 
-    socket.on("getQuestion", (pin, index) => {
+    socket.on("getQuestion", (pin) => {
         let room = Game_room.getRoomById(pin);
-        if(index < room.list_question.length)
-            socket.emit("question-content", room.list_question[index]);
+        if(room.question_index < room.list_question.length)
+            socket.emit("question-content", room.list_question[room.question_index]);
         else
             socket.emit("final-statistic");    
     })
     
+    socket.on("nextQuestion",(pin)=>{
+        Game_room.updateQuestionIndexByRoomId(pin);
+    })
+
     socket.on("thisIsMyAnswer",(player,correctAnswer)=>{
         console.log(players);
         players.updatePlayer(player);

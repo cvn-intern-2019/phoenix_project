@@ -99,7 +99,7 @@
 {{#section 'js'}}
 <script>
     let socket = io();
-
+    console.log(socket.id);
     let info =
     {
         nickname: '{{info.nickname}}',
@@ -111,8 +111,11 @@
     });
 
     socket.on("playerInfo",(player)=>{
-        localStorage.setItem("profile",JSON.stringify(player));
+        localStorage.setItem(`profile_${socket.id}`,JSON.stringify(player));
+        console.log(localStorage.getItem(`profile_${socket.id}`));
+        console.log(`profile_${socket.id}`);
     })
+
     socket.on('updatePlayerList', (players) => {
         $("#players-number").html(players.length);
         $('#playerList').html('');
@@ -136,7 +139,6 @@
     })
 
     localStorage.setItem("localPin", info.pin);
-    localStorage.setItem("questionIndex", 0);
     
 </script>
 {{/section}}

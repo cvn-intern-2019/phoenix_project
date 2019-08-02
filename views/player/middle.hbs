@@ -9,7 +9,6 @@
         socket.emit('host-join', pin);
         roomPin = pin;
         localStorage.setItem("localPin", roomPin);
-        localStorage.setItem("questionIndex", 0);
     })
 
     socket.on('updatePlayerList', players => {

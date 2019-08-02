@@ -14,7 +14,9 @@
 
 {{#section 'js'}}
 <script type="text/javascript">
-    socket.emit("getQuestion", window.localStorage.getItem("localPin"), window.localStorage.getItem("questionIndex"));
+    console.log(socket.id);
+
+    socket.emit("getQuestion", window.localStorage.getItem("localPin"));
     socket.on("question-content", (question) => {
         $("#question-content").html(question.question_content);
     })
