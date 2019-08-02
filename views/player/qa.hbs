@@ -43,7 +43,7 @@
     let answer = 0;
     let answerTime = 0;
     var start = Date.now();
-    let player = JSON.parse(localStorage.getItem(`profile_${socket.id}`));
+    let player = JSON.parse(sessionStorage.getItem(`profile`));
     if(!player){
         disableAnswerBtn();
     }
@@ -90,7 +90,7 @@
             if(player){
                 player.answer = answer;
                 player.answerTime = answerTime;     
-                localStorage.setItem(`profile_${socket.id}`,JSON.stringify(player));
+                sessionStorage.setItem(`profile`,JSON.stringify(player));
                 socket.emit("thisIsMyAnswer",player,localStorage.getItem("correct_answer"));
             }else{
                 // only host

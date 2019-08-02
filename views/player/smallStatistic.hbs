@@ -21,12 +21,23 @@
 {{/section}}
 {{#section 'js'}}
 <script>
-    let profile = JSON.parse(window.localStorage.getItem("profile"));
-    if (profile) {
-        socket.emit("updateProfile", profile.id);
-        socket.on("updatedProfile", (player) => {
-            window.localStorage.setItem("profile", JSON.stringify(player));
+    let player = JSON.parse(window.sessionStorage.getItem("profile"));
+    if (player) {
+        socket.emit("updateProfile", player.id);
+        socket.on("updatedProfile", (profile) => {
+            window.sessionStorage.setItem("profile", JSON.stringify(profile));
+            updatedPlayer = JSON.parse(window.sessionStorage.getItem("profile"));
+            if (player.score < updatedPlayer.score) {
+                $(`#answer_point`).html("+ " + (parseInt(updatedPlayer.score) - parseInt(player.score)) + " .pt");
+                $(`#answer_status`).html("Correct !")
+            } else {
+                $(`#answer_result`).removeClass("bg-success").addClass('bg-danger');
+                $(`#answer_status`).html("Incorrect !")
+                $(`#answer_point`).html("+ 0 .pt");
+            }
         })
+
+
     }
     $("body").addClass('homepage-bg');
     var sec = 2;
@@ -48,7 +59,7 @@
 {{/section}}
 <div class="container py-5 ">
     <div class="row border border-dark rounded bg-white">
-        <div class="col-md-6 text-center p-0 px-2 py-2 bg-success">
+        <div class="col-md-6 text-center p-0 px-2 py-2 bg-success" id="answer_result">
             <div class="countdown d-flex justify-content-center align-items-center">
                 <h3 class="text-danger m-0" id="countdown">3</h3>
             </div>
@@ -57,8 +68,8 @@
 				<h2 class="" style="margin-bottom: 70%;">+ 1234 .pt</h2>
 			</div> -->
             <div class="text-white" style="font-weight: bold;" id="result-answer">
-                <h1 class="">Incorrect</h1>
-                <h2 class="">+ 0 .pt</h2>
+                <h1 id="answer_status">Incorrect</h1>
+                <h2 id="answer_point">+ 0 .pt</h2>
             </div>
         </div>
         <div class="col-md-6 p-0 bg-dark text-white">
