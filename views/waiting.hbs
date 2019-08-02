@@ -136,7 +136,7 @@
         socket.emit('player-join', info);
     })
 
-    localStorage.setItem("localPin", info.pin);
+    sessionStorage.setItem("localPin", info.pin);
     
 </script>
 {{/section}}

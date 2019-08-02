@@ -24,9 +24,7 @@ module.exports = (app) => {
         });
     })  
     app.get('/player/middle', (req, res) => {
-        res.render('player/middle', {
-            layout: 'player.hbs'
-        })
+        res.render('player/middle')
     });
     app.route('/player/new_game')
     .get((req, res) => {
@@ -36,7 +34,9 @@ module.exports = (app) => {
     })  
 
     app.get('/player/final-stat' , (req,res) => {
-        res.render('player/final-stat');
+        res.render('player/final-stat',{
+            layout: 'player.hbs'
+        });
     });
 }   
     

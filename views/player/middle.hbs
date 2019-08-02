@@ -8,7 +8,7 @@
         $('#pin').html(pin);
         socket.emit('host-join', pin);
         roomPin = pin;
-        localStorage.setItem("localPin", roomPin);
+        sessionStorage.setItem("localPin", roomPin);
     })
 
     socket.on('updatePlayerList', players => {

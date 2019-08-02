@@ -95,8 +95,6 @@ io.on('connection', (socket) => {
         players.removePlayer(socket.id);
         players.addPlayer(new Player(socket.id, info.nickname, pin));        
         io.to(pin).emit('updatePlayerList', players.getPlayerByRoom(pin));
-        console.log(players.getPlayerByRoom(pin));
-        //   socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', "New User Joined!"));
         io.to(`${players.players[parseInt(players.players.length-1)].id}`).emit("playerInfo",players.players[parseInt(players.players.length-1)]);
 
     })
@@ -127,7 +125,9 @@ io.on('connection', (socket) => {
         let player = players.getPlayerById(playerId);
         socket.emit("updatedProfile",player);
     })
-
+    socket.on("listPlayerScoreRequest",(pin)=>{
+        socket.emit("listPlayerScoreReponse",players.getPlayerByRoom(pin));
+    })
     socket.on('disconnect', () => {
         console.log("Dis");
         // let player = players.removePlayer(socket.id);
