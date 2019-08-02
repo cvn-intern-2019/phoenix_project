@@ -1,0 +1,45 @@
+{{#section 'css'}}
+<style>
+    #time_question {
+        width: 150px;
+        height: 150px;
+        border: 8px solid red;
+        margin-top: 50px;
+        margin-bottom: 40px;
+        font-size: 100px;
+    }
+</style>
+{{/section}}
+
+
+{{#section 'js'}}
+<script type="text/javascript">
+    console.log(socket.id);
+    socket.emit("getQuestion", window.localStorage.getItem("localPin"));
+    socket.on("question-content", (question) => {
+        $("#question-content").html(question.question_content);
+    })
+    socket.on("final-statistic", () => {
+        window.location.replace('/player/final-stat');
+    })
+
+    var timeleft = 4;
+    var downloadTimer = setInterval(function () {
+        document.getElementById("time_question").innerHTML = timeleft;
+        timeleft -= 1;
+        if (timeleft < 0) {
+            clearInterval(downloadTimer);
+            window.location.replace("/player/question");
+        }
+    }, 1000);
+
+</script>
+{{/section}}
+
+
+<div class="container">
+    <div class="row d-flex flex-row justify-content-center align-items-center text-center">
+        <h3 class="rounded-circle" id="time_question">5</h3>
+        <h3><strong id="question-content"></strong></h3>
+    </div>
+</div>

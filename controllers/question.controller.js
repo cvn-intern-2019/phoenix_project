@@ -4,10 +4,9 @@ const fs = require('fs');
 const multer = require('multer');
 
 
-
 const storage = multer.diskStorage({
     destination: './public/img/',
-    filename: function(req, file, cb) {
+    filename: function (req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname));
     }
 })

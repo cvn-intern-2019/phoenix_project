@@ -1,0 +1,86 @@
+{{#section 'css'}}
+<style>
+    .countdown {
+        background-color: white;
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+        border: 5px solid #000;
+    }
+    }
+
+    @media only screen and (max-width: 800px) {
+        .countdown {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid #000;
+        }
+    }
+</style>
+{{/section}}
+{{#section 'js'}}
+<script>
+    let player = JSON.parse(window.sessionStorage.getItem("profile"));
+    if (player) {
+        socket.emit("updateProfile", player.id);
+        socket.on("updatedProfile", (profile) => {
+            window.sessionStorage.setItem("profile", JSON.stringify(profile));
+            updatedPlayer = JSON.parse(window.sessionStorage.getItem("profile"));
+            if (player.score < updatedPlayer.score) {
+                $(`#answer_point`).html("+ " + (parseInt(updatedPlayer.score) - parseInt(player.score)) + " .pt");
+                $(`#answer_status`).html("Correct !")
+            } else {
+                $(`#answer_result`).removeClass("bg-success").addClass('bg-danger');
+                $(`#answer_status`).html("Incorrect !")
+                $(`#answer_point`).html("+ 0 .pt");
+            }
+        })
+
+
+    }
+    $("body").addClass('homepage-bg');
+    var sec = 2;
+    $('#countdown').css({
+        fontSize: 30
+    });
+    var timer = setInterval(function () {
+        $('#countdown').text(sec--);
+        if (sec < 3) {
+            $('#countdown').addClass("text-danger");
+            $('#countdown').addClass("text-warning");
+        }
+        if (sec == -1) {
+            clearInterval(timer);
+            window.location.replace("/player/new_game");
+        }
+    }, 1000);
+</script>
+{{/section}}
+<div class="container py-5 ">
+    <div class="row border border-dark rounded bg-white">
+        <div class="col-md-6 text-center p-0 px-2 py-2 bg-success" id="answer_result">
+            <div class="countdown d-flex justify-content-center align-items-center">
+                <h3 class="text-danger m-0" id="countdown">3</h3>
+            </div>
+            <!-- <div class="text-white" style="font-weight: bold;">		
+				<h1 class="" style="margin-top: 40%;">Correct</h1>
+				<h2 class="" style="margin-bottom: 70%;">+ 1234 .pt</h2>
+			</div> -->
+            <div class="text-white" style="font-weight: bold;" id="result-answer">
+                <h1 id="answer_status">Incorrect</h1>
+                <h2 id="answer_point">+ 0 .pt</h2>
+            </div>
+        </div>
+        <div class="col-md-6 p-0 bg-dark text-white">
+            <h1 class="text-center p-2 shadow ">Player Score</h1>
+            <ul class="py-3 bg-white text-dark rounded" style="" id="list-score">
+                <li>
+                    <span class="ml-4 font-weight-bold" style="font-size: 20px;">Name</span>
+                    <span class="ml-4 font-weight-bold float-right" style="font-size: 20px;">1234 .pt</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>

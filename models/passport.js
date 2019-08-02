@@ -2,12 +2,12 @@ const localStrategy = require('passport-local').Strategy;
 var db = require('../utils/db');
 const md5 = require('md5');
 
-module.exports = function(passport) {
+module.exports = function (passport) {
     passport.use('local-signup', new localStrategy({
-            usernameField: 'username',
-            passwordField: 'password',
-            passReqToCallback: true
-        },
+        usernameField: 'username',
+        passwordField: 'password',
+        passReqToCallback: true
+    },
         (req, username, password, done) => {
             let sql = `SELECT * FROM users where user_username = '${username}' OR user_email = '${req.body.email}'`;
             db.query(sql)
@@ -41,8 +41,8 @@ module.exports = function(passport) {
     ));
 
     passport.use('local-signin', new localStrategy({
-            passReqToCallback: true
-        },
+        passReqToCallback: true
+    },
         (req, username, password, done) => {
             let sql = `SELECT * FROM users where user_username = '${username}'`;
             db.query(sql)

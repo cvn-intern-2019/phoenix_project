@@ -19,8 +19,7 @@
 {{/section}}
 
 <div class="container p-5">
-    <form method="POST" action="/host/questionset/{{qs_id}}/question/add" enctype="multipart/form-data"
-        id="question">
+    <form method="POST" action="/host/questionset/{{qs_id}}/question/add" enctype="multipart/form-data" id="question">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         <h1 class="question-set-heading text-center text-white mt-0">Question</h1>
         <div class="row p-3 border rounded border-dark bg-light">
