@@ -73,8 +73,20 @@ class Players {
             this.addPlayer(players[i]);
         }
     }
-}
+    deletePlayersByRoomId(id) {
+        let deletePlayers = this.getPlayerByRoom(id);
+        for (let i = 0; i < deletePlayers.length; i++) {
+            this.removePlayer(deletePlayers[i].id);
+        }
+    }
 
+    deletePlayersByStatus() {
+        for (let i = 0; i < this.players.length; i++) {
+            if (this.players[i].status === false && this.players[i].roomId === '')
+                this.removePlayer(this.players[i].id);
+        }
+    }
+}
 class Player {
     constructor(id, name, roomId) {
         this.id = id;

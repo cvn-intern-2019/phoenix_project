@@ -131,6 +131,14 @@ io.on('connection', (socket) => {
         players.updatePlayerStatus(pin);
     })
 
+    socket.on("deletePlayer", (pinRoom) => {
+        players.deletePlayersByRoomId(pinRoom);
+        players.deletePlayersByStatus();
+        Game_room.removeRoomById(pinRoom);
+        console.log(players);
+        console.log(Game_room);
+    })
+
     socket.on('disconnect', () => {
         let player = players.getPlayerById(socket.id);
         if (player) {
