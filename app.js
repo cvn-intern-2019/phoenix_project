@@ -128,6 +128,14 @@ io.on('connection', (socket) => {
     socket.on("listPlayerScoreRequest",(pin)=>{
         socket.emit("listPlayerScoreReponse",players.getPlayerByRoom(pin));
     })
+
+    socket.on("deletePlayer", (pinRoom) => {
+        players.deletePlayersByRoomId(pinRoom);
+        Game_room.removeRoomById(pinRoom);
+        console.log(players);
+        console.log(Game_room);
+    })
+   
     socket.on('disconnect', () => {
         console.log("Dis");
         // let player = players.removePlayer(socket.id);

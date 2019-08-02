@@ -64,6 +64,14 @@ class Players {
         if (correctAnswer == player.answer)
             player.calculateScore();
     }
+
+    deletePlayersByRoomId(id)
+    {
+        this.players = this.getPlayerByRoom(id);
+        if(this.players.length > 0){
+            this.players.splice(0,this.players.length);
+        }
+    }
 }
 
 class Player {
