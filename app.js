@@ -108,6 +108,7 @@ io.on('connection', (socket) => {
             socket.emit("question-content", room.list_question[room.question_index]);
         else
             socket.emit("final-statistic");
+
     })
 
     socket.on("nextQuestion", (pin) => {
