@@ -15,7 +15,17 @@
 {{#section 'js'}}
 <script type="text/javascript">
     console.log(socket.id);
-    socket.emit("getQuestion", window.localStorage.getItem("localPin"));
+    socket.emit("getQuestion", window.sessionStorage.getItem("localPin"));
+    let player = JSON.parse(sessionStorage.getItem("profile"));
+    if(player){
+        $('#navPin').html("PIN: "+player.roomId);
+        $('#playerName').html(player.name);
+        $('#pointBox').addClass('border border-dark');        
+        $('#point').html(player.score+" .pt");
+    }else{
+        $('#navPin').html("PIN: "+sessionStorage.getItem("localPin"));
+    }
+    console.log(player);
     socket.on("question-content", (question) => {
         $("#question-content").html(question.question_content);
     })
@@ -38,8 +48,8 @@
 
 
 <div class="container">
-    <div class="row d-flex flex-row justify-content-center align-items-center text-center">
+    <div class="row d-flex flex-column justify-content-center align-items-center text-center">
         <h3 class="rounded-circle" id="time_question">5</h3>
-        <h3><strong id="question-content"></strong></h3>
+        <h2><strong id="question-content"></strong></h2>
     </div>
 </div>

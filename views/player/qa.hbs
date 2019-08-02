@@ -44,6 +44,14 @@
     let answerTime = 0;
     var start = Date.now();
     let player = JSON.parse(sessionStorage.getItem(`profile`));
+    if(player){
+        $('#navPin').html("PIN: "+player.roomId);
+        $('#playerName').html(player.name);
+        $('#pointBox').addClass('border border-dark');        
+        $('#point').html(player.score+" .pt");
+    }else{
+        $('#navPin').html("PIN: "+sessionStorage.getItem("localPin"));
+    }
     if(!player){
         disableAnswerBtn();
     }
@@ -91,11 +99,11 @@
                 player.answer = answer;
                 player.answerTime = answerTime;     
                 sessionStorage.setItem(`profile`,JSON.stringify(player));
-                socket.emit("thisIsMyAnswer",player,localStorage.getItem("correct_answer"));
+                socket.emit("thisIsMyAnswer",player,sessionStorage.getItem("correct_answer"));
             }else{
                 // only host
-                socket.emit("nextQuestion",window.localStorage.getItem("localPin"));
-                console.log(window.localStorage.getItem("localPin"));
+                socket.emit("nextQuestion",window.sessionStorage.getItem("localPin"));
+                console.log(window.sessionStorage.getItem("localPin"));
             }            
             $('#countdown').fadeOut('slow');
             clearInterval(timer);
@@ -115,14 +123,14 @@
 </script>
 <script>
     // send get question command
-    socket.emit("getQuestion", window.localStorage.getItem("localPin"));
+    socket.emit("getQuestion", window.sessionStorage.getItem("localPin"));
     // Increase questionIndex
-    let i = window.localStorage.getItem("questionIndex");
+    let i = window.sessionStorage.getItem("questionIndex");
     // Get question content
     socket.on("question-content", (question) => {
         // Show question-content
         $('#question-content').html(question.question_content);
-        localStorage.setItem("correct_answer",question.question_answercorrect);
+        sessionStorage.setItem("correct_answer",question.question_answercorrect);
         if (question.question_image !== '')
             $('#question-image').attr('src', '/img/' + question.question_image);
         $('#question-answer1').html(question.question_answer1);

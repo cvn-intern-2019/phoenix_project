@@ -20,6 +20,28 @@
 
 {{#section 'js'}}
 <script>
+    // Get list of player's score 
+    let player = JSON.parse(sessionStorage.getItem("profile"));
+    if(player){
+        $('#navPin').html("PIN: "+player.roomId);
+        $('#playerName').html(player.name);
+        $('#pointBox').addClass('border border-dark');
+        $('#point').html(player.score+" .pt");
+    }else{
+        $('#navPin').html("PIN: "+sessionStorage.getItem("localPin"));
+    }
+    socket.emit("listPlayerScoreRequest",window.sessionStorage.getItem("localPin"));
+    socket.on("listPlayerScoreReponse",(listPlayer)=>{
+        if(listPlayer[0]){
+            $('#player1').text(listPlayer[0].name);
+        }
+        if(listPlayer[1]){
+            $('#player2').text(listPlayer[1].name);
+        }
+        if(listPlayer[2]){
+            $('#player3').text(listPlayer[2].name);
+        }
+    });
     $("body").addClass('homepage-bg');
 
     $('#rank2').animate({ height: "70%" }, 1000);
@@ -38,22 +60,22 @@
             <div class="d-flex flex-row justify-content-center" style="height:60vh">
                 <div class="mt-auto ml-1 p-2 border border-dark align-self-stretch rounded bg-success" id="rank2"
                     style="width:100px">
-                    <div class="text2">adasdasd10</div>
+                    <div class="text2" id="player2"></div>
                 </div>
                 <div class="mt-auto ml-1 p-2 border border-dark align-self-stretch rounded bg-danger" id="rank1"
                     style="width:100px">
                     <i class="fas fa-crown fa-2x text-warning"></i>
-                    <div class="text1">adasdasd</div>
+                    <div class="text1" id="player1"></div>
                 </div>
                 <div class="mt-auto ml-1 p-2 border border-dark align-self-stretch rounded bg-primary" id="rank3"
                     style="width:100px">
-                    <div class="text3">456456456</div>
+                    <div class="text3" id="player3"></div>
                 </div>
             </div>
 
         </div>
         <div class="col-md-2 text-center">
-            <button class="btn btn-primary">Quit</button>
+            <a href="/" class="btn btn-primary">Quit</a>
         </div>
     </div>
 </div>
