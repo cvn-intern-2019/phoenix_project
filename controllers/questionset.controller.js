@@ -116,11 +116,9 @@ module.exports = {
         question_model.findByQuestionsetId(req.params.qs_id)
             .then(result => {
                 res.render('player/middle', { question: result, qs_id: req.params.qs_id });
-                console.log(result);
             })
             .catch(err => {
                 console.log(err);
             })
-
     },
 };
