@@ -21,10 +21,10 @@ let io = socketIO(server);
 let csrfProtection = csrf();
 
 const storage = multer.diskStorage({
-    destination: './public/img/', 
-    filename: function (req, file, cb) {
+    destination: './public/img/',
+    filename: function(req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname));
-    }	
+    }
 })
 const upload = multer({
     storage: storage
@@ -76,11 +76,10 @@ io.on('connection', (socket) => {
     socket.on('create_room', (data) => {
         let room = new Room(data[1], data[0]);
         Game_room.addRoom(room);
-        console.log(Game_room);
         socket.emit('waiting-room', room.roomId);
     })
 
-    socket.on('host-join' , (pin) => {
+    socket.on('host-join', (pin) => {
         socket.join(pin);
     })
 
@@ -93,9 +92,9 @@ io.on('connection', (socket) => {
 
         socket.join(pin);
         players.removePlayer(socket.id);
-        players.addPlayer(new Player(socket.id, info.nickname, pin));        
+        players.addPlayer(new Player(socket.id, info.nickname, pin));
         io.to(pin).emit('updatePlayerList', players.getPlayerByRoom(pin));
-        io.to(`${players.players[parseInt(players.players.length-1)].id}`).emit("playerInfo",players.players[parseInt(players.players.length-1)]);
+        io.to(`${players.players[parseInt(players.players.length-1)].id}`).emit("playerInfo", players.players[parseInt(players.players.length - 1)]);
 
     })
 
@@ -105,35 +104,41 @@ io.on('connection', (socket) => {
 
     socket.on("getQuestion", (pin) => {
         let room = Game_room.getRoomById(pin);
-        if(room.question_index < room.list_question.length)
+        if (room.question_index < room.list_question.length)
             socket.emit("question-content", room.list_question[room.question_index]);
         else
-            socket.emit("final-statistic");    
+            socket.emit("final-statistic");
     })
-    
-    socket.on("nextQuestion",(pin)=>{
+
+    socket.on("nextQuestion", (pin) => {
         Game_room.updateQuestionIndexByRoomId(pin);
     })
 
-    socket.on("thisIsMyAnswer",(player,correctAnswer)=>{
-        console.log(players);
+    socket.on("thisIsMyAnswer", (player, correctAnswer) => {
         players.updatePlayer(player);
-        players.checkAnswerAndUpdateScore(correctAnswer,player.id);
+        players.checkAnswerAndUpdateScore(correctAnswer, player.id);
     })
-    
-    socket.on("updateProfile",(playerId)=>{
+
+    socket.on("updateProfile", (playerId) => {
         let player = players.getPlayerById(playerId);
-        socket.emit("updatedProfile",player);
+        socket.emit("updatedProfile", player);
     })
-    socket.on("listPlayerScoreRequest",(pin)=>{
-        socket.emit("listPlayerScoreReponse",players.getPlayerByRoom(pin));
+    socket.on("listPlayerScoreRequest", (pin) => {
+        socket.emit("listPlayerScoreReponse", players.getPlayerByRoom(pin));
     })
+
+    socket.on("updatePlayersStatus", (pin) => {
+        players.updatePlayerStatus(pin);
+    })
+
     socket.on('disconnect', () => {
-        console.log("Dis");
-        // let player = players.removePlayer(socket.id);
-        // if (player) {
-        //     io.to(player.roomId).emit('updatePlayerList', players.getPlayerByRoom(player.roomId));
-        // }
+        let player = players.getPlayerById(socket.id);
+        if (player) {
+            let oldRoomId = player.roomId;
+            player.roomId = '';
+            console.log(players);
+            io.to(oldRoomId).emit('updatePlayerList', players.getPlayerByRoom(oldRoomId));
+        }
     })
 })
 server.listen(port, () => {

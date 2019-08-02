@@ -51,6 +51,7 @@ class Players {
         if (playerData.id) {
             let player = this.getPlayerById(playerData.id);
             player.score = playerData.score;
+            player.roomId = playerData.roomId;
             player.answer = playerData.answer;
             player.answerTime = playerData.answerTime;
 
@@ -64,6 +65,14 @@ class Players {
         if (correctAnswer == player.answer)
             player.calculateScore();
     }
+    updatePlayerStatus(pin) {
+        let players = this.getPlayerByRoom(pin);
+        for (let i = 0; i < players.length; i++) {
+            players[i].status = players[i].status ? false : true;
+            this.removePlayer(players[i].id);
+            this.addPlayer(players[i]);
+        }
+    }
 }
 
 class Player {
@@ -74,6 +83,7 @@ class Player {
         this.score = 0;
         this.answer = 0;
         this.answerTime = 0;
+        this.status = false;
     }
 
     calculateScore() {
