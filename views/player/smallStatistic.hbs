@@ -1,16 +1,9 @@
 {{#section 'css'}}
 <style>
-    .countdown {
-        background-color: white;
-        width: 75px;
-        height: 75px;
-        border-radius: 50%;
-        border: 5px solid #000;
-    }
-    }
+
 
     @media only screen and (max-width: 800px) {
-        .countdown {
+        .countdown-stat {
             width: 80px;
             height: 80px;
             border-radius: 50%;
@@ -20,62 +13,12 @@
 </style>
 {{/section}}
 {{#section 'js'}}
-<script>
-    let player = JSON.parse(window.sessionStorage.getItem("profile"));
-    if (player) {
-        socket.emit("updateProfile", player.id);
-        socket.on("updatedProfile", (profile) => {
-            window.sessionStorage.setItem("profile", JSON.stringify(profile));
-            updatedPlayer = JSON.parse(window.sessionStorage.getItem("profile"));
-            if (player.score < updatedPlayer.score) {
-                $(`#answer_point`).html("+ " + (parseInt(updatedPlayer.score) - parseInt(player.score)) + " .pt");
-                $(`#answer_status`).html("Correct !")
-            } else {
-                $(`#answer_result`).removeClass("bg-success").addClass('bg-danger');
-                $(`#answer_status`).html("Incorrect !")
-                $(`#answer_point`).html("+ 0 .pt");
-            }
-            $('#navPin').html("PIN: "+player.roomId);
-            $('#playerName').html(player.name);
-            $('#pointBox').addClass('border border-dark');        
-            $('#point').html(player.score+" .pt");
-        })
-    }else{
-        $('#navPin').html("PIN: "+sessionStorage.getItem("localPin"));
-    }
-    socket.emit("listPlayerScoreRequest",window.sessionStorage.getItem("localPin"));
-    socket.on("listPlayerScoreReponse",(listPlayer)=>{
-        for (let i = 0; i < listPlayer.length; i++) {
-            $("#list-score").append(
-                '<li>'+
-                    '<span class="ml-4 font-weight-bold" style="font-size: 20px;">'+listPlayer[i].name+'</span>'+
-                    '<span class="ml-4 font-weight-bold float-right" style="font-size: 20px;" id="">'+listPlayer[i].score+' .pt</span>'+
-                '</li>');
-        }
-    });
-
-    $("body").addClass('homepage-bg');
-    var sec = 2;
-    $('#countdown').css({
-        fontSize: 30
-    });
-    var timer = setInterval(function () {
-        $('#countdown').text(sec--);
-        if (sec < 3) {
-            $('#countdown').addClass("text-danger");
-            $('#countdown').addClass("text-warning");
-        }
-        if (sec == -1) {
-            clearInterval(timer);
-            window.location.replace("/player/new_game");
-        }
-    }, 1000);
-</script>
+<script src="/js/small-statistic.js"></script>
 {{/section}}
 <div class="container py-5 ">
     <div class="row border border-dark rounded bg-white">
         <div class="col-md-6 text-center p-0 px-2 py-2 bg-success" id="answer_result">
-            <div class="countdown d-flex justify-content-center align-items-center">
+            <div class="countdown-stat d-flex justify-content-center align-items-center">
                 <h3 class="text-danger m-0" id="countdown">3</h3>
             </div>
             <div class="text-white" style="font-weight: bold;" id="result-answer">
@@ -89,5 +32,4 @@
             </ul>
         </div>
     </div>
-
 </div>

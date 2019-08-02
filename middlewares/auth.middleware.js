@@ -17,11 +17,8 @@ function alreadySignin(req, res, next) {
 
 function checkUserId(req, res, next) {
     let sql = `SELECT user_id FROM user_questionset WHERE questionset_id = ${req.params.qs_id}`
-    console.log(sql);
-
     db.query(sql)
         .then(result => {
-            console.log(result);
             if (result.length > 0 && req.user.user_id == result[0].user_id)
                 return next();
             res.render('error');
