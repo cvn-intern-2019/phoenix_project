@@ -106,11 +106,19 @@
     };
 
     socket.on('roomNotExists', () => {
-        window.location.href = '/player';
+        $('#checking-room').html('Room Not Found');
+        setTimeout(() => {
+            window.location.href = '/player';
+        }, 1000);
     });
 
-    socket.on("playerInfo",(player)=>{
-        sessionStorage.setItem(`profile`,JSON.stringify(player));
+    socket.on('roomFound', () => {
+        $('#checking-room').html('Waiting for host to start game!!');
+    });
+
+
+    socket.on("playerInfo", (player) => {
+        sessionStorage.setItem(`profile`, JSON.stringify(player));
     })
 
     socket.on('updatePlayerList', (players) => {
@@ -128,14 +136,14 @@
         console.log('disconnected from server.');
     });
 
-    
+
 
     socket.on('connect', () => {
         socket.emit('player-join', info);
     })
 
     sessionStorage.setItem("localPin", info.pin);
-    
+
 </script>
 {{/section}}
 <div class="d-flex flex-column justify-content-center align-items-center my-5">
@@ -154,5 +162,5 @@
         <div></div>
     </div>
     <br>
-    <h1>Waiting for host to start game!!</h1>
+    <h1 id="checking-room"></h1>
 </div>
