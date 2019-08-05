@@ -94,6 +94,30 @@
             opacity: 0;
         }
     }
+
+    .loading-text {
+        position: relative;
+        text-transform: uppercase;
+        font-size: 2em;
+        letter-spacing: 4px;
+        overflow: hidden;
+        background: linear-gradient(90deg, #000, #fff, #000);
+        background-repeat: no-repeat;
+        background-size: 80%;
+        animation: loading 3s linear infinite;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0);
+    }
+
+    @keyframes loading {
+        0% {
+            background-position: -500%;
+        }
+
+        100% {
+            background-position: 500%;
+        }
+    }
 </style>
 {{/section}}
 {{#section 'js'}}
@@ -109,7 +133,7 @@
         $('#checking-room').html('Room Not Found');
         setTimeout(() => {
             window.location.href = '/player';
-        }, 1000);
+        }, 3000);
     });
 
     socket.on('roomFound', () => {
@@ -162,5 +186,5 @@
         <div></div>
     </div>
     <br>
-    <h1 id="checking-room"></h1>
+    <h1 id="checking-room" class="loading-text"></h1>
 </div>
