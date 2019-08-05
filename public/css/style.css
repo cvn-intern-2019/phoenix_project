@@ -20,9 +20,9 @@ h1.question-set-heading {
     padding: 10px;
 }
 
-img#old_img {
-    width: 450px;
-    height: 400px;
+#old_img {
+    width: 80%;
+    height: 90%;
     margin-top: 20px;
     margin-left: 10px;
     margin-right: 30px;
@@ -99,19 +99,19 @@ form#player-info .btn {
 
 .text2 {
     position: absolute;
-    top: 26%;
+    top: 22%;
     display: none;
 }
 
 .text1 {
     position: absolute;
-    top: 16%;
+    top: 12%;
     display: none;
 }
 
 .text3 {
     position: absolute;
-    top: 31%;
+    top: 27%;
     display: none;
 }
 
@@ -154,7 +154,17 @@ label.error {
     border: 5px solid #000;
 }
 
-@media only screen and (max-width: 800px) {
+#player1,
+#player2,
+#player3 {
+    font-size: 26px;
+    font-weight: bold;
+    font-family: cursive;
+    width: 150px;
+    height: 10%;
+}
+
+@media only screen and (max-width: 992px) {
     .countdown {
         width: 80px;
         height: 80px;

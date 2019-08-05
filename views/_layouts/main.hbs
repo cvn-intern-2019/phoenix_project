@@ -20,18 +20,18 @@
 
 
     <header class="shadow bg-light container-fluid">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/">
-                <i class="fas fa-fire-extinguisher text-danger"></i>
-                <i class="fab fa-cloudversify fa-2x text-secondary"></i>
-                <i class="fab fa-phoenix-framework fa-2x" style="color: rgb(248, 120, 45)"></i>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light row">
+            <a class="navbar-brand col-6 col-lg-4" href="/">
+                <i class="fas fa-fire-extinguisher fa-2x text-danger"></i>
+                <i class="fab fa-cloudversify fa-3x text-secondary"></i>
+                <i class="fab fa-phoenix-framework fa-3x" style="color: rgb(248, 120, 45)"></i>
             </a>
 
-            <div class="navbar-collapse" id="navbarTogglerDemo03">
-                <a class="navbar-nav ml-auto mr-auto mt-2 mt-lg-0 navbar-brand" href="/" id="logo-text">
-                    <h2><strong>Kahoot Phoenix</strong></h2>
+            <div class="navbar-collapse col-6 col-lg-8 row" id="navbarTogglerDemo03">
+                <a class="navbar-nav mr-auto mt-2 mt-lg-0 navbar-brand d-flex justify-content-center col-lg-6" href="/">
+                    <h1 id="logo-text"><strong>Kahoot Phoenix</strong></h1>
                 </a>
-                <div class="my-2 my-lg-0">
+                <div class="form-inline text-right d-flex justify-content-end col-lg-6 col-12">
                     {{#if user}}
                     <div class="dropdown">
                         <a class="dropdown-toggle" id="dropdownMenuButton" style="cursor: pointer; font-size: 20px"

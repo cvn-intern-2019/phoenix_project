@@ -54,7 +54,6 @@ app.use(passport.session());
 app.use(flash());
 app.use(csrfProtection);
 
-
 require('./models/passport')(passport);
 require('./routes/route')(app);
 require('./routes/player.route')(app);

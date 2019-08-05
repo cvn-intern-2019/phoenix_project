@@ -11,7 +11,18 @@ if (player) {
         } else {
             $(`#answer_result`).removeClass("bg-success").addClass('bg-danger');
             $(`#answer_status`).html("Incorrect !")
-            $(`#answer_point`).html("+ 0 .pt");
+            if(window.sessionStorage.getItem("correct_answer") == 1){
+                $(`#answer_correct`).html("Correct_answer : A");
+            }
+            if(window.sessionStorage.getItem("correct_answer") == 2){
+                $(`#answer_correct`).html("Correct_answer : B");
+            }
+            if(window.sessionStorage.getItem("correct_answer") == 3){
+                $(`#answer_correct`).html("Correct_answer : C");
+            }
+            if(window.sessionStorage.getItem("correct_answer") == 4){
+                $(`#answer_correct`).html("Correct_answer : D");
+            }
         }
         // Update player's info in nav-bar
         $('#navPin').html("PIN: " + updatedPlayer.roomId);
