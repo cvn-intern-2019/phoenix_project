@@ -35,10 +35,25 @@
                 $(`#answer_status`).html("Incorrect !")
                 $(`#answer_point`).html("+ 0 .pt");
             }
+            $('#navPin').html("PIN: "+player.roomId);
+            $('#playerName').html(player.name);
+            $('#pointBox').addClass('border border-dark');        
+            $('#point').html(player.score+" .pt");
         })
-
-
+    }else{
+        $('#navPin').html("PIN: "+sessionStorage.getItem("localPin"));
     }
+    socket.emit("listPlayerScoreRequest",window.sessionStorage.getItem("localPin"));
+    socket.on("listPlayerScoreReponse",(listPlayer)=>{
+        for (let i = 0; i < listPlayer.length; i++) {
+            $("#list-score").append(
+                '<li>'+
+                    '<span class="ml-4 font-weight-bold" style="font-size: 20px;">'+listPlayer[i].name+'</span>'+
+                    '<span class="ml-4 font-weight-bold float-right" style="font-size: 20px;" id="">'+listPlayer[i].score+' .pt</span>'+
+                '</li>');
+        }
+    });
+
     $("body").addClass('homepage-bg');
     var sec = 2;
     $('#countdown').css({
@@ -63,22 +78,14 @@
             <div class="countdown d-flex justify-content-center align-items-center">
                 <h3 class="text-danger m-0" id="countdown">3</h3>
             </div>
-            <!-- <div class="text-white" style="font-weight: bold;">		
-				<h1 class="" style="margin-top: 40%;">Correct</h1>
-				<h2 class="" style="margin-bottom: 70%;">+ 1234 .pt</h2>
-			</div> -->
             <div class="text-white" style="font-weight: bold;" id="result-answer">
-                <h1 id="answer_status">Incorrect</h1>
-                <h2 id="answer_point">+ 0 .pt</h2>
+                <h1 id="answer_status"></h1>
+                <h2 id="answer_point"></h2>
             </div>
         </div>
         <div class="col-md-6 p-0 bg-dark text-white">
             <h1 class="text-center p-2 shadow ">Player Score</h1>
             <ul class="py-3 bg-white text-dark rounded" style="" id="list-score">
-                <li>
-                    <span class="ml-4 font-weight-bold" style="font-size: 20px;">Name</span>
-                    <span class="ml-4 font-weight-bold float-right" style="font-size: 20px;">1234 .pt</span>
-                </li>
             </ul>
         </div>
     </div>

@@ -11,6 +11,24 @@ class Players {
 
     getPlayerByRoom(roomId) {
         let players = this.players.filter((player) => player.roomId == roomId);
+
+        // Sort Players in room
+        if (players.length > 1) {
+            let sorted = false
+            while (!sorted) {
+                sorted = true
+                for (var i = 1; i < players.length; i++) {
+                    if (players[i].score > players[i - 1].score) {
+                        let temp = players[i];
+                        players[i] = players[i - 1];
+                        players[i - 1] = temp;
+                        sorted = false;
+                    }
+                }
+            }
+        }
+
+
         return players;
     }
 
@@ -29,7 +47,7 @@ class Players {
     }
 
     updatePlayer(playerData) {
-            // Update player info
+        // Update player info
         if (playerData.id) {
             let player = this.getPlayerById(playerData.id);
             player.score = playerData.score;

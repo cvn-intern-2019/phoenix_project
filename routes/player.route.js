@@ -5,12 +5,6 @@ module.exports = (app) => {
         res.render('player/home', { csrfToken: req.csrfToken() })
     });
 
-
-
-    // app.post('/player/waiting-room' , (req,res) => {
-    //     res.render('waiting_room' , {info : req.body});
-    // });
-
     app.get('/player/small-statistic', (req, res) => {
         res.render('player/smallStatistic', {
             layout: 'player.hbs'
@@ -24,9 +18,7 @@ module.exports = (app) => {
             });
         })
     app.get('/player/middle', (req, res) => {
-        res.render('player/middle', {
-            layout: 'player.hbs'
-        })
+        res.render('player/middle')
     });
     app.route('/player/new_game')
         .get((req, res) => {
@@ -36,6 +28,8 @@ module.exports = (app) => {
         })
 
     app.get('/player/final-stat', (req, res) => {
-        res.render('player/final-stat');
+        res.render('player/final-stat', {
+            layout: 'player.hbs'
+        });
     });
 }
