@@ -14,10 +14,10 @@ if (player) {
             $(`#answer_point`).html("+ 0 .pt");
         }
         // Update player's info in nav-bar
-        $('#navPin').html("PIN: " + player.roomId);
-        $('#playerName').html(player.name);
+        $('#navPin').html("PIN: " + updatedPlayer.roomId);
+        $('#playerName').html(updatedPlayer.name);
         $('#pointBox').addClass('border border-dark');
-        $('#point').html(player.score + " .pt");
+        $('#point').html(updatedPlayer.score + " .pt");
     })
 } else {
     $('#navPin').html("PIN: " + sessionStorage.getItem("localPin"));

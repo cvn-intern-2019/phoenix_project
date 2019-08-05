@@ -54,7 +54,6 @@ app.use(passport.session());
 app.use(flash());
 app.use(csrfProtection);
 
-// app.use('/questionset', require('./routes/questionset.route'));
 
 require('./models/passport')(passport);
 require('./routes/route')(app);
@@ -138,6 +137,14 @@ io.on('connection', (socket) => {
         Game_room.removeRoomById(pinRoom);
     })
 
+    socket.on("cancelRoom", (pin) => {
+        io.to(pin).emit('roomCanceled');
+    })
+
+    socket.on('endGame', (pin) => {
+        Game_room.endGame(pin);
+    })
+
     socket.on('disconnect', () => {
         let player = players.getPlayerById(socket.id);
         if (player) {
@@ -149,9 +156,9 @@ io.on('connection', (socket) => {
             } else {
                 players.removePlayer(player.id);
             }
-
-
             io.to(oldRoomId).emit('updatePlayerList', players.getPlayerByRoom(oldRoomId));
+        } else {
+            Game_room.removeEndedRoom();
         }
     })
 })

@@ -175,4 +175,7 @@ label.error {
         border-radius: 50%;
         border: 4px solid #000;
     }
+    #logo-text {
+        display: none;
+    }
 }

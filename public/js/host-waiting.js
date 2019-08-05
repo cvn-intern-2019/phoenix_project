@@ -32,6 +32,12 @@ $("#host_start").click(() => {
     socket.emit("start-game", roomPin);
 })
 
+$('#host_back').click(() => {
+    socket.emit("deletePlayer", window.sessionStorage.getItem("localPin"));
+    window.location.replace('/host/questionset');
+    socket.emit("cancelRoom", window.sessionStorage.getItem("localPin"));
+})
+
 socket.on("redirect-to-question", () => {
     window.location.replace('/player/new_game');
 })

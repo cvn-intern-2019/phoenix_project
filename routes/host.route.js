@@ -1,7 +1,7 @@
 const authMiddleware = require('../middlewares/auth.middleware');
 const host_controller = require('../controllers/host.controller');
 
-module.exports = function (app, passport) {
+module.exports = function(app, passport) {
     app.route('/host/signin')
         .get(authMiddleware.alreadySignin, host_controller.getSignIn)
         .post(passport.authenticate('local-signin', {
@@ -28,6 +28,9 @@ module.exports = function (app, passport) {
         .get(authMiddleware.isSignIn, host_controller.getchangePassword)
         .post(host_controller.postchangePassword)
 
+    app.get('/player/middle', (req, res) => {
+        res.render('host/middle')
+    });
 
     app.get('/host/profile', authMiddleware.isSignIn, host_controller.profile)
 };
