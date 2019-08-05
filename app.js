@@ -88,14 +88,14 @@ io.on('connection', (socket) => {
         if (!Game_room.getRoomById(pin)) {
             console.log('Room not found');
             socket.emit('roomNotExists');
+            players.removePlayer(socket.id);
+        } else {
+            socket.emit('roomFound');
+            socket.join(pin);
+            players.addPlayer(new Player(socket.id, info.nickname, pin));
+            io.to(pin).emit('updatePlayerList', players.getPlayerByRoom(pin));
+            io.to(`${players.players[parseInt(players.players.length - 1)].id}`).emit("playerInfo", players.players[parseInt(players.players.length - 1)]);
         }
-
-        socket.join(pin);
-        players.removePlayer(socket.id);
-        players.addPlayer(new Player(socket.id, info.nickname, pin));
-        io.to(pin).emit('updatePlayerList', players.getPlayerByRoom(pin));
-        io.to(`${players.players[parseInt(players.players.length-1)].id}`).emit("playerInfo", players.players[parseInt(players.players.length - 1)]);
-
     })
 
     socket.on("start-game", (pin) => {
