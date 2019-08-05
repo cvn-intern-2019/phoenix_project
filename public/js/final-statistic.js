@@ -19,13 +19,18 @@ socket.on("listPlayerScoreReponse", (listPlayer) => {
     if (listPlayer[2]) {
         $('#player3').text(listPlayer[2].name);
     }
+});
+
+$('#quitBtn').click(() => {
     if (player) {
-        let data = window.sessionStorage.clear();
-        console.log("Completed data!" + data);
+        window.sessionStorage.clear();
+        window.location.replace('/player');
     } else {
-        socket.emit("deletePlayer", window.sessionStorage.getItem("localPin"))
+        socket.emit("deletePlayer", window.sessionStorage.getItem("localPin"));
+        window.location.replace('/host/questionset');
     }
 });
+
 $("body").addClass('homepage-bg');
 
 $('#rank2').animate({ height: "70%" }, 1000);

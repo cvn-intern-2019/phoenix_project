@@ -71,7 +71,6 @@ const players = new Players();
 const Game_room = new Game_rooms();
 
 io.on('connection', (socket) => {
-    console.log("A new user just connected");
 
     socket.on('create_room', (data) => {
         let room = new Room(data[1], data[0]);
@@ -85,20 +84,26 @@ io.on('connection', (socket) => {
 
     socket.on('player-join', (info) => {
         let pin = info.pin;
-        if (!Game_room.getRoomById(pin)) {
-            console.log('Room not found');
+        let room = Game_room.getRoomById(pin);
+        if (!room) {
             socket.emit('roomNotExists');
             players.removePlayer(socket.id);
         } else {
-            socket.emit('roomFound');
-            socket.join(pin);
-            players.addPlayer(new Player(socket.id, info.nickname, pin));
-            io.to(pin).emit('updatePlayerList', players.getPlayerByRoom(pin));
-            io.to(`${players.players[parseInt(players.players.length - 1)].id}`).emit("playerInfo", players.players[parseInt(players.players.length - 1)]);
+            if (!room.isStarted) {
+                socket.emit('roomFound');
+                socket.join(pin);
+                players.addPlayer(new Player(socket.id, info.nickname, pin));
+                io.to(pin).emit('updatePlayerList', players.getPlayerByRoom(pin));
+                io.to(`${players.players[parseInt(players.players.length - 1)].id}`).emit("playerInfo", players.players[parseInt(players.players.length - 1)]);
+            } else {
+                io.to(socket.id).emit("alreadyStart");
+            }
+
         }
     })
 
     socket.on("start-game", (pin) => {
+        Game_room.startGame(pin);
         io.to(pin).emit("redirect-to-question");
     })
 
@@ -128,24 +133,24 @@ io.on('connection', (socket) => {
         socket.emit("listPlayerScoreReponse", players.getPlayerByRoom(pin));
     })
 
-    socket.on("updatePlayersStatus", (pin) => {
-        players.updatePlayerStatus(pin);
-    })
-
     socket.on("deletePlayer", (pinRoom) => {
         players.deletePlayersByRoomId(pinRoom);
-        players.deletePlayersByStatus();
         Game_room.removeRoomById(pinRoom);
-        console.log(players);
-        console.log(Game_room);
     })
 
     socket.on('disconnect', () => {
         let player = players.getPlayerById(socket.id);
         if (player) {
+            let room = Game_room.getRoomById(player.roomId);
             let oldRoomId = player.roomId;
-            player.roomId = '';
-            console.log(players);
+
+            if (room.isStarted) {
+                player.roomId = oldRoomId;
+            } else {
+                players.removePlayer(player.id);
+            }
+
+
             io.to(oldRoomId).emit('updatePlayerList', players.getPlayerByRoom(oldRoomId));
         }
     })

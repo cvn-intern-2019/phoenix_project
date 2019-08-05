@@ -11,28 +11,25 @@ socket.on('waiting-room', (pin) => {
 socket.on('updatePlayerList', players => {
     $("#players-number").html(players.length);
     $('#playerList').html('');
-    console.log(players);
     if (players.length <= 0) {
         $('#host_start').attr("disabled", "disabled");
     } else {
         $('#host_start').removeAttr('disabled');
     }
     for (let i = 0; i < players.length; i++) {
-        console.log(players[i].name);
         $('#playerList').append($("<div class='col-md-4 py-2'><p>" + players[i].name + "</p></div>"));
     }
 
 })
 
 function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
-$(document).ready(function () {
+$(document).ready(function() {
     $(document).on("keydown", disableF5);
 });
 
 $("#host_start").click(() => {
     $("#host_start").attr('disabled', 'disabled');
     socket.emit("start-game", roomPin);
-    socket.emit("updatePlayersStatus", roomPin);
 })
 
 socket.on("redirect-to-question", () => {

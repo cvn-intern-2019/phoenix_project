@@ -140,6 +140,13 @@
         $('#checking-room').html('Waiting for host to start game!!');
     });
 
+    socket.on('alreadyStart',()=>{
+        $('#checking-room').html('Game already started!');
+        setTimeout(() => {
+            window.location.href = '/player';
+        }, 3000);
+    })
+
 
     socket.on("playerInfo", (player) => {
         sessionStorage.setItem(`profile`, JSON.stringify(player));
