@@ -1,49 +1,7 @@
-{{#section 'css'}}
-<style type="text/css">
-    label.error {
-        color: rgb(255, 186, 38);
-        font-size: 24px;
-    }
-</style>
-{{/section}}
-
 {{#section 'js'}}
 <script>
     $('body').css("height", "100vh");
 </script>
-
-{{!-- jquery validate --}}
-<script>
-    let socket = io({ transports: ['websocket'], upgrade: false });
-    $(document).ready(function () {
-        $("#player-info").validate({
-            rules: {
-                pin: {
-                    required: true,
-                    minlength: 4,
-                    maxlength: 4,
-                    digits: true
-                },
-                nickname: {
-                    required: true,
-                    minlength: 3,
-                    maxlength: 10,
-                },
-            },
-            messages: {
-                pin: {
-                    required: "Please enter PIN",
-                    digits: "PIN must be number"
-                },
-                nickname: {
-                    required: "Please enter nickname",
-                },
-            }
-        });
-    });
-
-</script>
-
 {{/section}}
 
 <div class="homepage-bg p-5" style="height: 100%">

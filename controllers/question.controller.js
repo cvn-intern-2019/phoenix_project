@@ -6,7 +6,7 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
     destination: './public/img/',
-    filename: function (req, file, cb) {
+    filename: function(req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname));
     }
 })
@@ -80,7 +80,6 @@ module.exports = {
         // delete file
         question_model.getImageById(req.params.q_id)
             .then(result => {
-                console.log(result);
                 let fileName = result[0].question_image;
                 try {
                     fs.unlink('./public/img/' + fileName, (err) => {
@@ -102,7 +101,6 @@ module.exports = {
         // delete db
         question_model.delete(req.params.q_id)
             .then(result => {
-                console.log(result);
                 res.redirect(`/host/questionset/${req.params.qs_id}/question`);
             })
             .catch(err => {

@@ -17,8 +17,9 @@ class Game_rooms {
     removeRoomById(id) {
         let game_room = this.getRoomById(id);
         if (game_room)
-            this.Game_rooms = this.Game_rooms.filter((game_room) => game_room.roomId !== id);
-        return game_room;
+            this.Game_rooms = this.Game_rooms.filter((game_room) => game_room.roomId != id);
+        return this.Game_rooms;
+        
     }
 
     updateQuestionIndexByRoomId(id){
