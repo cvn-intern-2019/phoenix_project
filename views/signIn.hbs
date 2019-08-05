@@ -1,10 +1,9 @@
 <div class="mt-5 row">
   <div
     class="container border border-dark col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-10 col-offset-1">
-    <form id="signInForm" action="signin" method="POST">
+    <form id="signInForm" action="signin" method="POST" >
       <input type="hidden" name="_csrf" value="{{ csrfToken }}">
       <p class="h4 pt-4 mb-4 text-center">Sign in</p>
-
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" class="form-control mb-2" placeholder="Username">
@@ -20,7 +19,7 @@
         <label id="password-error" class="my-error-class" for="password">{{ signinpwd }}</label>
         {{/if}}
       </div>
-
+      <div align='center' class="g-recaptcha" data-sitekey="6LfnSrEUAAAAAH7WjYsHd5epMKyLGgBuTbvhRVgW" required></div>
       <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
 
       <div class="text-center pb-4">
