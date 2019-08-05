@@ -21,12 +21,14 @@ socket.on("listPlayerScoreReponse", (listPlayer) => {
     }
 });
 
-('#quitBtn').click(() => {
+$('#quitBtn').click(() => {
+    console.log('quit');
     if (player) {
         window.sessionStorage.clear();
     } else {
         socket.emit("deletePlayer", window.sessionStorage.getItem("localPin"));
     }
+    window.location.replace('/');
 });
 
 $("body").addClass('homepage-bg');
