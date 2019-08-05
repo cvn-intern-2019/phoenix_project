@@ -1,12 +1,12 @@
 const questionset_model = require('../models/questionset.model');
 const question_model = require('../models/question.model');
-const {Game_rooms, Room} = require('../utils/game_room');
+const { Game_rooms, Room } = require('../utils/game_room');
 var multer = require('multer');
 var fs = require('fs');
 
 const storage = multer.diskStorage({
     destination: './public/img/',
-    filename: function (req, file, cb) {
+    filename: function(req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname));
     }
 })
@@ -86,12 +86,12 @@ module.exports = {
                 if (req.file) {
                     fileName = req.file.filename;
                     try {
+                        //file removed
                         fs.unlink('./public/img/' + questionset.image, (err) => {
                             if (err) {
                                 console.error(err)
                                 return
                             }
-                            //file removed
                         })
                     } catch (err) {
                         console.error(err)
@@ -114,11 +114,11 @@ module.exports = {
 
     create_room: (req, res) => {
         question_model.findByQuestionsetId(req.params.qs_id)
-        .then(result => {
-            res.render('player/middle',  {question : result, qs_id : req.params.qs_id} );
-        })
-        .catch(err => {
-            console.log(err);
-        })
+            .then(result => {
+                res.render('host/middle', { question: result, qs_id: req.params.qs_id });
+            })
+            .catch(err => {
+                console.log(err);
+            })
     },
 };

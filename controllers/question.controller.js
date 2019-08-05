@@ -138,12 +138,12 @@ module.exports = {
                 if (req.file) {
                     filename = req.file.filename;
                     try {
+                        //file removed
                         fs.unlink('./public/img/' + question.image, (err) => {
                             if (err) {
                                 console.error(err)
                                 return
                             }
-                            //file removed
                         })
                     } catch (err) {
                         console.error(err)

@@ -102,7 +102,6 @@ $(document).ready(() => {
                 required: true,
                 minlength: 5,
                 maxlength: 50,
-                //digits: true
             },
             description: {
                 required: true,

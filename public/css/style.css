@@ -1,4 +1,4 @@
-#questionset_title {
+#questionset_title, #questionset_description {
     white-space: nowrap;
     margin-bottom: 50px;
     margin-left: 10px;
@@ -182,5 +182,8 @@ label.error {
         height: 80px;
         border-radius: 50%;
         border: 4px solid #000;
+    }
+    #logo-text {
+        display: none;
     }
 }
