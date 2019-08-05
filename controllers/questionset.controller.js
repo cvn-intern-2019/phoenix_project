@@ -16,29 +16,39 @@ const upload = multer({
 
 module.exports = {
     showQuestionsetList: (req, res) => {
-        let page = req.params.p;
+        var page = req.query.page || 1;
+        if (page < 1) page = 1;
         let min = 0;
         let max = 0;
         min = (page - 1) * 4;
-        max = page * 4;
-        console.log(min);
-        console.log(max);
+        max = 4;
+        //console.log(min);
+        //console.log(max);
         questionset_model.list(req.user.user_id)
             .then(result => {
-                let totalItem = result;
-                if (totalItem.length > 0) {
+                let total = result.length;
+                if (total> 0) {
                     questionset_model.listPerPage(req.user.user_id, min, max)
-                        .then(result => {
-                            res.render('questionsets/questionset', {
-                                user: req.user,
-                                questionset: totalItem,
-                                listPerPage: result,
-                            });
-                        })
-                        .catch(err => {
-                            console.log(err);
-                            res.render('error');
-                        })
+                    .then(results => {
+                        console.log(total);
+                        var npages = Math.floor(total / 4);
+                        
+                        if (total % max > 0) npages++;
+                        var pages = [];
+                        for (i = 1; i <= npages; i++) {
+                            var obj = { value: i, active: i === +page };
+                            pages.push(obj);
+                        }
+                        res.render('questionsets/questionset', {
+                            user: req.user,
+                            questionset: results,
+                            pages
+                        });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        res.render('error');
+                    })
                 }
             })
             .catch(err => {

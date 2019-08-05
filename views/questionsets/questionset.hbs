@@ -3,42 +3,24 @@
     $("body").addClass('homepage-bg');
 </script>
 <script>
-    let list = {{ this.questionset.length }};
-    let totalPage = 0;
-    let currentPage = 0;
-    let pages = 0;
 
-    if (list % 4) {
-        totalPage = parseInt(list / 4) + 1;
-    } else {
-        totalPage = (list / 4);
-    }
-    for(let i = 1; i <= totalPage;i++){
-        if(i==1){
-            $(".pagination").append($("<a href='/host/questionset/"+i+"'><<</a>"));
-        }
-        $(".pagination").append($("<a href='/host/questionset/"+i+"'>"+i+"</a>"));
-        if(i==totalPage){
-            $(".pagination").append($("<a href='/host/questionset/"+i+"'>>></a>"));
-        }
-    }
 </script>
 {{/section}}
 
 {{#section 'css'}}
 <style>
     .pagination {
-        background-color:aliceblue;
+        background-color: aliceblue;
         display: inline-block;
+        margin-left: 30px;
     }
 
     .pagination a {
-        color: black;
+        color:black;
         float: left;
         padding: 8px 16px;
         text-decoration: none;
     }
-
 </style>
 {{/section}}
 
@@ -53,7 +35,7 @@
             {{else}}
             <h1 class="row d-flex justify-content-center text-white">No data</h1>
             {{/if}}
-            {{#each this.listPerPage}}
+            {{#each this.questionset}}
             <div class="list-group my-2 border border-primary rounded">
                 <div class="list-group-item d-flex justify-content-between align-items-center">
                     {{#if questionset_image}}
@@ -78,7 +60,16 @@
                 </div>
             </div>
             {{/each}}
-            <div class="pagination">
-            </div>
+        </div>
+        <div class="pagination">
+            {{#each this.pages}}
+            {{#if active}}
+            <a class="page-link page-item active" aria-current="page" style="background-color:cornflowerblue"
+                href="javascript:;">{{value}} <span class="sr-only">(current)</span></a>
+            {{else}}
+            <a class="page-link page-item" href="?page={{value}}">{{value}}</a>
+            {{/if}}
+            {{/each}}
         </div>
     </div>
+</div>
