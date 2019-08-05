@@ -133,4 +133,29 @@ $(document).ready(() => {
         }
         return true;
     }, "please use only alphanumeric or alphabetic characters");
+
+    $("#player-info").validate({
+        rules: {
+            pin: {
+                required: true,
+                minlength: 4,
+                maxlength: 4,
+                digits: true
+            },
+            nickname: {
+                required: true,
+                minlength: 3,
+                maxlength: 10,
+            },
+        },
+        messages: {
+            pin: {
+                required: "Please enter PIN",
+                digits: "PIN must be number"
+            },
+            nickname: {
+                required: "Please enter nickname",
+            },
+        }
+    });
 });

@@ -1,37 +1,10 @@
 {{#section 'js'}}
-<script>
-    let socket = io({ transports: ['websocket'], upgrade: false });
-    let data = [list_question, {{ qs_id }}];
-    let roomPin = '';
-    socket.emit('create_room', data);
-    socket.on('waiting-room', (pin) => {
-        $('#pin').html(pin);
-        socket.emit('host-join', pin);
-        roomPin = pin;
-        sessionStorage.setItem("localPin", roomPin);
-    })
-
-    socket.on('updatePlayerList', players => {
-        $("#players-number").html(players.length);
-        $('#playerList').html('');
-        for (let i = 0; i < players.length; i++) {
-            console.log(players[i].name);
-            $('#playerList').append($("<div class='col-md-4 py-2'><p>" + players[i].name + "</p></div>"));
-        }
-    })
-
-    $("#host_start").click(() => {
-        socket.emit("start-game", roomPin);
-    })
-
-    socket.on("redirect-to-question", () => {
-        window.location.replace('/player/new_game');
-    })
-</script>
+<script src="/js/host-waiting.js"></script> 
 {{/section}}
 
 <script>
     var list_question = [];
+    let data = [list_question, {{ qs_id }}];
 </script>
 {{#each question}}
 <script>

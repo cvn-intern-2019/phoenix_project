@@ -99,7 +99,6 @@
 {{#section 'js'}}
 <script>
     let socket = io();
-    console.log(socket.id);
     let info =
     {
         nickname: '{{info.nickname}}',
@@ -118,7 +117,6 @@
         $("#players-number").html(players.length);
         $('#playerList').html('');
         for (let i = 0; i < players.length; i++) {
-            console.log(players[i].name);
             $('#playerList').append($("<div class='col-md-4 py-2'><p>" + players[i].name + "</p></div>"));
         }
     });

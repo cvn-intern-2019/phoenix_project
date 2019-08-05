@@ -4,8 +4,18 @@
 {{/section}}
 
 {{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
 <script>
+    $(function () {
+        $('#question_img').fileinput({
+            theme: 'fa',
+            allowedFileExtensions: ['png', 'jpg', 'gif'],
+            uploadAsync: false,
+        });
+    });
     $("body").addClass('homepage-bg');
+    $("#correctanswer").val({{ question.question_answercorrect }});
 </script>
 {{/section}}
 

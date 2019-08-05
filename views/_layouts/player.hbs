@@ -8,24 +8,17 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/nar-bar-player.css">
+    <link rel="stylesheet" href="/css/nav-bar-player.css">
     {{{_sections.css}}}
 </head>
 
 <body>
-    {{!-- LOGO
-            <i class="fas fa-fire-extinguisher fa-4x"></i>
-            <i class="fab fa-cloudversify fa-5x"></i>
-            <i class="fab fa-phoenix-framework fa-4x"></i>
-     --}}
-
-
     <header class="shadow bg-light container-fluid">
         <nav class="navbar navbar-expand-lg navbar-light bg-light text-center ">
-            <div class="navbar-collapse form-inline" id="navbarTogglerDemo03">
-                <h3 class="text-left" ><strong id="navPin"></strong></h3>
-                <div class="form-inline ml-auto my-2 my-lg-0">
-                    <h3 ><strong id="playerName"></strong></h3>
+            <div class="navbar-collapse form-inline d-flex justify-content-between" id="navbarTogglerDemo03">
+                <h3 class="text-left"><strong id="navPin"></strong></h3>
+                <h3><strong id="playerName"></strong></h3>
+                <div class="form-inline my-2">
                     <div class=" p-2 ml-3" id="pointBox">
                         <h4 id="point"></h4>
                     </div>
@@ -43,6 +36,7 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/validateForm.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    {{!-- Socket init --}}
     <script>
         const socket = io({ transports: ['websocket'], upgrade: false });
     </script>
