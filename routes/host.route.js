@@ -5,7 +5,7 @@ module.exports = function(app, passport) {
     app.route('/host/signin')
         .get(authMiddleware.alreadySignin, host_controller.getSignIn)
         .post(passport.authenticate('local-signin', {
-            successRedirect: '/host/questionset',
+            successRedirect: '/host/questionset/1',
             failureRedirect: '/host/signin',
             failureFlash: true
         }))

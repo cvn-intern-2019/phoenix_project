@@ -18,6 +18,12 @@ module.exports = {
         return db.query(sql);
     },
 
+    listPerPage: (user_id,min,max) => {
+        let sql = `SELECT questionsets.* FROM questionsets, user_questionset 
+        WHERE user_questionset.questionset_id = questionsets.questionset_id and user_questionset.user_id = ${user_id} Limit ${min},${max}`;
+        return db.query(sql);
+    },
+
     save: (questionset, filename) => {
         let sql = `INSERT INTO questionsets (questionset_title,questionset_description,questionset_image,questionset_state) 
         VALUES ("${questionset.title}","${questionset.description}","${filename}","${questionset.status}")`;

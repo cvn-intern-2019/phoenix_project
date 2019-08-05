@@ -2,6 +2,44 @@
 <script>
     $("body").addClass('homepage-bg');
 </script>
+<script>
+    let list = {{ this.questionset.length }};
+    let totalPage = 0;
+    let currentPage = 0;
+    let pages = 0;
+
+    if (list % 4) {
+        totalPage = parseInt(list / 4) + 1;
+    } else {
+        totalPage = (list / 4);
+    }
+    for(let i = 1; i <= totalPage;i++){
+        if(i==1){
+            $(".pagination").append($("<a href='/host/questionset/"+i+"'><<</a>"));
+        }
+        $(".pagination").append($("<a href='/host/questionset/"+i+"'>"+i+"</a>"));
+        if(i==totalPage){
+            $(".pagination").append($("<a href='/host/questionset/"+i+"'>>></a>"));
+        }
+    }
+</script>
+{{/section}}
+
+{{#section 'css'}}
+<style>
+    .pagination {
+        background-color:aliceblue;
+        display: inline-block;
+    }
+
+    .pagination a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
+
+</style>
 {{/section}}
 
 
@@ -15,7 +53,7 @@
             {{else}}
             <h1 class="row d-flex justify-content-center text-white">No data</h1>
             {{/if}}
-            {{#each this.questionset}}
+            {{#each this.listPerPage}}
             <div class="list-group my-2 border border-primary rounded">
                 <div class="list-group-item d-flex justify-content-between align-items-center">
                     {{#if questionset_image}}
@@ -36,10 +74,11 @@
                         {{/if}}
                         <a class="btn btn-info mx-4" href="/host/questionset/{{questionset_id}}/edit"><i
                                 class="fas fa-edit"></i> Edit</a>
-                    </span> 
+                    </span>
                 </div>
             </div>
             {{/each}}
+            <div class="pagination">
+            </div>
         </div>
     </div>
-</div>
