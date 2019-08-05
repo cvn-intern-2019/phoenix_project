@@ -48,7 +48,7 @@
             console.log("Completed data!" +  data);
         }
         else {
-            socket.emit("deletePlayer", window.sessionStorage.getItem("localPin"))
+            socket.emit("deletePlayer", window.sessionStorage.getItem("localPin"));
         }
     });
 
