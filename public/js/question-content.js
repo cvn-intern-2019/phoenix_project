@@ -13,12 +13,14 @@ socket.on("question-content", (question, index) => {
     if (parseInt(sessionStorage.getItem("question_index")) < index) {
         sessionStorage.setItem("question_index", index);
     } else {
-        socket.emit('endGame', window.sessionStorage.getItem("localPin"));
-        socket.emit("deletePlayer", window.sessionStorage.getItem("localPin"));
-        window.sessionStorage.clear();
-        window.location.replace('/error');
+        socket.emit('hostDisconnect', window.sessionStorage.getItem("localPin"));
     }
 })
+
+socket.on("roomDisconnected", () => {
+    window.location.replace("/error");
+})
+
 socket.on("final-statistic", () => {
     window.location.replace('/player/final-stat');
 })
