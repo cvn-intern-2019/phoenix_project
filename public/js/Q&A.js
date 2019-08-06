@@ -38,7 +38,7 @@ $("#ans4").click(() => {
 });
 
 // Handle countdown
-var sec = 3
+var sec = 14;
 $('#countdown').css({
     fontSize: 40
 });
