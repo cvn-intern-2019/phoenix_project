@@ -144,6 +144,15 @@ io.on('connection', (socket) => {
         Game_room.endGame(pin);
     })
 
+    socket.on("hostDisconnect", (pin) => {
+        let room = Game_room.getRoomById(pin);
+        if (room) {
+            players.deletePlayersByRoomId(pinRoom);
+            Game_room.removeRoomById(pinRoom);
+        }
+        io.to(pin).emit("roomDisconnected");
+    })
+
     socket.on('disconnect', () => {
         let player = players.getPlayerById(socket.id);
         if (player) {
