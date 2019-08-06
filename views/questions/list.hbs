@@ -123,14 +123,14 @@
                             href="/host/questionset/{{questionset_id}}/question/{{question_id}}/edit">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a class="btn btn-outline-danger d-block p-0 my-2 mr-3" id="delete-btn" href="#myModal"
+                        <a class="btn btn-outline-danger d-block p-0 my-2 mr-3" id="delete-btn" href="#myModal{{question_id}}"
                             data-toggle="modal">
                             <i class="fas fa-trash"></i>
                         </a>
                     </div>
                 </div>
             </div>
-            <div id="myModal" class="modal fade">
+            <div id="myModal{{question_id}}" class="modal fade">
                 <div class="modal-dialog modal-dialog-centered modal-confirm">
                     <div class="modal-content">
                         <div class="modal-header">
