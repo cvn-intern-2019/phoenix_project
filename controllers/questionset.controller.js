@@ -46,11 +46,12 @@ module.exports = {
 
     savequestionset: (req, res) => {
         let questionset = req.body;
-        questionset.title = questionset_model.format(questionset.title);
-        questionset.description = questionset_model.format(questionset.description);
+        questionset.title = questionset_model.format(questionset.title).trim();
+        questionset.description = questionset_model.format(questionset.description).trim();
         upload(req, res, err => {
-            if (err) {
-                res.render('questionsets/add_questionset');
+            if (questionset.title.length <= 0 ||questionset.description.length <= 0 ) {
+                //req.flash("error", "Begin is not a space");
+                res.render('questionsets/add_questionset',{ user: req.user, csrfToken: req.csrfToken()});
             } else {
                 var filename = "";
                 if (req.file) {
@@ -89,11 +90,12 @@ module.exports = {
 
     editquestionset: (req, res) => {
         let questionset = req.body;
-        questionset.title = questionset_model.format(questionset.title);
-        questionset.description = questionset_model.format(questionset.description);
+        questionset.title = questionset_model.format(questionset.title).trim();
+        questionset.description = questionset_model.format(questionset.description).trim();
         upload(req, res, err => {
-            if (err) {
-                res.render('questionset/questionset');
+            if (questionset.title.length <= 0 ||questionset.description.length <= 0 ) {
+                //req.flash("error", "Begin is not a space");
+                res.redirect('back');
             } else {
                 var fileName = "";
                 if (req.file) {
