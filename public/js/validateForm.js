@@ -5,20 +5,24 @@ $(document).ready(() => {
             username: {
                 required: true,
                 minlength: 5,
+                maxlength: 45,
                 specialChars: true
             },
             password: {
                 required: true,
-                minlength: 7
+                minlength: 7,
+                maxlength: 45,
             },
             confirmPassword: {
                 required: true,
                 equalTo: "#password",
-                minlength: 7
+                minlength: 7,
+                maxlength: 45,
             },
             email: {
                 required: true,
-                email: true
+                email: true,
+                maxlength: 45,
             }
         }
     });
@@ -43,7 +47,8 @@ $(document).ready(() => {
         rules: {
             email: {
                 required: true,
-                email: true
+                email: true,
+                maxlength: 45,
             }
         }
     });
@@ -53,15 +58,18 @@ $(document).ready(() => {
         rules: {
             current: {
                 required: true,
-                minlength: 7
+                minlength: 7,
+                maxlength: 45,
             },
             new: {
                 required: true,
-                minlength: 7
+                minlength: 7,
+                maxlength: 45,
             },
             confirm: {
                 required: true,
-                minlength: 7
+                minlength: 7,
+                maxlength: 45,
             }
         }
     });
