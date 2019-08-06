@@ -14,7 +14,13 @@ module.exports = {
 
     list: (user_id) => {
         let sql = `SELECT questionsets.* FROM questionsets, user_questionset 
-        WHERE user_questionset.questionset_id = questionsets.questionset_id and user_questionset.user_id = ${user_id} ORDER BY user_questionset.questionset_id DESC;`;
+        WHERE user_questionset.questionset_id = questionsets.questionset_id and user_questionset.user_id = ${user_id}`;
+        return db.query(sql);
+    },
+
+    listPerPage: (user_id,min,max) => {
+        let sql = `SELECT questionsets.* FROM questionsets, user_questionset 
+        WHERE user_questionset.questionset_id = questionsets.questionset_id and user_questionset.user_id = ${user_id} Limit ${min}, ${max}`;
         return db.query(sql);
     },
 

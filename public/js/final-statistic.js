@@ -19,13 +19,22 @@ socket.on("listPlayerScoreReponse", (listPlayer) => {
     if (listPlayer[2]) {
         $('#player3').text(listPlayer[2].name);
     }
-    if (player) {
-        let data = window.sessionStorage.clear();
-        console.log("Completed data!" + data);
-    } else {
-        socket.emit("deletePlayer", window.sessionStorage.getItem("localPin"))
-    }
 });
+
+// Anounce server to change room status
+socket.emit('endGame', window.sessionStorage.getItem("localPin"));
+
+$('#quitBtn').click(() => {
+    if (player) {
+        window.sessionStorage.clear();
+        window.location.replace('/player');
+    } else {
+        socket.emit("deletePlayer", window.sessionStorage.getItem("localPin"));
+        window.location.replace('/host/questionset');
+    }
+    window.location.replace('/');
+});
+
 $("body").addClass('homepage-bg');
 
 $('#rank2').animate({ height: "70%" }, 1000);

@@ -1,6 +1,13 @@
 {{#section 'css'}}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/css/fileinput.min.css" media="all"
   rel="stylesheet" type="text/css" />
+  <style>
+  label.error {
+    color: red;
+    font-size: 15px;
+    font-style: oblique;
+  }
+</style>
 {{/section}}
 
 {{#section 'js'}}
@@ -19,7 +26,7 @@
 </script>
 {{/section}}
 <div class="container">
-  <form class="m-5" action="/host/questionset/{{questionset.questionset_id}}/edit" method="POST"
+  <form class="m-3" action="/host/questionset/{{questionset.questionset_id}}/edit" method="POST"
     enctype="multipart/form-data" id="questionset">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     <input type="hidden" name="image" value="{{ questionset.questionset_image }}">
@@ -52,7 +59,7 @@
             {{/if}}>Inactive</lable>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary px-5" id="btn-question-set">Save</button>
-    <a type="cancel" class="btn btn-secondary px-5" id="btn-question-set" href="/host/questionset">Cancel</a>
+    <button type="submit" class="btn btn-primary px-5 mb-5" id="btn-question-set">Save</button>
+    <a type="cancel" class="btn btn-secondary px-5 mb-5" id="btn-question-set" href="/host/questionset">Cancel</a>
   </form>
 </div>

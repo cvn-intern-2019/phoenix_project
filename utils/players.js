@@ -65,14 +65,6 @@ class Players {
         if (correctAnswer == player.answer)
             player.calculateScore();
     }
-    updatePlayerStatus(pin) {
-        let players = this.getPlayerByRoom(pin);
-        for (let i = 0; i < players.length; i++) {
-            players[i].status = players[i].status ? false : true;
-            this.removePlayer(players[i].id);
-            this.addPlayer(players[i]);
-        }
-    }
     deletePlayersByRoomId(id) {
         let deletePlayers = this.getPlayerByRoom(id);
         for (let i = 0; i < deletePlayers.length; i++) {
@@ -80,12 +72,6 @@ class Players {
         }
     }
 
-    deletePlayersByStatus() {
-        for (let i = 0; i < this.players.length; i++) {
-            if (this.players[i].status === false && this.players[i].roomId === '')
-                this.removePlayer(this.players[i].id);
-        }
-    }
 }
 class Player {
     constructor(id, name, roomId) {
@@ -95,7 +81,6 @@ class Player {
         this.score = 0;
         this.answer = 0;
         this.answerTime = 0;
-        this.status = false;
     }
 
     calculateScore() {

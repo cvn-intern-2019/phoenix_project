@@ -4,6 +4,8 @@
 <style>
   label.error {
     color: red;
+    font-size: 15px;
+    font-style: oblique;
   }
 </style>
 {{/section}}
@@ -23,7 +25,7 @@
 </script>
 {{/section}}
 <div class="container">
-  <form action="/host/questionset/add" method="POST" enctype="multipart/form-data" id="questionset">
+  <form class="m-3" action="/host/questionset/add" method="POST" enctype="multipart/form-data" id="questionset">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     <h1 class="question-set-heading text-white"> New question set</h1>
     <div class="row p-3 border rounded border-dark bg-light">
@@ -49,7 +51,7 @@
             value="0"> Inactive</lable>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary px-5" id="btn-question-set">Submit</button>
-    <a type="cancel" class="btn btn-secondary px-5" id="btn-question-set" href="/host/questionset">Cancel</a>
+    <button type="submit" class="btn btn-primary px-5 mb-5" id="btn-question-set">Submit</button>
+    <a type="cancel" class="btn btn-secondary px-5 mb-5" id="btn-question-set" href="/host/questionset">Cancel</a>
   </form>
 </div>

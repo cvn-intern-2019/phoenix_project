@@ -1,5 +1,5 @@
 {{#section 'js'}}
-<script src="/js/host-waiting.js"></script> 
+<script src="/js/host-waiting.js"></script>
 {{/section}}
 
 <script>
@@ -24,20 +24,25 @@
 
 <div class="container">
     <div class="row d-flex justify-content-center mt-5 mx-4">
-        <div class="border border-dark col-md-3"
-            style="font-size: 30px;margin-bottom: 100px; border: 5px solid; text-align:center;">
-            <p><strong> PIN: <span id="pin"></span> </strong></p>
+        <div class="border border-dark justify-conetent-center align-items-center flex-column my-5">
+            <h2 class="m-3"><strong>PIN</strong>
+                <strong id="pin"></strong></h2>
         </div>
     </div>
     <div class="row mb-5">
-        <div class="col-md-6">
-            <span class="red display-4">
-                <h1 id="players-number">0</h1>Players
+        <div class="col-md-4  text-white">
+            <button class=" col-md-4 btn btn-primary border border-dark" id="host_back"
+                style="font-size: 20px">Back</button>
+        </div>
+        <div class="col-md-4 d-flex flex-column">
+            <h1 id="players-number" class="justify-content-center d-flex">0</h1>
+            <span class="red display-4 justify-content-center d-flex">
+                Players
             </span>
         </div>
-        <div class="col-md-6  text-white">
+        <div class="col-md-4  text-white">
             <button class=" col-md-4 btn btn-success border border-dark" id="host_start"
-                style="font-size: 20px;float:right">Start</button>
+                style="font-size: 20px;float:right" disabled>Start</button>
         </div>
     </div>
     <div class="row border border-dark" id="playerList">

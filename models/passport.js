@@ -49,7 +49,7 @@ module.exports = function(passport) {
                         return done(null, false, req.flash('signinuser', 'Username not found'))
                     }
                     if (md5(password) !== result[0].user_password)
-                        return done(null, false, req.flash('signinpwd', 'Wrong password'));
+                        return done(null, false, req.flash('signinpwd', 'Incorrect password'));
 
                     req.session.cookie.expires = false;
                     return done(null, result[0]);

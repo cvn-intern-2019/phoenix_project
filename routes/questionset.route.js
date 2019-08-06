@@ -1,7 +1,7 @@
 const authMiddleware = require('./../middlewares/auth.middleware');
 const questionset_controller = require('../controllers/questionset.controller');
 
-module.exports = function(app) {
+module.exports = function (app) {
     app.route('/host/questionset')
         .get(authMiddleware.isSignIn, questionset_controller.showQuestionsetList);
 
@@ -18,5 +18,4 @@ module.exports = function(app) {
 
     app.route('/host/questionset/:qs_id/start_game')
         .get(authMiddleware.isSignIn, questionset_controller.create_room);
-
 }
