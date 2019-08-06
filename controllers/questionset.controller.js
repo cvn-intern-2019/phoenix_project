@@ -17,39 +17,24 @@ const upload = multer({
 module.exports = {
     showQuestionsetList: (req, res) => {
         var page = req.query.page || 1;
+        let pageItems = 5;
         if (page < 1) page = 1;
         let min = 0;
         let max = 0;
-        min = (page - 1) * 4;
-        max = 4;
+        min = (page - 1) * pageItems;
+        max = page*pageItems;
         //console.log(min);
         //console.log(max);
         questionset_model.list(req.user.user_id)
             .then(result => {
-                let total = result.length;
-                if (total> 0) {
-                    questionset_model.listPerPage(req.user.user_id, min, max)
-                    .then(results => {
-                        console.log(total);
-                        var npages = Math.floor(total / 4);
-                        
-                        if (total % max > 0) npages++;
-                        var pages = [];
-                        for (i = 1; i <= npages; i++) {
-                            var obj = { value: i, active: i === +page };
-                            pages.push(obj);
-                        }
-                        res.render('questionsets/questionset', {
-                            user: req.user,
-                            questionset: results,
-                            pages
-                        });
-                    })
-                    .catch(err => {
-                        console.log(err);
-                        res.render('error');
-                    })
-                }
+                let total = (result.length /pageItems) +1;
+                result = result.slice(min, max);                
+                res.render('questionsets/questionset', {
+                    user: req.user,
+                    questionset: result,
+                    listPerPage : total,
+                    page
+                });
             })
             .catch(err => {
                 console.log(err);
