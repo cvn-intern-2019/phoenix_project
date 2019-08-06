@@ -3,7 +3,8 @@
     src: url(../webfonts/charbb_reg.ttf);
 }
 
-#questionset_title {
+#questionset_title,
+#questionset_description {
     white-space: nowrap;
     margin-bottom: 50px;
     margin-left: 10px;
