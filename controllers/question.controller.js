@@ -2,7 +2,7 @@ const question_model = require('../models/question.model');
 const questionset_model = require('../models/questionset.model');
 const fs = require('fs');
 const multer = require('multer');
-const paginationSize = 1;
+const paginationSize = 5;
 
 const storage = multer.diskStorage({
     destination: './public/img/',
