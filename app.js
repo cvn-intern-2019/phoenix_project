@@ -107,11 +107,14 @@ io.on('connection', (socket) => {
 
     socket.on("getQuestion", (pin) => {
         let room = Game_room.getRoomById(pin);
-        if (room.question_index < room.list_question.length && room)
-            socket.emit("question-content", room.list_question[room.question_index], room.question_index);
+        if(room){
+            if (room.question_index < room.list_question.length)
+                socket.emit("question-content", room.list_question[room.question_index], room.question_index);
+            else
+               socket.emit("final-statistic");
+        }
         else
-            socket.emit("final-statistic");
-
+            io.to(pin).emit("roomDisconnected");
     })
 
     socket.on("nextQuestion", (pin) => {
