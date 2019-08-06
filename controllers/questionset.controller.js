@@ -41,7 +41,7 @@ module.exports = {
     },
 
     addquestionset: (req, res) => {
-        res.render('questionsets/add_questionset', { user: req.user, csrfToken: req.csrfToken() });
+        res.render('questionsets/add_questionset', { user: req.user, error: req.flash("error"), csrfToken: req.csrfToken() });
     },
 
     savequestionset: (req, res) => {
@@ -50,8 +50,8 @@ module.exports = {
         questionset.description = questionset_model.format(questionset.description).trim();
         upload(req, res, err => {
             if (questionset.title.length <= 0 ||questionset.description.length <= 0 ) {
-                //req.flash("error", "Begin is not a space");
-                res.render('questionsets/add_questionset',{ user: req.user, csrfToken: req.csrfToken()});
+                req.flash("error", "Begin is not a space");
+                res.render('questionsets/add_questionset',{ user: req.user,  error: req.flash("error"), csrfToken: req.csrfToken()});
             } else {
                 var filename = "";
                 if (req.file) {
@@ -80,7 +80,8 @@ module.exports = {
         questionset_model.findById(req.params.qs_id)
             .then(result => {
                 let path = '/img/' + result[0].questionset_image;
-                res.render('questionsets/edit_questionset', { questionset: result[0], path: path, csrfToken: req.csrfToken() });
+                res.render('questionsets/edit_questionset', { questionset: result[0], path: path, csrfToken: req.csrfToken(),
+                    error: req.flash("error"), });
             })
             .catch(err => {
                 console.log(err);
@@ -94,7 +95,7 @@ module.exports = {
         questionset.description = questionset_model.format(questionset.description).trim();
         upload(req, res, err => {
             if (questionset.title.length <= 0 ||questionset.description.length <= 0 ) {
-                //req.flash("error", "Begin is not a space");
+                req.flash("error", "Begin is not a space");
                 res.redirect('back');
             } else {
                 var fileName = "";

@@ -1,7 +1,7 @@
 {{#section 'css'}}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/css/fileinput.min.css" media="all"
   rel="stylesheet" type="text/css" />
-  <style>
+<style>
   label.error {
     color: red;
     font-size: 15px;
@@ -21,6 +21,7 @@
       allowedFileExtensions: ['png', 'jpg', 'gif'],
       uploadAsync: false,
     });
+    $("#error").hide(10000);
   });
   $("body").addClass('homepage-bg');
 </script>
@@ -31,6 +32,13 @@
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     <input type="hidden" name="image" value="{{ questionset.questionset_image }}">
     <h1 class="question-set-heading text-white"> Edit question set</h1>
+    <div class="form-group text-center">
+      {{#if error}}
+      <div class="alert alert-danger" role="alert" id="error">
+        {{error}}
+      </div>
+      {{/if}}
+    </div>
     <div class="row p-3 border rounded border-dark bg-light">
       <div class="form-group col-md-12">
         <div>
