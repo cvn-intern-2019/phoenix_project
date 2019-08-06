@@ -22,7 +22,8 @@ socket.on("listPlayerScoreReponse", (listPlayer) => {
 });
 
 // Anounce server to change room status
-socket.emit('endGame', window.sessionStorage.getItem("localPin"));
+if (!player)
+    socket.emit('endGame', window.sessionStorage.getItem("localPin"));
 
 $('#quitBtn').click(() => {
     if (player) {
