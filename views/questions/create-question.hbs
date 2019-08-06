@@ -22,14 +22,14 @@
     <form method="POST" action="/host/questionset/{{qs_id}}/question/add" enctype="multipart/form-data" id="question">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         <h1 class="question-set-heading text-center text-white mt-0">Question</h1>
-        <div class="row p-3 border rounded border-dark bg-light">
-            <div class="form-group text-center">
-                {{#if error}}
-                <div class="alert alert-danger" role="alert">
-                    {{error}}
-                </div>
-                {{/if}}
+        <div class="form-group text-center">
+            {{#if error}}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
             </div>
+            {{/if}}
+        </div>
+        <div class="row p-3 border rounded border-dark bg-light">
             <div class="form-group col-md-8">
                 <label><strong>Content</strong></label>
                 <textarea class="form-control" rows="5" placeholder="Content of question" name="content"></textarea>
