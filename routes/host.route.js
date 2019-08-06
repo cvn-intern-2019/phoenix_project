@@ -4,7 +4,7 @@ const host_controller = require('../controllers/host.controller');
 module.exports = function(app, passport) {
     app.route('/host/signin')
         .get(authMiddleware.alreadySignin, host_controller.getSignIn)
-        .post(passport.authenticate('local-signin', {
+        .post(authMiddleware.reCaptcha, passport.authenticate('local-signin', {
             successRedirect: '/host/questionset',
             failureRedirect: '/host/signin',
             failureFlash: true
