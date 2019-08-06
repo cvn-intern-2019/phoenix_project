@@ -70,6 +70,11 @@ var timer = setInterval(function() {
 }, 1000);
 
 
+socket.on("roomDisconnected", () => {
+    window.sessionStorage.clear();
+    window.location.replace("/error");
+})
+
 // send get question command
 socket.emit("getQuestion", window.sessionStorage.getItem("localPin"));
 
