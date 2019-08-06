@@ -18,6 +18,7 @@ socket.on("question-content", (question, index) => {
 })
 
 socket.on("roomDisconnected", () => {
+    window.sessionStorage.clear();
     window.location.replace("/error");
 })
 
