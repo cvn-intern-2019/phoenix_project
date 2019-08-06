@@ -71,23 +71,23 @@ $(document).ready(() => {
         rules: {
             content: {
                 required: true,
-                maxlength: 99,
+                maxlength: 255,
             },
             answer1: {
                 required: true,
-                maxlength: 50,
+                maxlength: 255,
             },
             answer2: {
                 required: true,
-                maxlength: 50,
+                maxlength: 255,
             },
             answer3: {
                 required: true,
-                maxlength: 50,
+                maxlength: 255,
             },
             answer4: {
                 required: true,
-                maxlength: 50,
+                maxlength: 255,
             },
             correctanswer: {
                 required: true,

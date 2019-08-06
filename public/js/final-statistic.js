@@ -32,6 +32,7 @@ $('#quitBtn').click(() => {
         socket.emit("deletePlayer", window.sessionStorage.getItem("localPin"));
         window.location.replace('/host/questionset');
     }
+    window.location.replace('/');
 });
 
 $("body").addClass('homepage-bg');

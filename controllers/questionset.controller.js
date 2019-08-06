@@ -62,6 +62,7 @@ module.exports = {
             }
         })
     },
+
     findquestionset: (req, res) => {
         questionset_model.findById(req.params.qs_id)
             .then(result => {
@@ -111,11 +112,15 @@ module.exports = {
         })
     },
 
-
     create_room: (req, res) => {
+        // Create room
         question_model.findByQuestionsetId(req.params.qs_id)
             .then(result => {
-                res.render('host/middle', { question: result, qs_id: req.params.qs_id });
+                if (result.length > 0) {
+                    res.render('host/middle', { question: result, qs_id: req.params.qs_id });
+                } else {
+                    res.redirect('/host/questionset/' + req.params.qs_id + '/question/add')
+                }
             })
             .catch(err => {
                 console.log(err);

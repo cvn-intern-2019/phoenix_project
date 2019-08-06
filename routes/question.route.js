@@ -1,7 +1,7 @@
 const authMiddleware = require('../middlewares/auth.middleware');
 const question_controller = require('../controllers/question.controller');
 
-module.exports = function (app) {
+module.exports = function(app) {
     app.route('/host/questionset/:qs_id/question')
         .get(authMiddleware.isSignIn, authMiddleware.checkUserId, question_controller.showQuestionList);
 

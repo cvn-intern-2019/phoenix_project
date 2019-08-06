@@ -1,62 +1,71 @@
-ul#list-score{
-	margin: 10% 20% 10% 20%;
-	padding: 0px 3% 0px 0%;
+ul#list-score {
+    margin: 10% 20% 10% 20%;
+    padding: 0px 3% 0px 0%;
 }
-ul#list-score li{
-	margin-bottom: 2%;
-	list-style-type: none;
+
+ul#list-score li {
+    margin-bottom: 2%;
+    list-style-type: none;
 }
-div#result-answer h1{
-	font-size:60px;
-	margin-top: 35%;
+
+div#result-answer h1 {
+    font-size: 60px;
+    margin-top: 35%;
 }
-div#result-answer h2{
-	margin-bottom: 70%;
+
+div#result-answer h2 {
+    margin-bottom: 70%;
 }
+
 @media only screen and (max-width: 768px) {
-	#navbarTogglerDemo03 h1#numOfQuestion{
-		font-size: 28px;
-	}
-	#navbarTogglerDemo03 h3#narPin,h3#playerName{
-		font-size: 24px;
-	}
-	#navbarTogglerDemo03 h4#point{
-		font-size: 20px;
-	}
+    #navbarTogglerDemo03 h1#numOfQuestion {
+        font-size: 28px;
+    }
+    #navbarTogglerDemo03 h3#narPin,
+    h3#playerName {
+        font-size: 24px;
+    }
+    #navbarTogglerDemo03 h4#point {
+        font-size: 20px;
+    }
 }
+
 @media screen and (max-width: 640px) {
-	div#result-answer h1{
-		font-size:60px;
-		margin-top: 20%;
-	}
-	div#result-answer h2{
-		margin-bottom: 40%;
-	}
-	#navbarTogglerDemo03 h1#numOfQuestion{
-		font-size: 22px;
-	}
-	#navbarTogglerDemo03 h3#narPin,h3#playerName{
-		font-size: 18px;
-	}
-	#navbarTogglerDemo03 h4#point{
-		font-size: 16px;
-	}
+    div#result-answer h1 {
+        font-size: 60px;
+        margin-top: 20%;
+    }
+    div#result-answer h2 {
+        margin-bottom: 40%;
+    }
+    #navbarTogglerDemo03 h1#numOfQuestion {
+        font-size: 22px;
+    }
+    #navbarTogglerDemo03 h3#narPin,
+    h3#playerName {
+        font-size: 18px;
+    }
+    #navbarTogglerDemo03 h4#point {
+        font-size: 16px;
+    }
 }
+
 @media screen and (max-width: 500px) {
-	div#result-answer h1{
-		font-size:60px;
-		margin-top: 10%;
-	}
-	div#result-answer h2{
-		margin-bottom: 20%;
-	}
-	#navbarTogglerDemo03 h1#numOfQuestion{
-		font-size: 20px;
-	}
-	#navbarTogglerDemo03 h3#narPin,h3#playerName{
-		font-size: 16px;
-	}
-	#navbarTogglerDemo03 h4#point{
-		font-size: 14px;
-	}
+    div#result-answer h1 {
+        font-size: 60px;
+        margin-top: 10%;
+    }
+    div#result-answer h2 {
+        margin-bottom: 20%;
+    }
+    #navbarTogglerDemo03 h1#numOfQuestion {
+        font-size: 20px;
+    }
+    #navbarTogglerDemo03 h3#narPin,
+    h3#playerName {
+        font-size: 16px;
+    }
+    #navbarTogglerDemo03 h4#point {
+        font-size: 14px;
+    }
 }
