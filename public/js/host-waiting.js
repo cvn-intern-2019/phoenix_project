@@ -31,6 +31,7 @@ $("#host_start").click(() => {
     $("#host_start").attr('disabled', 'disabled');
     socket.emit("start-game", roomPin);
 })
+sessionStorage.setItem("question_index", "-1");
 
 $('#host_back').click(() => {
     socket.emit("deletePlayer", window.sessionStorage.getItem("localPin"));

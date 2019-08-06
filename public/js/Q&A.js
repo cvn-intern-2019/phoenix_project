@@ -38,7 +38,7 @@ $("#ans4").click(() => {
 });
 
 // Handle countdown
-var sec = 14
+var sec = 3
 $('#countdown').css({
     fontSize: 40
 });
@@ -72,13 +72,13 @@ var timer = setInterval(function() {
 
 // send get question command
 socket.emit("getQuestion", window.sessionStorage.getItem("localPin"));
-// Increase questionIndex
-let i = window.sessionStorage.getItem("questionIndex");
+
 // Get question content
-socket.on("question-content", (question) => {
+socket.on("question-content", (question, index) => {
     // Show question-content
     $('#question-content').html(question.question_content);
     sessionStorage.setItem("correct_answer", question.question_answercorrect);
+
     if (question.question_image !== '')
         $('#question-image').attr('src', '/img/' + question.question_image);
     $('#question-answer1').html(question.question_answer1);

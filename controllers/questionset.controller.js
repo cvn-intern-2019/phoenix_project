@@ -6,7 +6,7 @@ var fs = require('fs');
 
 const storage = multer.diskStorage({
     destination: './public/img/',
-    filename: function (req, file, cb) {
+    filename: function(req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname));
     }
 })
@@ -22,17 +22,15 @@ module.exports = {
         let min = 0;
         let max = 0;
         min = (page - 1) * pageItems;
-        max = page*pageItems;
-        //console.log(min);
-        //console.log(max);
+        max = page * pageItems;
         questionset_model.list(req.user.user_id)
             .then(result => {
-                let total = (result.length /pageItems) +1;
-                result = result.slice(min, max);                
+                let total = (result.length / pageItems) + 1;
+                result = result.slice(min, max);
                 res.render('questionsets/questionset', {
                     user: req.user,
                     questionset: result,
-                    listPerPage : total,
+                    listPerPage: total,
                     page
                 });
             })
