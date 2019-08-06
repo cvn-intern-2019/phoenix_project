@@ -148,6 +148,7 @@
         }, 3000);
     })
 
+    sessionStorage.setItem("question_index", "-1");
 
     socket.on("playerInfo", (player) => {
         sessionStorage.setItem(`profile`, JSON.stringify(player));

@@ -8,8 +8,16 @@ if (player) {
 } else {
     $('#navPin').html("PIN: " + sessionStorage.getItem("localPin"));
 }
-socket.on("question-content", (question) => {
+socket.on("question-content", (question, index) => {
     $("#question-content").html(question.question_content);
+    if (parseInt(sessionStorage.getItem("question_index")) < index) {
+        sessionStorage.setItem("question_index", index);
+    } else {
+        socket.emit('endGame', window.sessionStorage.getItem("localPin"));
+        socket.emit("deletePlayer", window.sessionStorage.getItem("localPin"));
+        window.sessionStorage.clear();
+        window.location.replace('/error');
+    }
 })
 socket.on("final-statistic", () => {
     window.location.replace('/player/final-stat');
