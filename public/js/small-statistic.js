@@ -11,16 +11,16 @@ if (player) {
         } else {
             $(`#answer_result`).removeClass("bg-success").addClass('bg-danger');
             $(`#answer_status`).html("Incorrect !")
-            if(window.sessionStorage.getItem("correct_answer") == 1){
+            if (window.sessionStorage.getItem("correct_answer") == 1) {
                 $(`#answer_correct`).html("Correct_answer : A");
             }
-            if(window.sessionStorage.getItem("correct_answer") == 2){
+            if (window.sessionStorage.getItem("correct_answer") == 2) {
                 $(`#answer_correct`).html("Correct_answer : B");
             }
-            if(window.sessionStorage.getItem("correct_answer") == 3){
+            if (window.sessionStorage.getItem("correct_answer") == 3) {
                 $(`#answer_correct`).html("Correct_answer : C");
             }
-            if(window.sessionStorage.getItem("correct_answer") == 4){
+            if (window.sessionStorage.getItem("correct_answer") == 4) {
                 $(`#answer_correct`).html("Correct_answer : D");
             }
         }
@@ -32,6 +32,16 @@ if (player) {
     })
 } else {
     $('#navPin').html("PIN: " + sessionStorage.getItem("localPin"));
+    $(`#answer_status`).html("Correct Answer:").attr("style", "font-size:30px;")
+    if (window.sessionStorage.getItem("correct_answer") == 1) {
+        $(`#answer_point`).html("A").attr("style", "font-size:60px;")
+    } else if (window.sessionStorage.getItem("correct_answer") == 2) {
+        $(`#answer_point`).html("B").attr("style", "font-size:60px;")
+    } else if (window.sessionStorage.getItem("correct_answer") == 3) {
+        $(`#answer_point`).html("C").attr("style", "font-size:60px;")
+    } else if (window.sessionStorage.getItem("correct_answer") == 4) {
+        $(`#answer_point`).html("D").attr("style", "font-size:60px;")
+    }
 }
 
 function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
