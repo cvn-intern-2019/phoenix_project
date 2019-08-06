@@ -17,7 +17,6 @@ module.exports = (app) => {
                 layout: 'player.hbs'
             });
         })
-
     app.route('/player/new_game')
         .get((req, res) => {
             res.render('player/new_game', {

@@ -1,4 +1,5 @@
 const db = require('../utils/db')
+const request = require('request');
 
 
 function isSignIn(req, res, next) {
@@ -29,8 +30,38 @@ function checkUserId(req, res, next) {
         });
 }
 
+function reCaptcha(req, res, next) {
+    if (
+        req.body['g-recaptcha-response'] === undefined ||
+        req.body['g-recaptcha-response'] === '' ||
+        req.body['g-recaptcha-response'] === null
+    ) {
+        return res.redirect('back');
+    }
+
+    // Secret Key
+    const secretKey = '6LfnSrEUAAAAAAyvMtdLhM7siLbpfHcro3do244I';
+
+    // Verify URL
+    const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${req.body['g-recaptcha-response']}&remoteip=${req.connection.remoteAddress}`;
+
+    // Make Request To VerifyURL
+    request(verifyUrl, (err, response, body) => {
+        body = JSON.parse(body);
+
+        // If Not Successful
+        if (body.success !== undefined && !body.success) {
+            return res.redirect('back');
+        }
+
+        //If Successful
+        next();
+    });
+}
+
 module.exports = {
     isSignIn,
     alreadySignin,
-    checkUserId
+    checkUserId,
+    reCaptcha
 }

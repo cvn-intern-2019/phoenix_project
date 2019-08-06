@@ -1,6 +1,29 @@
 {{#section 'js'}}
 <script>
     $("body").addClass('homepage-bg');
+    // Set pagination
+    //Previous btn
+    if ({{ page_id }} > 1) {
+        $(".pagination").append($(`<li class="page-item"><a class="page-link" href="/host/questionset/{{info_qs.questionset_id}}/question?page=` + parseInt({{ page_id }} - 1) + `">Previous</a></li>`));
+    }
+    else {
+        $(".pagination").append($(`<li class="page-item"><a class="page-link">Previous</a></li>`));
+    }
+    // Pages btn
+    for (let i = 1; i < {{ page_count }}; i++) {
+        if (i == {{ page_id }}) {
+            $(".pagination").append($(`<li class="page-item active"><a class="page-link">` + i + `</a></li>`));
+            continue;
+        }
+        $(".pagination").append($(`<li class="page-item"><a class="page-link" href="/host/questionset/{{info_qs.questionset_id}}/question?page=` + i + `">` + i + `</a></li>`));
+    }
+    // Next btn
+    if ({{ page_id }} < {{ page_count }} - 1) {
+        $(".pagination").append($(`<li class="page-item"><a class="page-link" href="/host/questionset/{{info_qs.questionset_id}}/question?page=` + parseInt({{ page_id }} + 1) + `">Next</a></li>`));
+    }
+    else {
+        $(".pagination").append($(`<li class="page-item"><a class="page-link">Next</a></li>`));
+    }
 </script>
 {{/section}}
 
@@ -129,6 +152,12 @@
                 </div>
             </div>
             {{/each}}
+            {{#if list_q}}
+            <nav aria-label="Page navigation example" class="float-right">
+                <ul class="pagination">
+                </ul>
+            </nav>
+            {{/if}}
         </div>
     </div>
 </div>

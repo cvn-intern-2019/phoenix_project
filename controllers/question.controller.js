@@ -2,7 +2,7 @@ const question_model = require('../models/question.model');
 const questionset_model = require('../models/questionset.model');
 const fs = require('fs');
 const multer = require('multer');
-
+const paginationSize = 1;
 
 const storage = multer.diskStorage({
     destination: './public/img/',
@@ -21,11 +21,19 @@ module.exports = {
             .then(qs_info => {
                 question_model.findByQuestionsetId(qs_id)
                     .then(q_list => {
+                        let query = req.query;
+                        let page_id = parseInt(query.page);
+                        let page_count = q_list.length / paginationSize + 1;
+                        let begin = (page_id - 1) * paginationSize;
+                        let end = (page_id - 1) * paginationSize + paginationSize;
+                        q_list = q_list.slice(begin, end);
                         res.render('questions/list', {
                             info_qs: qs_info[0],
                             list_q: q_list,
                             user: req.user,
                             success: req.flash("success"),
+                            page_id,
+                            page_count,
                         });
                     })
                     .catch(err => {
@@ -67,7 +75,7 @@ module.exports = {
                 question_model.add(question, filename, qs_id)
                     .then(result => {
                         req.flash("success", "Create question successfully!");
-                        res.redirect(`/host/questionset/${qs_id}/question`);
+                        res.redirect(`/host/questionset/${qs_id}/question?page=1`);
                     }).catch(err => {
                         console.log(err);
                         req.flash("error", "Fail to insert question!");
@@ -84,8 +92,8 @@ module.exports = {
                 try {
                     fs.unlink('./public/img/' + fileName, (err) => {
                         if (err) {
-                            console.error(err)
-                            return
+                            console.error('Cannot find question image')
+                            return;
                         }
                         //file removed
                     })
@@ -101,7 +109,7 @@ module.exports = {
         // delete db
         question_model.delete(req.params.q_id)
             .then(result => {
-                res.redirect(`/host/questionset/${req.params.qs_id}/question`);
+                res.redirect(`/host/questionset/${req.params.qs_id}/question?page=1`);
             })
             .catch(err => {
                 console.log(err);
@@ -154,7 +162,7 @@ module.exports = {
                 }
                 question_model.update(question, filename, req.params.q_id)
                     .then(result => {
-                        res.redirect(`/host/questionset/${req.params.qs_id}/question`);
+                        res.redirect(`/host/questionset/${req.params.qs_id}/question?page=1`);
                     })
                     .catch(err => {
                         console.log(err);

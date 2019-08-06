@@ -76,6 +76,7 @@ module.exports = {
             }
         })
     },
+
     findquestionset: (req, res) => {
         questionset_model.findById(req.params.qs_id)
             .then(result => {
@@ -125,8 +126,8 @@ module.exports = {
         })
     },
 
-
     create_room: (req, res) => {
+        // Create room
         question_model.findByQuestionsetId(req.params.qs_id)
             .then(result => {
                 if(result.length > 0){

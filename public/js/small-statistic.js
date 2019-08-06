@@ -21,15 +21,15 @@ if (player) {
     })
 } else {
     $('#navPin').html("PIN: " + sessionStorage.getItem("localPin"));
-    $(`#answer_status`).html("Correct Answer:").attr("style","font-size:30px;")
-    if(window.sessionStorage.getItem("correct_answer") == 1){
-        $(`#answer_point`).html("A").attr("style","font-size:60px;")
-    }else if(window.sessionStorage.getItem("correct_answer") == 2){
-        $(`#answer_point`).html("B").attr("style","font-size:60px;")
-    }else if(window.sessionStorage.getItem("correct_answer") == 3){
-        $(`#answer_point`).html("C").attr("style","font-size:60px;")
-    }else if(window.sessionStorage.getItem("correct_answer") == 4){
-        $(`#answer_point`).html("D").attr("style","font-size:60px;")
+    $(`#answer_status`).html("Correct Answer:").attr("style", "font-size:30px;")
+    if (window.sessionStorage.getItem("correct_answer") == 1) {
+        $(`#answer_point`).html("A").attr("style", "font-size:60px;")
+    } else if (window.sessionStorage.getItem("correct_answer") == 2) {
+        $(`#answer_point`).html("B").attr("style", "font-size:60px;")
+    } else if (window.sessionStorage.getItem("correct_answer") == 3) {
+        $(`#answer_point`).html("C").attr("style", "font-size:60px;")
+    } else if (window.sessionStorage.getItem("correct_answer") == 4) {
+        $(`#answer_point`).html("D").attr("style", "font-size:60px;")
     }
 }
 
