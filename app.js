@@ -107,11 +107,15 @@ io.on('connection', (socket) => {
 
     socket.on("getQuestion", (pin) => {
         let room = Game_room.getRoomById(pin);
-        if (room.question_index < room.list_question.length)
-            socket.emit("question-content", room.list_question[room.question_index]);
-        else
-            socket.emit("final-statistic");
-
+        if (room) {
+            if (room.question_index < room.list_question.length) {
+                socket.emit("question-content", room.list_question[room.question_index], room.question_index);
+            } else {
+                socket.emit("final-statistic");
+            }
+        } else {
+            socket.emit("roomDisconnected");
+        }
     })
 
     socket.on("nextQuestion", (pin) => {
@@ -142,6 +146,15 @@ io.on('connection', (socket) => {
 
     socket.on('endGame', (pin) => {
         Game_room.endGame(pin);
+    })
+
+    socket.on("hostDisconnect", (pin) => {
+        let room = Game_room.getRoomById(pin);
+        if (room) {
+            players.deletePlayersByRoomId(pin);
+            Game_room.removeRoomById(pin);
+        }
+        socket.emit("roomDisconnected");
     })
 
     socket.on('disconnect', () => {
