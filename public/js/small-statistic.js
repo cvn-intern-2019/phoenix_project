@@ -43,9 +43,9 @@ socket.emit("listPlayerScoreRequest", window.sessionStorage.getItem("localPin"))
 socket.on("listPlayerScoreReponse", (listPlayer) => {
     for (let i = 0; i < listPlayer.length; i++) {
         $("#list-score").append(
-            '<li>' +
-            '<span class="ml-4 font-weight-bold" style="font-size: 20px;">' + listPlayer[i].name + '</span>' +
-            '<span class="ml-4 font-weight-bold float-right" style="font-size: 20px;" id="">' + listPlayer[i].score + ' .pt</span>' +
+            '<li class="d-flex justify-content-between">' +
+            '<span class="ml-4 font-weight-bold" style="font-size: 20px;" id="playerName">' + listPlayer[i].name + '</span>' +
+            '<span class="ml-4 font-weight-bold" style="font-size: 20px;">' + listPlayer[i].score + ' .pt</span>' +
             '</li>');
     }
 });
