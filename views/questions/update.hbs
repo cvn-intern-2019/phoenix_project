@@ -16,6 +16,9 @@
     });
     $("body").addClass('homepage-bg');
     $("#correctanswer").val({{ question.question_answercorrect }});
+    setTimeout(function() {
+        $("#error").remove();
+    }, 3000);
 </script>
 {{/section}}
 
@@ -25,7 +28,7 @@
         enctype="multipart/form-data" id="question">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         <h1 class="question-set-heading text-center text-white mt-0">Edit Question</h1>
-        <div class="form-group text-center">
+        <div class="form-group text-center" id="error">
             {{#if error}}
             <div class="alert alert-danger" role="alert">
                 {{error}}
