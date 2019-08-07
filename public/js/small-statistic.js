@@ -52,7 +52,7 @@ socket.on("listPlayerScoreReponse", (listPlayer) => {
 
 // Handle UI
 $("body").addClass('homepage-bg');
-var sec = 50;
+var sec = 2;
 $('#countdown').css({
     fontSize: 30
 });
