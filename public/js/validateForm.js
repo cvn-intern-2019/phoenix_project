@@ -157,7 +157,7 @@ $(document).ready(() => {
             nickname: {
                 required: true,
                 minlength: 3,
-                maxlength: 10,
+                maxlength: 8,
             },
         },
         messages: {
