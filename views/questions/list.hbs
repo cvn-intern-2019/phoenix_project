@@ -24,6 +24,9 @@
     else {
         $(".pagination").append($(`<li class="page-item"><a class="page-link">Next</a></li>`));
     }
+    setTimeout(function() {
+        $("#alert").remove();
+    }, 3000);
 </script>
 {{/section}}
 
@@ -55,7 +58,7 @@
 
 <div class="mt-5 row">
     <div class="container col-lg-8 col-lg-offset-4 ">
-        <div class="form-group text-center test-white">
+        <div class="form-group text-center test-white" id="alert">
             {{#if success}}
             <div class="alert alert-success" role="alert">
                 {{success}}
