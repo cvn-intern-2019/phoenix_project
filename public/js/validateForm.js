@@ -45,6 +45,11 @@ $(document).ready(() => {
     $("#editProfileForm").validate({
         errorClass: 'my-error-class',
         rules: {
+            username: {
+                required: true,
+                minlength: 5,
+                specialChars: true
+            },
             email: {
                 required: true,
                 email: true,

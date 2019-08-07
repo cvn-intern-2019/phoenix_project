@@ -1,6 +1,12 @@
 let socket = io({ transports: ['websocket'], upgrade: false });
 let roomPin = '';
+// Createroom command
 socket.emit('create_room', data);
+// Out of room error
+socket.on('OutOfRoom', () => {
+    window.location.replace('/error');
+})
+
 socket.on('waiting-room', (pin) => {
     $('#pin').html(pin);
     socket.emit('host-join', pin);

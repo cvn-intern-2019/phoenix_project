@@ -49,9 +49,9 @@ module.exports = {
         questionset.title = questionset_model.format(questionset.title).trim();
         questionset.description = questionset_model.format(questionset.description).trim();
         upload(req, res, err => {
-            if (questionset.title.length <= 0 ||questionset.description.length <= 0 ) {
+            if (questionset.title.length <= 0 || questionset.description.length <= 0) {
                 req.flash("error", "Begin is not a space");
-                res.render('questionsets/add_questionset',{ user: req.user,  error: req.flash("error"), csrfToken: req.csrfToken()});
+                res.render('questionsets/add_questionset', { user: req.user, error: req.flash("error"), csrfToken: req.csrfToken() });
             } else {
                 var filename = "";
                 if (req.file) {
@@ -80,8 +80,12 @@ module.exports = {
         questionset_model.findById(req.params.qs_id)
             .then(result => {
                 let path = '/img/' + result[0].questionset_image;
-                res.render('questionsets/edit_questionset', { questionset: result[0], path: path, csrfToken: req.csrfToken(),
-                    error: req.flash("error"), });
+                res.render('questionsets/edit_questionset', {
+                    questionset: result[0],
+                    path: path,
+                    csrfToken: req.csrfToken(),
+                    error: req.flash("error"),
+                });
             })
             .catch(err => {
                 console.log(err);
@@ -94,7 +98,7 @@ module.exports = {
         questionset.title = questionset_model.format(questionset.title).trim();
         questionset.description = questionset_model.format(questionset.description).trim();
         upload(req, res, err => {
-            if (questionset.title.length <= 0 ||questionset.description.length <= 0 ) {
+            if (questionset.title.length <= 0 || questionset.description.length <= 0) {
                 req.flash("error", "Begin is not a space");
                 res.redirect('back');
             } else {
@@ -131,14 +135,15 @@ module.exports = {
         // Create room
         question_model.findByQuestionsetId(req.params.qs_id)
             .then(result => {
-                if(result.length > 0){
+                if (result.length > 0) {
                     res.render('host/middle', { question: result, qs_id: req.params.qs_id });
-                }else{
+                } else {
                     res.redirect(`/host/questionset/${req.params.qs_id}/question/add`);
                 }
             })
             .catch(err => {
                 console.log(err);
+                res.render('error');
             })
     },
 };
