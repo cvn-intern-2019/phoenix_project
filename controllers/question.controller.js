@@ -85,7 +85,8 @@ module.exports = {
                         .then(result => {
                             req.flash("success", "Create question successfully!");
                             res.redirect(`/host/questionset/${qs_id}/question?page=1`);
-                        }).catch(err => {
+                        })
+                        .catch(err => {
                             console.log(err);
                             req.flash("error", "Fail to insert question!");
                             res.redirect(`/host/questionset/${qs_id}/question/add`);
@@ -182,6 +183,7 @@ module.exports = {
                         })
                         .catch(err => {
                             console.log(err);
+                            res.render('error');
                         });
                 }
             })

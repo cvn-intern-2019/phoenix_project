@@ -21,37 +21,47 @@ module.exports = {
         });
     },
     postEdit: (req, res) => {
-        host_model.validEmail(req.body.email, req.user.user_id)
-            .then(result => {
-                // if email isn't exist.
-                if (result.length == 0) {
-                    host_model.updateEmail(req.body.email, req.user.user_id)
-                        .then(result => {
-                            req.user.user_email = req.body.email;
-                            req.flash("editMessage", "Edit Success!");
-                            res.redirect('/host/edit-profile');
-                        })
-                        .catch(err => {
-                            res.render('host/edit-profile', {
-                                csrfToken: req.csrfToken(),
-                                error: "Edit Fail!",
+        if (validateEmail(req.body.email)) {
+            host_model.validEmail(req.body.email, req.user.user_id)
+                .then(result => {
+                    // if email isn't exist.
+                    if (result.length == 0) {
+                        host_model.updateEmail(req.body.email, req.user.user_id)
+                            .then(result => {
+                                req.user.user_email = req.body.email;
+                                req.flash("editMessage", "Edit Success!");
+                                res.redirect('/host/edit-profile');
+                            })
+                            .catch(err => {
+                                res.render('host/edit-profile', {
+                                    csrfToken: req.csrfToken(),
+                                    error: "Edit Fail!",
+                                    user: req.user,
+                                });
                             });
+                    } else {
+                        res.render('host/edit-profile', {
+                            csrfToken: req.csrfToken(),
+                            error: "Email has existed!",
+                            user: req.user,
                         });
-                } else {
+                    }
+
+                })
+                .catch(err => {
                     res.render('host/edit-profile', {
                         csrfToken: req.csrfToken(),
-                        error: "Email has existed!",
+                        error: "Edit Fail!",
                         user: req.user,
                     });
-                }
-
-            })
-            .catch(err => {
-                res.render('host/edit-profile', {
-                    csrfToken: req.csrfToken(),
-                    error: "Edit Fail!",
                 });
+        } else {
+            res.render('host/edit-profile', {
+                csrfToken: req.csrfToken(),
+                error: "Edit Fail!",
+                user: req.user,
             });
+        }
     },
     getchangePassword: (req, res) => {
         res.render('host/change-password', {
@@ -93,4 +103,9 @@ module.exports = {
     profile: (req, res) => {
         res.render('profile', { user: req.user });
     }
+}
+
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
 }

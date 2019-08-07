@@ -4,6 +4,7 @@
 {{/section}}
 
 {{#section 'js'}}
+{{!-- Multer handle --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
 <script>
@@ -15,7 +16,7 @@
         });
     });
     $("body").addClass('homepage-bg');
-    setTimeout(function() {
+    setTimeout(function () {
         $("#error").remove();
     }, 3000);
 </script>
@@ -25,9 +26,9 @@
     <form method="POST" action="/host/questionset/{{qs_id}}/question/add" enctype="multipart/form-data" id="question">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         <h1 class="question-set-heading text-center text-white mt-0">Question</h1>
-        <div class="form-group text-center" id ="error">
+        <div class="form-group text-center" id="error">
             {{#if error}}
-            <div class="alert alert-danger elementToFadeInAndOut" role="alert" >
+            <div class="alert alert-danger elementToFadeInAndOut" role="alert">
                 {{error}}
             </div>
             {{/if}}
