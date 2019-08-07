@@ -1,5 +1,4 @@
 const host_model = require('../models/host.model');
-//const db = require('../utils/db');
 const md5 = require('md5');
 
 
@@ -70,8 +69,8 @@ module.exports = {
         if (currentpass != req.user.user_password)
             error = 'Current password is incorrect.';
         else
-            if (newpass != confirmpass)
-                error = 'Confirm password is incorrect.';
+        if (newpass != confirmpass)
+            error = 'Confirm password is incorrect.';
         if (error == "") {
             host_model.changePassword(newpass, req.user.user_id)
                 .then(result => {

@@ -116,7 +116,7 @@ module.exports = {
         // Create room
         question_model.findByQuestionsetId(req.params.qs_id)
             .then(result => {
-                if (result.legth > 0) {
+                if (result.length > 0) {
                     res.render('player/middle', { question: result, qs_id: req.params.qs_id });
                 } else {
                     res.redirect('/host/questionset/' + req.params.qs_id + '/question/add')
