@@ -21,7 +21,9 @@
       allowedFileExtensions: ['png', 'jpg', 'gif'],
       uploadAsync: false,
     });
-    $("#error").hide(10000);
+    setTimeout(function() {
+        $("#alert").remove();
+    }, 3000);
   });
   $("body").addClass('homepage-bg');
 </script>
@@ -32,9 +34,9 @@
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     <input type="hidden" name="image" value="{{ questionset.questionset_image }}">
     <h1 class="question-set-heading text-white"> Edit question set</h1>
-    <div class="form-group text-center">
+    <div class="form-group text-center" id="alert">
       {{#if error}}
-      <div class="alert alert-danger" role="alert" id="error">
+      <div class="alert alert-danger" role="alert" >
         {{error}}
       </div>
       {{/if}}
