@@ -21,7 +21,9 @@
       uploadAsync: false,
     });
   });
-  $("#error").hide(10000);
+  setTimeout(function() {
+        $("#alert").remove();
+    }, 3000);
   $("body").addClass('homepage-bg');
 </script>
 {{/section}}
@@ -29,9 +31,9 @@
   <form class="m-3" action="/host/questionset/add" method="POST" enctype="multipart/form-data" id="questionset">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     <h1 class="question-set-heading text-white"> New question set</h1>
-    <div class="form-group text-center">
+    <div class="form-group text-center" id="alert">
       {{#if error}}
-      <div class="alert alert-danger" role="alert" id="error">
+      <div class="alert alert-danger" role="alert">
         {{error}}
       </div>
       {{/if}}
