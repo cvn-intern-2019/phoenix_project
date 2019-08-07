@@ -54,8 +54,6 @@ app.use(passport.session());
 app.use(flash());
 app.use(csrfProtection);
 
-// app.use('/questionset', require('./routes/questionset.route'));
-
 require('./models/passport')(passport);
 require('./routes/route')(app);
 require('./routes/player.route')(app);
@@ -71,7 +69,6 @@ const players = new Players();
 const Game_room = new Game_rooms();
 
 io.on('connection', (socket) => {
-    console.log("A new user just connected");
 
     socket.on('create_room', (data) => {
         let room = new Room(data[1], data[0]);
@@ -85,30 +82,40 @@ io.on('connection', (socket) => {
 
     socket.on('player-join', (info) => {
         let pin = info.pin;
-        if (!Game_room.getRoomById(pin)) {
-            console.log('Room not found');
+        let room = Game_room.getRoomById(pin);
+        if (!room) {
             socket.emit('roomNotExists');
+            players.removePlayer(socket.id);
+        } else {
+            if (!room.isStarted) {
+                socket.emit('roomFound');
+                socket.join(pin);
+                players.addPlayer(new Player(socket.id, info.nickname, pin));
+                io.to(pin).emit('updatePlayerList', players.getPlayerByRoom(pin));
+                io.to(`${players.players[parseInt(players.players.length - 1)].id}`).emit("playerInfo", players.players[parseInt(players.players.length - 1)]);
+            } else {
+                io.to(socket.id).emit("alreadyStart");
+            }
+
         }
-
-        socket.join(pin);
-        players.removePlayer(socket.id);
-        players.addPlayer(new Player(socket.id, info.nickname, pin));
-        io.to(pin).emit('updatePlayerList', players.getPlayerByRoom(pin));
-        io.to(`${players.players[parseInt(players.players.length-1)].id}`).emit("playerInfo", players.players[parseInt(players.players.length - 1)]);
-
     })
 
     socket.on("start-game", (pin) => {
+        Game_room.startGame(pin);
         io.to(pin).emit("redirect-to-question");
     })
 
     socket.on("getQuestion", (pin) => {
         let room = Game_room.getRoomById(pin);
-        if (room.question_index < room.list_question.length)
-            socket.emit("question-content", room.list_question[room.question_index]);
-        else
-            socket.emit("final-statistic");
-
+        if (room) {
+            if (room.question_index < room.list_question.length) {
+                socket.emit("question-content", room.list_question[room.question_index], room.question_index);
+            } else {
+                socket.emit("final-statistic");
+            }
+        } else {
+            socket.emit("roomDisconnected");
+        }
     })
 
     socket.on("nextQuestion", (pin) => {
@@ -128,28 +135,42 @@ io.on('connection', (socket) => {
         socket.emit("listPlayerScoreReponse", players.getPlayerByRoom(pin));
     })
 
-    socket.on("updatePlayersStatus", (pin) => {
-        players.updatePlayerStatus(pin);
+    socket.on("deletePlayer", (pinRoom) => {
+        players.deletePlayersByRoomId(pinRoom);
+        Game_room.removeRoomById(pinRoom);
     })
 
-    socket.on("deletePlayer", (pinRoom) => {
-        if (pinRoom) {
-            players.deletePlayersByRoomId(pinRoom);
-            Game_room.removeRoomById(pinRoom);
-        } else {
-            players.deletePlayersByStatus();
+    socket.on("cancelRoom", (pin) => {
+        io.to(pin).emit('roomCanceled');
+    })
+
+    socket.on('endGame', (pin) => {
+        Game_room.endGame(pin);
+    })
+
+    socket.on("hostDisconnect", (pin) => {
+        let room = Game_room.getRoomById(pin);
+        if (room) {
+            players.deletePlayersByRoomId(pin);
+            Game_room.removeRoomById(pin);
         }
-        console.log(players);
-        console.log(Game_room);
+        socket.emit("roomDisconnected");
     })
 
     socket.on('disconnect', () => {
         let player = players.getPlayerById(socket.id);
         if (player) {
+            let room = Game_room.getRoomById(player.roomId);
             let oldRoomId = player.roomId;
-            player.roomId = '';
-            console.log(players);
+
+            if (room.isStarted) {
+                player.roomId = oldRoomId;
+            } else {
+                players.removePlayer(player.id);
+            }
             io.to(oldRoomId).emit('updatePlayerList', players.getPlayerByRoom(oldRoomId));
+        } else {
+            Game_room.removeEndedRoom();
         }
     })
 })

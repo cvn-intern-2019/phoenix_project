@@ -17,9 +17,6 @@ module.exports = (app) => {
                 layout: 'player.hbs'
             });
         })
-    app.get('/player/middle', (req, res) => {
-        res.render('player/middle')
-    });
     app.route('/player/new_game')
         .get((req, res) => {
             res.render('player/new_game', {
@@ -31,5 +28,9 @@ module.exports = (app) => {
         res.render('player/final-stat', {
             layout: 'player.hbs'
         });
+    });
+
+    app.post('/player/waiting', (req, res) => {
+        res.render('player/waiting', { info: req.body });
     });
 }

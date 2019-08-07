@@ -16,13 +16,25 @@ const upload = multer({
 
 module.exports = {
     showQuestionsetList: (req, res) => {
+        var page = req.query.page || 1;
+        let pageItems = 5;
+        if (page < 1) page = 1;
+        let min = 0;
+        let max = 0;
+        min = (page - 1) * pageItems;
+        max = page * pageItems;
         questionset_model.list(req.user.user_id)
             .then(result => {
+                let total = (result.length / pageItems) + 1;
+                result = result.slice(min, max);
                 res.render('questionsets/questionset', {
                     user: req.user,
-                    questionset: result
+                    questionset: result,
+                    listPerPage: total,
+                    page
                 });
-            }).catch(err => {
+            })
+            .catch(err => {
                 console.log(err);
                 res.render('error');
             })
@@ -87,12 +99,12 @@ module.exports = {
                 if (req.file) {
                     fileName = req.file.filename;
                     try {
+                        //file removed
                         fs.unlink('./public/img/' + questionset.image, (err) => {
                             if (err) {
                                 console.error(err)
                                 return
                             }
-                            //file removed
                         })
                     } catch (err) {
                         console.error(err)
@@ -117,7 +129,7 @@ module.exports = {
         question_model.findByQuestionsetId(req.params.qs_id)
             .then(result => {
                 if (result.length > 0) {
-                    res.render('player/middle', { question: result, qs_id: req.params.qs_id });
+                    res.render('host/middle', { question: result, qs_id: req.params.qs_id });
                 } else {
                     res.redirect('/host/questionset/' + req.params.qs_id + '/question/add')
                 }

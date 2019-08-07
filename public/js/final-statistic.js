@@ -21,12 +21,17 @@ socket.on("listPlayerScoreReponse", (listPlayer) => {
     }
 });
 
+// Anounce server to change room status
+if (!player)
+    socket.emit('endGame', window.sessionStorage.getItem("localPin"));
+
 $('#quitBtn').click(() => {
-    console.log('quit');
     if (player) {
         window.sessionStorage.clear();
+        window.location.replace('/player');
     } else {
         socket.emit("deletePlayer", window.sessionStorage.getItem("localPin"));
+        window.location.replace('/host/questionset');
     }
     window.location.replace('/');
 });

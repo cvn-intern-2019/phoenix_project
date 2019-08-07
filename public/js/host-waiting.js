@@ -28,9 +28,15 @@ $(document).ready(function() {
 });
 
 $("#host_start").click(() => {
-    $("#host_start").attr("disabled", true);
+    $("#host_start").attr('disabled', 'disabled');
     socket.emit("start-game", roomPin);
-    socket.emit("updatePlayersStatus", roomPin);
+})
+sessionStorage.setItem("question_index", "-1");
+
+$('#host_back').click(() => {
+    socket.emit("deletePlayer", window.sessionStorage.getItem("localPin"));
+    window.location.replace('/host/questionset');
+    socket.emit("cancelRoom", window.sessionStorage.getItem("localPin"));
 })
 
 socket.on("redirect-to-question", () => {
