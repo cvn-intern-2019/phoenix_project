@@ -13,9 +13,18 @@ module.exports.listen = (server) => {
     io.on('connection', (socket) => {
 
         socket.on('create_room', (data) => {
-            let room = new Room(data[1], data[0]);
-            Game_room.addRoom(room);
-            socket.emit('waiting-room', room.roomId);
+            if (Game_room.Game_rooms.length == Game_room.max_length) {
+                socket.emit('OutOfRoom');
+            } else {
+                let room = new Room(data[1], data[0]);
+                let checkDuplicatePin = Game_room.getRoomById(room.roomId);
+                while (checkDuplicatePin) {
+                    room = new Room(data[1], data[0]);
+                    checkDuplicatePin = Game_room.getRoomById(room.roomId);
+                }
+                Game_room.addRoom(room);
+                socket.emit('waiting-room', room.roomId);
+            }
         })
 
         socket.on('host-join', (pin) => {

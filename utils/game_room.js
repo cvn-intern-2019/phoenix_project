@@ -3,6 +3,7 @@ const max = 9000;
 class Game_rooms {
     constructor() {
         this.Game_rooms = [];
+        this.max_length = max;
     }
 
     addRoom(room) {
@@ -50,7 +51,7 @@ class Game_rooms {
 class Room {
     constructor(questionset, list_question) {
         this.questionset = questionset;
-        this.roomId = Math.floor((Math.random() * 9000) + 1000);
+        this.roomId = Math.floor((Math.random() * max) + 1000);
         this.list_question = list_question;
         this.question_index = 0;
         this.isStarted = false;

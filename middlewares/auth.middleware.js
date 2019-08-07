@@ -1,6 +1,6 @@
 const db = require('../utils/db')
 const request = require('request');
-
+require('dotenv').config()
 
 function isSignIn(req, res, next) {
     if (req.isAuthenticated())
@@ -40,7 +40,7 @@ function reCaptcha(req, res, next) {
     }
 
     // Secret Key
-    const secretKey = '6LfnSrEUAAAAAAyvMtdLhM7siLbpfHcro3do244I';
+    const secretKey = process.env.captchaKey;
 
     // Verify URL
     const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${req.body['g-recaptcha-response']}&remoteip=${req.connection.remoteAddress}`;
