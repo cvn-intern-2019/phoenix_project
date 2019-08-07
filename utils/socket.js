@@ -57,7 +57,7 @@ module.exports.listen = (server) => {
         })
 
         socket.on("statisticRedirect", (pin) => {
-            io.to(pin).emit("redirect-to-question");
+            io.to(pin).emit("redirect");
         })
 
         socket.on("getQuestion", (pin) => {

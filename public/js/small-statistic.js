@@ -1,6 +1,3 @@
-// Call everybody redirect to statistic page
-socket.emit("statisticRedirect", window.sessionStorage.getItem("localPin"));
-
 let player = JSON.parse(window.sessionStorage.getItem("profile"));
 if (player) {
     socket.emit("updateProfile", player.id);
@@ -52,6 +49,9 @@ socket.on("listPlayerScoreReponse", (listPlayer) => {
             '</li>');
     }
 });
+
+// Call everybody redirect to statistic page
+socket.emit("statisticRedirect", window.sessionStorage.getItem("localPin"));
 
 // Handle UI
 $("body").addClass('homepage-bg');
