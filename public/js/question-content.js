@@ -13,7 +13,9 @@ socket.on("question-content", (question, index) => {
     if (parseInt(sessionStorage.getItem("question_index")) < index) {
         sessionStorage.setItem("question_index", index);
     } else {
-        socket.emit('hostDisconnect', window.sessionStorage.getItem("localPin"));
+        setTimeout(() => {
+            socket.emit('hostDisconnect', window.sessionStorage.getItem("localPin"));
+        }, 3500);
     }
 })
 

@@ -50,9 +50,6 @@ socket.on("listPlayerScoreReponse", (listPlayer) => {
     }
 });
 
-// Call everybody redirect to statistic page
-socket.emit("statisticRedirect", window.sessionStorage.getItem("localPin"));
-
 // Handle UI
 $("body").addClass('homepage-bg');
 var sec = 2;

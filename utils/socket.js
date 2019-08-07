@@ -56,10 +56,6 @@ module.exports.listen = (server) => {
             io.to(pin).emit("redirect-to-question");
         })
 
-        socket.on("statisticRedirect", (pin) => {
-            io.to(pin).emit("redirect");
-        })
-
         socket.on("getQuestion", (pin) => {
             let room = Game_room.getRoomById(pin);
             if (room) {

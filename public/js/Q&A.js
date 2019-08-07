@@ -69,22 +69,6 @@ var timer = setInterval(function() {
     }
 }, 1000);
 
-socket.on('redirect', () => {
-    if (player) {
-        player.answer = answer;
-        player.answerTime = answerTime;
-        sessionStorage.setItem(`profile`, JSON.stringify(player));
-        socket.emit("thisIsMyAnswer", player, sessionStorage.getItem("correct_answer"));
-    } else {
-        // only host
-        socket.emit("nextQuestion", window.sessionStorage.getItem("localPin"));
-    }
-    $('#countdown').fadeOut('slow');
-    clearInterval(timer);
-    window.location.replace("/player/small-statistic");
-})
-
-
 socket.on("roomDisconnected", () => {
     window.sessionStorage.clear();
     window.location.replace("/error");
